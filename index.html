@@ -1199,7 +1199,7 @@ function renderMenuBG(){
 /* ====================== SCREEN FLOW ====================== */
 function showScreen(id){
   document.querySelectorAll(".screen").forEach(s=>s.classList.add("hidden"));
-  if(id){ byId(id).classList.remove("hidden"); }
+  if(id){ const el=byId(id); if(el) el.classList.remove("hidden"); else console.warn("showScreen: missing #"+id); }
 }
 function toMenu(){
   mode="menu"; showScreen("menu"); byId("controls").classList.add("hidden"); byId("pauseBtn").classList.add("hidden");
@@ -1239,7 +1239,7 @@ function levelComplete(){
     "<div class='row'><span>🎯 Score</span><b>"+run.score+"</b></div>"+
     (isLast?"<div class='row'><span>💎 Heart Crystal</span><b style='color:#ff5a8c'>RECOVERED!</b></div>":"");
   sWin();
-  showScreen("levelclear");
+  showScreen("levelClear");
   byId("lcNext").textContent = isLast? "STORY ▶" : "NEXT LEVEL ▶";
 }
 function fmtTime(t){ const m=Math.floor(t/60),s=Math.floor(t%60); return m+":"+(s<10?"0":"")+s; }
@@ -1534,16 +1534,18 @@ byId("endDone").addEventListener("click",()=>{ S.ui(); toMenu(); });
 let last=performance.now(), acc=0;
 function loop(now){
   let dt=(now-last)/1000; last=now; if(dt>1/20) dt=1/20;
-  musicTick();
-  if(mode==="playing"){ update(dt); renderGame(); }
-  else if(mode==="paused"){ renderGame(); }
-  else if(mode==="cutscene"){ renderCutscene(); }
-  else if(mode==="ending"){ renderEnding(); }
-  else if(mode==="levelclear"||mode==="victory"||mode==="gameover"){ /* keep last frame: redraw game faded */ if(level) renderGame(); }
-  else { renderMenuBG(); }
-  // periodic save of playtime
-  if(mode==="playing"){ saveTick+=dt; if(saveTick>5){ saveTick=0; persist(); } }
-  requestAnimationFrame(loop);
+  try{
+    musicTick();
+    if(mode==="playing"){ update(dt); renderGame(); }
+    else if(mode==="paused"){ renderGame(); }
+    else if(mode==="cutscene"){ renderCutscene(); }
+    else if(mode==="ending"){ renderEnding(); }
+    else if(mode==="levelclear"||mode==="victory"||mode==="gameover"){ /* keep last frame: redraw game faded */ if(level) renderGame(); }
+    else { renderMenuBG(); }
+    // periodic save of playtime
+    if(mode==="playing"){ saveTick+=dt; if(saveTick>5){ saveTick=0; persist(); } }
+  }catch(err){ console.error("loop error:",err); }
+  requestAnimationFrame(loop);   // always keep the loop alive
 }
 let saveTick=0;
 
