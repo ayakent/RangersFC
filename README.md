@@ -5,13 +5,16 @@ Barangay Mabuhay, General Santos City, founded 14 June 1996.
 
 **Play with your heart.**
 
+**Live:** [ayakent.github.io/RangersFC](https://ayakent.github.io/RangersFC/) ·
+the game at [/game/](https://ayakent.github.io/RangersFC/game/)
+
 ## What's here
 
 | Path | What it is |
 | --- | --- |
 | `index.html` | The club website. One self-contained page: markup, styles and scripts. |
 | `game/index.html` | *SKY: Soccer Quest*, the club's side-scrolling football game. |
-| `assets/` | Club crest, favicon, and the game still used on the site. |
+| `assets/` | Club crest, favicon, the game still used on the site, and the share card. |
 | `vendor/three.min.js` | three.js r128, used by the hero scene (MIT — see `vendor/three.LICENSE`). |
 
 ## The page
@@ -42,9 +45,12 @@ Opening `index.html` straight from the filesystem works too.
 
 ## Publishing
 
-The site is plain static files, so GitHub Pages serves it as-is: in
-**Settings → Pages**, set the source to the branch you want and the root (`/`) folder.
-`index.html` becomes the home page and the game lives at `/game/`.
+Every push to `main` publishes the site, via `.github/workflows/pages.yml`. The site is
+plain static files, so there is nothing to build — the workflow uploads the repository
+root to GitHub Pages. It can also be run by hand from the **Actions** tab.
+
+`index.html` is the home page and the game lives at `/game/`. Because this is a project
+site, the URL follows the repository name: renaming the repository changes the address.
 
 ## Degrading gracefully
 
