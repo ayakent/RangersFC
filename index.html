@@ -408,21 +408,34 @@ section{padding:96px 0;position:relative}
 
 /* Coaches */
 .coach-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-@media(min-width:900px){.coach-grid{grid-template-columns:repeat(5,1fr)}}
-.coach{border:2px solid var(--navy);border-radius:20px;background:#fff;padding:28px 18px;text-align:center;
-  transition:box-shadow .3s,transform .25s var(--ease)}
+@media(min-width:640px){.coach-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1000px){.coach-grid{grid-template-columns:repeat(4,1fr)}}
+.coach{border:2px solid var(--navy);border-radius:20px;background:#fff;overflow:hidden;text-align:center;
+  display:flex;flex-direction:column;
+  transition:box-shadow .3s,transform .25s var(--ease),border-color .3s}
 .coach:hover{box-shadow:0 18px 38px rgba(11,43,76,.2)}
-.coach .badge{width:66px;height:66px;border-radius:50%;background:var(--navy);color:var(--sky);
-  font-family:var(--display);font-size:1.75rem;display:flex;align-items:center;justify-content:center;
-  margin:0 auto 15px;letter-spacing:.05em;transition:background .3s,color .3s}
-.coach:hover .badge{background:var(--red);color:#fff}
-.coach h3{font-size:1.55rem}
-.coach span{font-family:var(--cond);font-weight:600;letter-spacing:.18em;text-transform:uppercase;
-  font-size:.7rem;color:var(--ink-soft)}
-.coach.lead{border-color:var(--orange);background:#FFF4E7}
-.coach .tag{display:inline-block;margin-top:8px;background:var(--red);color:#fff;border-radius:999px;
-  padding:.3em .8em;font-size:.66rem}
-.coach a.phone{display:inline-block;margin-top:10px;font-weight:700;color:var(--blue);text-decoration:none;font-size:.93rem}
+/* team photo, framed like a squad card. It grows to fill whatever height the
+   row takes, so the cards without a phone number don't end in dead space. */
+.coach .shot{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--navy);
+  flex:1 1 auto;min-height:0}
+.coach .shot img{width:100%;height:100%;object-fit:cover;object-position:center 18%;
+  transition:transform .6s var(--ease)}
+.coach:hover .shot img{transform:scale(1.05)}
+.coach .shot::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(5,26,49,.5),rgba(5,26,49,0) 42%)}
+.coach .who{padding:15px 14px 20px}
+/* scales down on narrow cards so names hold one line on most phones, and
+   wrap rather than clip on the very narrowest */
+.coach h3{font-size:clamp(1.15rem,4.4vw,1.5rem)}
+@media(max-width:360px){.coach .who{padding:13px 8px 17px}}
+.coach span{display:block;font-family:var(--cond);font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;font-size:.7rem;color:var(--ink-soft)}
+.coach.lead{border-color:var(--orange)}
+.coach.lead .who{background:#FFF4E7}
+.coach .tag{display:inline-block;margin-top:9px;background:var(--red);color:#fff;border-radius:999px;
+  padding:.3em .8em;font-size:.66rem;letter-spacing:.12em}
+.coach a.phone{display:inline-block;margin-top:9px;font-weight:700;color:var(--blue);
+  text-decoration:none;font-size:.93rem}
 .coach a.phone:hover{text-decoration:underline}
 .coach-note{margin-top:32px;font-size:.99rem}
 
@@ -668,7 +681,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
         <div class="crest-card"><img src="assets/crest.webp" alt="Rangers Football Club official crest" width="158" height="158" /></div>
         <div class="stat"><b class="count" data-target="1996">0</b><span>Founded</span></div>
         <div class="stat"><b><span class="count" data-target="30">0</span>+</b><span>Years of football</span></div>
-        <div class="stat"><b class="count" data-target="5">0</b><span>Volunteer coaches</span></div>
+        <div class="stat"><b class="count" data-target="7">0</b><span>Volunteer coaches</span></div>
       </div>
     </div>
     <div class="mv-grid">
@@ -770,16 +783,38 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
     </div>
     <div class="coach-grid">
       <div class="coach lead reveal" data-tilt>
-        <div class="badge">JA</div>
-        <h3>Coach James</h3>
-        <span>Head Coach</span><br />
-        <span class="tag">Club Contact</span><br />
-        <a class="phone" href="tel:+639932910764">+63 993 291 0764</a>
+        <div class="shot"><img src="assets/coaches/james.webp" alt="Coach James" width="560" height="700" loading="lazy" /></div>
+        <div class="who">
+          <h3>Coach James</h3>
+          <span>Head Coach</span>
+          <span class="tag">Club Contact</span>
+          <a class="phone" href="tel:+639932910764">+63 993 291 0764</a>
+        </div>
       </div>
-      <div class="coach reveal" data-d="1" data-tilt><div class="badge">KU</div><h3>Coach Kurt</h3><span>Coach</span></div>
-      <div class="coach reveal" data-d="2" data-tilt><div class="badge">KI</div><h3>Coach Kim</h3><span>Coach</span></div>
-      <div class="coach reveal" data-d="3" data-tilt><div class="badge">RA</div><h3>Coach Ralph</h3><span>Coach</span></div>
-      <div class="coach reveal" data-d="3" data-tilt><div class="badge">YA</div><h3>Coach Yavets</h3><span>Coach</span></div>
+      <div class="coach reveal" data-d="1" data-tilt>
+        <div class="shot"><img src="assets/coaches/kurt.webp" alt="Coach Kurt" width="560" height="700" loading="lazy" /></div>
+        <div class="who"><h3>Coach Kurt</h3><span>Coach</span></div>
+      </div>
+      <div class="coach reveal" data-d="2" data-tilt>
+        <div class="shot"><img src="assets/coaches/kim.webp" alt="Coach Kim" width="560" height="700" loading="lazy" /></div>
+        <div class="who"><h3>Coach Kim</h3><span>Coach</span></div>
+      </div>
+      <div class="coach reveal" data-d="3" data-tilt>
+        <div class="shot"><img src="assets/coaches/ralph.webp" alt="Coach Ralph" width="560" height="700" loading="lazy" /></div>
+        <div class="who"><h3>Coach Ralph</h3><span>Coach</span></div>
+      </div>
+      <div class="coach reveal" data-tilt>
+        <div class="shot"><img src="assets/coaches/jabez.webp" alt="Coach Jabez" width="560" height="700" loading="lazy" /></div>
+        <div class="who"><h3>Coach Jabez</h3><span>Coach</span></div>
+      </div>
+      <div class="coach reveal" data-d="1" data-tilt>
+        <div class="shot"><img src="assets/coaches/steve.webp" alt="Coach Steve" width="560" height="700" loading="lazy" /></div>
+        <div class="who"><h3>Coach Steve</h3><span>Coach</span></div>
+      </div>
+      <div class="coach reveal" data-d="2" data-tilt>
+        <div class="shot"><img src="assets/coaches/ivan.webp" alt="Coach Ivan" width="560" height="700" loading="lazy" /></div>
+        <div class="who"><h3>Coach Ivan</h3><span>Coach</span></div>
+      </div>
     </div>
     <p class="coach-note reveal">Together with dedicated parents and volunteers, our coaches mentor every player to become not only a better footballer, but a responsible, respectful and confident young person.</p>
   </div>
@@ -889,7 +924,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
     </div>
     <div class="credits">
       <div><span>Head Coach</span><b>James</b></div>
-      <div><span>Coaches</span><b>Kurt · Kim · Ralph · Yavets</b></div>
+      <div><span>Coaches</span><b>Kurt · Kim · Ralph · Jabez · Steve · Ivan</b></div>
       <div><span>Supporting Cast</span><b>Parents &amp; Volunteers</b></div>
       <div><span>Home Pitch</span><b>Yam 1, Purok 27</b></div>
       <div><span>Founded</span><b>14 June 1996</b></div>
