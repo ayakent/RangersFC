@@ -392,6 +392,18 @@ section{padding:96px 0;position:relative}
 .prog h3{font-family:var(--body);font-weight:700;font-size:1.04rem;letter-spacing:0}
 .prog p{font-size:.95rem;margin-top:3px;max-width:none}
 
+/* Squad band — a full-bleed establishing shot between the programmes and
+   the goal quote. No text sits over the faces. */
+.squad{position:relative;background:var(--navy-ink);overflow:hidden}
+.squad-img{position:relative;height:clamp(300px,52vw,620px);overflow:hidden}
+.squad-img img{position:absolute;left:0;top:-8%;width:100%;height:116%;
+  object-fit:cover;object-position:center 44%;will-change:transform}
+.squad-img::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 100% at 50% 45%,rgba(0,0,0,0) 45%,rgba(3,8,15,.5) 100%)}
+.squad figcaption{padding:22px 0 26px}
+.squad figcaption .wrap{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:baseline}
+.squad figcaption p{color:var(--sky-soft);font-size:.95rem;max-width:58ch;margin:0}
+
 /* Goal quote — parallax slab */
 .goal{background:var(--navy-ink);padding:120px 0;position:relative;overflow:hidden}
 .goal .netline{position:absolute;inset:-10%;opacity:.07;will-change:transform;
@@ -761,6 +773,21 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
     </div>
   </div>
 </section>
+
+<!-- ============ SQUAD ============ -->
+<figure class="squad">
+  <div class="squad-img">
+    <img class="par" data-speed="-0.05" src="assets/squad.webp"
+         alt="The Rangers squad and coaches together on the club's home pitch in Barangay Mabuhay"
+         width="1600" height="1149" loading="lazy" />
+  </div>
+  <figcaption>
+    <div class="wrap">
+      <span class="eyebrow">The Squad</span>
+      <p>Players, coaches and volunteers on the home pitch at Yam 1, Purok 27.</p>
+    </div>
+  </figcaption>
+</figure>
 
 <!-- ============ GOAL QUOTE ============ -->
 <div class="goal">
