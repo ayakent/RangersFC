@@ -28,6 +28,11 @@ jobs:
       - name: Check out the site
         uses: actions/checkout@v4
 
+      - name: Build the gallery manifest
+        # Rebuilt on every deploy, so adding a photo or video to
+        # assets/gallery/ is all it takes for it to appear on the site.
+        run: python3 tools/build-gallery.py
+
       - name: Configure Pages
         # enablement turns Pages on for the repository if it is still off,
         # so no manual visit to Settings is needed.

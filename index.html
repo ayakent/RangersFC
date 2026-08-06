@@ -529,6 +529,38 @@ section{padding:96px 0;position:relative}
 .game-list li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange);
   flex:none;margin-top:.45em}
 
+/* Gallery — a slideshow of whatever is in assets/gallery/ */
+.gal-sec{background:var(--black);position:relative;overflow:hidden}
+.gal-sec .glow{position:absolute;left:50%;top:0;width:min(140vw,1100px);height:480px;
+  transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(circle at 50% 0,rgba(232,113,43,.16),transparent 68%)}
+.gal-stage{position:relative;border-radius:18px;overflow:hidden;background:var(--navy-ink);
+  aspect-ratio:16/10;box-shadow:0 24px 60px rgba(0,0,0,.55)}
+@media(max-width:640px){.gal-stage{aspect-ratio:4/3}}
+.gal-item{position:absolute;inset:0;opacity:0;transition:opacity .8s var(--ease);pointer-events:none}
+.gal-item.on{opacity:1}
+.gal-item img,.gal-item video{width:100%;height:100%;object-fit:contain;display:block;background:var(--navy-ink)}
+.gal-cap{position:absolute;left:0;right:0;bottom:0;padding:44px 20px 16px;pointer-events:none;
+  background:linear-gradient(to top,rgba(3,8,15,.9),rgba(3,8,15,0));
+  display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+.gal-cap b{font-family:var(--display);font-size:1.35rem;letter-spacing:.03em;color:#fff;font-weight:400}
+.gal-cap span{font-family:var(--cond);font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  font-size:.66rem;color:var(--orange)}
+.gal-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(249,246,239,.35);background:rgba(3,8,15,.5);color:#fff;cursor:pointer;
+  display:grid;place-items:center;transition:background .2s,border-color .2s;z-index:2}
+.gal-nav:hover{background:rgba(195,30,36,.7);border-color:transparent}
+.gal-nav.prev{left:12px}
+.gal-nav.next{right:12px}
+.gal-nav svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.1;
+  stroke-linecap:round;stroke-linejoin:round}
+.gal-dots{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.gal-dots button{width:9px;height:9px;padding:0;border-radius:50%;cursor:pointer;
+  border:1px solid rgba(156,203,232,.5);background:transparent;transition:.25s}
+.gal-dots button.on{background:var(--orange);border-color:var(--orange);transform:scale(1.25)}
+.gal-count{margin-top:14px;text-align:center;font-family:var(--cond);font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;font-size:.7rem;color:rgba(249,246,239,.5)}
+
 /* Album */
 .album-sec{background:var(--navy-ink);position:relative;overflow:hidden}
 .album-sec .glow{position:absolute;left:50%;top:0;width:min(140vw,1100px);height:520px;
@@ -656,6 +688,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
     <li data-for="values"><span>Values</span></li>
     <li data-for="programs"><span>Programmes</span></li>
     <li data-for="coaches"><span>Coaches</span></li>
+    <li data-for="gallery"><span>Gallery</span></li>
     <li data-for="album"><span>The Album</span></li>
     <li data-for="game"><span>The Game</span></li>
     <li data-for="visit"><span>Visit</span></li>
@@ -933,13 +966,38 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   </div>
 </section>
 
+<!-- ============ GALLERY ============ -->
+<!-- Built from assets/gallery/. Hides itself when the folder is empty. -->
+<section class="gal-sec" id="gallery" hidden>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>05</b> From the Pitch</div>
+      <h2 class="rt">Match days and training nights</h2>
+    </div>
+    <div class="reveal" data-d="1">
+      <div class="gal-stage" id="galStage" aria-live="polite">
+        <button class="gal-nav prev" type="button" aria-label="Previous">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button class="gal-nav next" type="button" aria-label="Next">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="gal-dots" id="galDots"></div>
+      <p class="gal-count" id="galCount"></p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ ALBUM ============ -->
 <section class="album-sec" id="album">
   <div class="glow" aria-hidden="true"></div>
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>05</b> The Record</div>
+      <div class="slate reveal"><b>06</b> The Record</div>
     </div>
     <div class="album-grid">
       <div class="album-copy reveal">
@@ -973,7 +1031,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>06</b> Extra Time</div>
+      <div class="slate reveal"><b>07</b> Extra Time</div>
     </div>
     <div class="game-grid">
       <a class="poster reveal" href="game/" aria-label="Play SKY: Soccer Quest">
@@ -1005,7 +1063,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>07</b> Visit Us</div>
+      <div class="slate reveal"><b>08</b> Visit Us</div>
       <h2 class="rt">Come watch a session</h2>
     </div>
     <div class="visit-grid">
@@ -1390,6 +1448,119 @@ function sWhistle(){
   peep(t + 0.3, 0.32);
 }
 /* ==========================================================================
+   GALLERY
+   Reads assets/gallery/gallery.json, which the deploy workflow rebuilds from
+   whatever is in that folder. Adding a photo or a video to the site is just
+   dropping the file in — nothing here needs touching. Stays hidden while the
+   folder is empty.
+   ========================================================================== */
+(function(){
+  var sec = document.getElementById('gallery');
+  if(!sec || !window.fetch) return;
+  var stage = document.getElementById('galStage'),
+      dotsEl = document.getElementById('galDots'),
+      countEl = document.getElementById('galCount');
+  var items = [], slides = [], at = 0, timer = null, HOLD = 5000;
+
+  fetch('assets/gallery/gallery.json', {cache:'no-cache'})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(data){
+      items = (data && data.items) || [];
+      if(!items.length) return;              /* nothing uploaded yet */
+      sec.hidden = false;
+      build();
+      show(0);
+    })['catch'](function(){ /* no manifest yet — leave the section hidden */ });
+
+  function build(){
+    items.forEach(function(item, i){
+      var slide = document.createElement('div');
+      slide.className = 'gal-item';
+      var media;
+      if(item.type === 'video'){
+        media = document.createElement('video');
+        media.src = item.src;
+        media.muted = true;                  /* muted, or phones refuse to play it */
+        media.playsInline = true;
+        media.setAttribute('playsinline', '');
+        media.preload = i === 0 ? 'metadata' : 'none';
+        /* A file the browser cannot decode fires "ended" straight away, which
+           would race the slideshow through everything. Only honour it from
+           the slide on screen, and only when something really played. */
+        media.addEventListener('ended', function(){
+          if(slides[at] !== slide) return;
+          if(!isFinite(media.duration) || media.duration <= 0){ queue(HOLD); return; }
+          next();
+        });
+        media.addEventListener('error', function(){ if(slides[at] === slide) queue(HOLD); });
+      }else{
+        media = document.createElement('img');
+        media.src = item.src;
+        media.loading = i === 0 ? 'eager' : 'lazy';
+        media.decoding = 'async';
+      }
+      media.alt = item.caption || 'Rangers Football Club';
+      slide.appendChild(media);
+
+      if(item.caption || item.date){
+        var cap = document.createElement('div');
+        cap.className = 'gal-cap';
+        if(item.caption){ var bEl = document.createElement('b'); bEl.textContent = item.caption; cap.appendChild(bEl); }
+        if(item.date){ var sEl = document.createElement('span'); sEl.textContent = item.date; cap.appendChild(sEl); }
+        slide.appendChild(cap);
+      }
+      stage.appendChild(slide);
+      slides.push(slide);
+
+      var dot = document.createElement('button');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', 'Show item ' + (i + 1));
+      dot.addEventListener('click', function(){ show(i); });
+      dotsEl.appendChild(dot);
+    });
+
+    stage.querySelector('.gal-nav.prev').addEventListener('click', function(){ show(at - 1); });
+    stage.querySelector('.gal-nav.next').addEventListener('click', next);
+    /* leave the slideshow alone while someone is looking closely */
+    stage.addEventListener('pointerenter', stop);
+    stage.addEventListener('pointerleave', queue);
+    stage.addEventListener('focusin', stop);
+  }
+
+  function next(){ show(at + 1); }
+  function stop(){ clearTimeout(timer); }
+  function queue(ms){
+    stop();
+    if(reduced || items.length < 2) return;
+    /* a video normally advances when it ends; the long timer is a backstop so
+       one that stalls can't freeze the slideshow. A video the browser cannot
+       play falls back to the ordinary hold instead of stranding us for 20s. */
+    timer = setTimeout(next, ms || (items[at].type === 'video' ? 20000 : HOLD));
+  }
+
+  function show(i){
+    if(!slides.length) return;
+    i = (i + slides.length) % slides.length;
+    slides.forEach(function(s, n){
+      s.classList.toggle('on', n === i);
+      var v = s.querySelector('video');
+      if(v && n !== i){ v.pause(); }
+      var d = dotsEl.children[n];
+      if(d) d.classList.toggle('on', n === i);
+    });
+    at = i;
+    countEl.textContent = (i + 1) + ' / ' + slides.length;
+    var vid = slides[i].querySelector('video');
+    if(vid){
+      vid.currentTime = 0;
+      var pr = vid.play();
+      if(pr && pr['catch']) pr['catch'](function(){ queue(HOLD); });
+    }
+    queue();
+  }
+})();
+
+/* ==========================================================================
    BACKGROUND MUSIC
    Browsers refuse to start audio before the visitor has interacted with the
    page, so the first play() attempt is expected to fail. When it does we arm
@@ -1397,7 +1568,7 @@ function sWhistle(){
    ========================================================================== */
 var bgm = document.getElementById('bgm');
 var sndBtn2 = document.getElementById('sndBtn2');
-var MUSIC_VOL = 0.34, fadeRaf = null, fadeStop = null;
+var MUSIC_VOL = 0.34, musicStarted = false;
 
 /* a visitor who switched it off should stay switched off next visit */
 try{ if(localStorage.getItem('rfc_sound') === 'off') muted = true; }catch(e){}
@@ -1410,32 +1581,19 @@ function paintSound(){
   sndBtn2.setAttribute('aria-label', muted ? 'Turn sound on' : 'Turn sound off');
 }
 
-/* Driven off the clock rather than a fixed step per tick, so a throttled
-   frame rate stretches the ramp instead of stalling it part-way. The timeout
-   is a backstop: a stalled fade would leave the music playing inaudibly,
-   which is worse than no fade at all, so the volume lands on target either
-   way. */
-function fadeIn(){
-  cancelAnimationFrame(fadeRaf);
-  clearTimeout(fadeStop);
-  var from = bgm.volume;
-  if(from >= MUSIC_VOL - 0.001){ bgm.volume = MUSIC_VOL; return; }
-  var t0 = performance.now(), dur = 2000;
-  (function step(now){
-    /* a frame timestamp can predate t0, which would compute a negative
-       volume and throw out of the loop — clamp before assigning */
-    var k = Math.max(0, Math.min(1, (now - t0) / dur));
-    bgm.volume = from + (MUSIC_VOL - from) * k;
-    if(k < 1) fadeRaf = requestAnimationFrame(step);
-  })(t0);
-  fadeStop = setTimeout(function(){ bgm.volume = MUSIC_VOL; }, dur + 400);
-}
+/* No fade: the anthem comes in at full volume from its first note, and the
+   very first play always starts at the top of the track rather than wherever
+   a blocked attempt left the playhead. */
 function musicPlay(){
   if(!bgm || muted) return;
+  bgm.volume = MUSIC_VOL;
+  if(!musicStarted) bgm.currentTime = 0;
   var p = bgm.play();
-  /* only fade once playback is really running, so it never enters mid-level */
-  if(p && p.then) p.then(fadeIn)['catch'](armGesture);
-  else fadeIn();
+  if(p && p.then){
+    p.then(function(){ musicStarted = true; })['catch'](armGesture);
+  }else{
+    musicStarted = true;
+  }
 }
 
 var GESTURES = ['pointerdown', 'keydown', 'touchstart'];
@@ -1488,8 +1646,13 @@ if(spotify){
   });
 }
 
+/* The anthem belongs to the welcome, so try again the moment the title
+   sequence lands — by then the visitor has usually tapped or hit skip,
+   which is the gesture the browser was holding out for. */
+onIntroEnd.push(function(){ musicPlay(); });
+
 paintSound();
-if(bgm){ bgm.volume = 0; musicPlay(); }
+if(bgm){ bgm.volume = MUSIC_VOL; musicPlay(); }
 
 /* ==========================================================================
    HUD HELPERS

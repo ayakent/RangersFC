@@ -14,7 +14,9 @@ the game at [/game/](https://ayakent.github.io/RangersFC/game/)
 | --- | --- |
 | `index.html` | The club website. One self-contained page: markup, styles and scripts. |
 | `game/index.html` | *SKY: Soccer Quest*, the club's side-scrolling football game. |
-| `assets/` | Club crest, favicon, the game still used on the site, and the share card. |
+| `assets/` | Club crest, favicon, the game still, the share card and the squad photo. |
+| `assets/gallery/` | Whatever you upload. Feeds the *From the Pitch* slideshow. |
+| `tools/build-gallery.py` | Turns that folder into the gallery manifest at deploy time. |
 | `vendor/three.min.js` | three.js r128, used by the hero scene (MIT — see `vendor/three.LICENSE`). |
 
 ## The page
@@ -31,6 +33,32 @@ A single scroll, staged like a short film.
 - **Chapters** — the club, its values, programmes, coaches, the game, and how to visit,
   each announced with a chapter slate and revealed on scroll.
 - **Film layer** — grain, vignette, light leak and letterbox bars over the whole page.
+
+## Adding photos and videos to the gallery
+
+Drop the files into **`assets/gallery/`** and that is the whole job — the site
+picks them up on the next deploy. Nothing here needs editing.
+
+From a phone or a laptop, without installing anything:
+
+1. Open [`assets/gallery/`](../../tree/main/assets/gallery) on GitHub.
+2. **Add file → Upload files**, then drag the photos or clips in.
+3. **Commit changes.**
+
+A minute or so later they are live in the *From the Pitch* section, which plays
+them as a slideshow. Remove a file the same way and it disappears.
+
+**Name the file and you get a caption for free.** The deploy reads the filename,
+so `2026-06-14-grand-finals-in-koronadal.jpg` shows up as *Grand finals in
+Koronadal*, dated 14 June 2026. The leading date is optional; without one you
+just get the caption.
+
+A few practical limits:
+
+- Photos: `.jpg`, `.png`, `.webp`, `.gif`, `.avif`. Videos: `.mp4`, `.webm`, `.mov`.
+- **Use `.mp4` for video** — it is the one format every phone and browser plays.
+- GitHub refuses single files over 100MB, so trim long clips before uploading.
+- Items appear in filename order, which is why dates in front are handy.
 
 ## Running it
 
