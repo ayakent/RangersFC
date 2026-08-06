@@ -493,8 +493,13 @@
       bgm.volume = VOL;
       if(!started) bgm.currentTime = 0;
       var p = bgm.play();
-      if(p && p.then){ p.then(function(){ started = true; })['catch'](arm); }
-      else { started = true; }
+      if(p && p.then){
+        p.then(function(){ started = true; stage.pending(false); })
+         ['catch'](function(){ stage.pending(true); arm(); });
+      }else{
+        started = true;
+        stage.pending(false);
+      }
     }
 
     stage.onIntroEnd(play);
