@@ -19,8 +19,9 @@ Barangay Mabuhay, General Santos City, founded 14 June 1996.
 | `assets/shop/shop.json` | The shop's stock. Edit this to change items, prices and sizes. |
 | `assets/team.css`, `assets/team.js` | Shared kit behind the three pages above. |
 | `assets/` | Club crest, favicon, the game still, the share card and the squad photo. |
-| `assets/gallery/` | Whatever you upload. Feeds the *From the Pitch* slideshow. |
-| `tools/build-gallery.py` | Turns that folder into the gallery manifest at deploy time. |
+| `assets/gallery/` | Whatever you upload. Sub-folders feed the sister-team pages. |
+| `tools/build-gallery.py` | Turns those folders into gallery manifests at deploy time. |
+| `assets/gallery.js` | The slideshow, shared by every page that has one. |
 | `vendor/three.min.js` | three.js r128, used by the hero scene (MIT — see `vendor/three.LICENSE`). |
 
 ## The page
@@ -51,19 +52,37 @@ there are product photos.
 
 Nothing is charged on the site. Orders arrive as a text or email to a coach.
 
-## Adding photos and videos to the gallery
+## Adding photos and videos
 
-Drop the files into **`assets/gallery/`** and that is the whole job — the site
-picks them up on the next deploy. Nothing here needs editing.
+Every page has its own folder. Drop files in the right one and that is the whole
+job — the site picks them up on the next deploy. Nothing here needs editing.
+
+| Put the file here | It appears on |
+| --- | --- |
+| [`assets/gallery/`](../../tree/main/assets/gallery) | the Rangers home page |
+| [`assets/gallery/new-mabu/`](../../tree/main/assets/gallery/new-mabu) | the FC New Mabu page |
+| [`assets/gallery/gila/`](../../tree/main/assets/gallery/gila) | the Gila page |
+| [`assets/shop/`](../../tree/main/assets/shop) | product photos for the shop — see below |
 
 From a phone or a laptop, without installing anything:
 
-1. Open [`assets/gallery/`](../../tree/main/assets/gallery) on GitHub.
+1. Open the folder on GitHub.
 2. **Add file → Upload files**, then drag the photos or clips in.
 3. **Commit changes.**
 
-A minute or so later they are live in the *From the Pitch* section, which plays
-them as a slideshow. Remove a file the same way and it disappears.
+A minute or so later they are live, played as a slideshow. Remove a file the same
+way and it disappears. A page whose folder is empty simply hides its gallery, so
+there is never a broken-looking empty section.
+
+**Shop photos work slightly differently.** Upload the picture to `assets/shop/`,
+then point an item at it in `assets/shop/shop.json`:
+
+```json
+{ "name": "Rangers FC Home Jersey", "image": "assets/shop/home-jersey.webp" }
+```
+
+Without an `image` the card falls back to the club crest, which is why the shop
+looks finished before any product photography exists.
 
 **Name the file and you get a caption for free.** The deploy reads the filename,
 so `2026-06-14-grand-finals-in-koronadal.jpg` shows up as *Grand finals in

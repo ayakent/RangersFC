@@ -218,12 +218,40 @@
   </div>
 </section>
 
+<!-- ============ GALLERY ============ -->
+<!-- Fed by assets/gallery/gila/. Hides itself while that folder is empty. -->
+<section class="gal-sec" id="gallery" hidden data-gallery
+         data-manifest="../assets/gallery/gila/gallery.json" data-base="../"
+         style="background:var(--bg);position:relative;overflow:hidden">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>05</b> The Album</div>
+      <h2 class="rt">The work, photographed</h2>
+      <p class="reveal" data-d="1">Sessions, drills and the occasional match. Added as they happen.</p>
+    </div>
+    <div class="reveal" data-d="1">
+      <div class="gal-stage" aria-live="polite">
+        <button class="gal-nav prev" type="button" aria-label="Previous">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button class="gal-nav next" type="button" aria-label="Next">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="gal-dots"></div>
+      <p class="gal-count"></p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ JOIN ============ -->
 <section id="join">
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>05</b> Start</div>
+      <div class="slate reveal"><b>06</b> Start</div>
       <h2 class="rt">Bring boots. Bring patience.</h2>
     </div>
     <div class="contact-grid">
@@ -274,6 +302,7 @@
   </div>
 </footer>
 
+<script src="../assets/gallery.js"></script>
 <script src="../assets/team.js"></script>
 </body>
 </html>
