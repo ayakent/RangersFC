@@ -1,0 +1,74 @@
+{
+  "_readme": [
+    "This file is the shop. Edit it on GitHub and the page updates on the next deploy.",
+    "team: rangers | newmabu | gila | all",
+    "price: a number in pesos, or null to show 'Ask for price'",
+    "image: optional path like assets/shop/jersey.webp — leave out and the crest is used",
+    "sizes: optional list shown as chips",
+    "sold_out: optional true"
+  ],
+  "currency": "₱",
+  "items": [
+    {
+      "name": "Rangers FC Home Jersey",
+      "team": "rangers",
+      "price": null,
+      "sizes": ["Kids S", "Kids M", "Kids L", "Adult S", "Adult M", "Adult L", "Adult XL"],
+      "note": "The white shirt with the club name across the chest."
+    },
+    {
+      "name": "Rangers FC Training Shirt",
+      "team": "rangers",
+      "price": null,
+      "sizes": ["Kids", "Adult"],
+      "note": "Lightweight, for sessions on the home pitch."
+    },
+    {
+      "name": "Rangers FC Cap",
+      "team": "rangers",
+      "price": null,
+      "note": "For the parents on the touchline in the afternoon sun."
+    },
+    {
+      "name": "FC New Mabu Jersey",
+      "team": "newmabu",
+      "price": null,
+      "sizes": ["Kids S", "Kids M", "Kids L", "Adult S", "Adult M", "Adult L"],
+      "note": "The 2026 crest, first season."
+    },
+    {
+      "name": "FC New Mabu Training Shirt",
+      "team": "newmabu",
+      "price": null,
+      "sizes": ["Kids", "Adult"],
+      "note": "School-day kit for the New Mabuhay sessions."
+    },
+    {
+      "name": "Gila Academy Training Shirt",
+      "team": "gila",
+      "price": null,
+      "sizes": ["Kids", "Adult S", "Adult M", "Adult L", "Adult XL"],
+      "note": "Grind · Improve · Learn · Achieve across the back."
+    },
+    {
+      "name": "Gila Hoodie",
+      "team": "gila",
+      "price": null,
+      "sizes": ["Adult S", "Adult M", "Adult L", "Adult XL"],
+      "note": "For the walk home after a long session."
+    },
+    {
+      "name": "Club Sticker Pack",
+      "team": "all",
+      "price": null,
+      "note": "All three badges. Small, cheap, everywhere."
+    },
+    {
+      "name": "Match Ball",
+      "team": "all",
+      "price": null,
+      "sizes": ["Size 3", "Size 4", "Size 5"],
+      "note": "Every ball bought is a ball the club does not have to."
+    }
+  ]
+}

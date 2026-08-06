@@ -13,6 +13,11 @@ Barangay Mabuhay, General Santos City, founded 14 June 1996.
 | --- | --- |
 | `index.html` | The club website. One self-contained page: markup, styles and scripts. |
 | `game/index.html` | *SKY: Soccer Quest*, the club's side-scrolling football game. |
+| `new-mabu/index.html` | FC New Mabu — sister team at New Mabuhay Elementary School. |
+| `gila/index.html` | Gila — the skills academy. |
+| `shop/index.html` | Club shop for all three teams. |
+| `assets/shop/shop.json` | The shop's stock. Edit this to change items, prices and sizes. |
+| `assets/team.css`, `assets/team.js` | Shared kit behind the three pages above. |
 | `assets/` | Club crest, favicon, the game still, the share card and the squad photo. |
 | `assets/gallery/` | Whatever you upload. Feeds the *From the Pitch* slideshow. |
 | `tools/build-gallery.py` | Turns that folder into the gallery manifest at deploy time. |
@@ -32,6 +37,19 @@ A single scroll, staged like a short film.
 - **Chapters** — the club, its values, programmes, coaches, the game, and how to visit,
   each announced with a chapter slate and revealed on scroll.
 - **Film layer** — grain, vignette, light leak and letterbox bars over the whole page.
+
+## Editing the shop
+
+Open **`assets/shop/shop.json`** on GitHub, edit, commit. The shop rebuilds on the
+next deploy — no code to touch.
+
+Each item takes a `name`, a `team` (`rangers`, `newmabu`, `gila` or `all`), an
+optional `note`, optional `sizes`, and a `price`. Leave `price` as `null` and the
+card shows *Ask for price*; put a number there and it shows the peso amount. Add
+`"sold_out": true` to grey one out, or `"image": "assets/shop/thing.webp"` once
+there are product photos.
+
+Nothing is charged on the site. Orders arrive as a text or email to a coach.
 
 ## Adding photos and videos to the gallery
 
