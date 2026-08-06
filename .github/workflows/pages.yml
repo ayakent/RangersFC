@@ -48,3 +48,8 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # GitHub's publishing queue has been slow enough to blow through the
+          # action's ten-minute default and fail a deploy that was fine. Wait
+          # twenty before calling it.
+          timeout: 1200000
