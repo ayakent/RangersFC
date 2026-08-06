@@ -77,9 +77,19 @@ p{max-width:64ch}
 .nav-snd.off .slash{opacity:1}
 @media(max-width:520px){.nav-snd{width:34px;height:34px}.nav-snd svg{width:16px;height:16px}}
 /* with a sound switch in the bar too, the wordmark needs to give a little */
-@media(max-width:430px){.wordmark{font-size:1.06rem;white-space:nowrap}
-  .brand img{width:38px;height:38px}}
-@media(max-width:360px){.wordmark{font-size:.96rem}}
+@media(max-width:430px){
+  .wordmark{font-size:.95rem;white-space:nowrap}
+  .brand{gap:8px}
+  .brand img{width:32px;height:32px}
+  .nav-inner{gap:8px;padding:9px 16px}
+  .nav-end{gap:8px}
+  .nav-end .btn-sm{padding:.5em .85em;font-size:.7rem;letter-spacing:.1em}
+}
+@media(max-width:360px){
+  .wordmark{font-size:.86rem}
+  .wordmark small{letter-spacing:.2em}
+  .brand img{width:29px;height:29px}
+}
 
 /* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;gap:.55em;font-family:var(--cond);font-weight:600;
