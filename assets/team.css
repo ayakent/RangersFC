@@ -186,6 +186,37 @@ footer{border-top:1px solid var(--line);padding:56px 0 44px;background:var(--bg)
 .small{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-size:.78rem;
   color:var(--ink-faint);display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between}
 
+/* ---------- gallery slideshow ---------- */
+.gal-sec .glow{position:absolute;left:50%;top:0;width:min(140vw,1100px);height:460px;
+  transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(circle at 50% 0,var(--accent),transparent 68%);opacity:.14}
+.gal-stage{position:relative;border-radius:18px;overflow:hidden;background:var(--bg-2);
+  aspect-ratio:16/10;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+@media(max-width:640px){.gal-stage{aspect-ratio:4/3}}
+.gal-item{position:absolute;inset:0;opacity:0;transition:opacity .8s var(--ease);pointer-events:none}
+.gal-item.on{opacity:1}
+.gal-item img,.gal-item video{width:100%;height:100%;object-fit:contain;display:block;background:var(--bg-2)}
+.gal-cap{position:absolute;left:0;right:0;bottom:0;padding:44px 20px 16px;pointer-events:none;
+  background:linear-gradient(to top,rgba(0,0,0,.88),rgba(0,0,0,0));
+  display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+.gal-cap b{font-family:var(--display);font-size:1.35rem;letter-spacing:.03em;color:#fff;font-weight:400}
+.gal-cap span{font-family:var(--cond);font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  font-size:.66rem;color:var(--accent)}
+.gal-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.32);background:rgba(0,0,0,.45);color:#fff;cursor:pointer;
+  display:grid;place-items:center;transition:background .2s,border-color .2s;z-index:2}
+.gal-nav:hover{background:var(--accent);border-color:transparent;color:#0B0B0C}
+.gal-nav.prev{left:12px}
+.gal-nav.next{right:12px}
+.gal-nav svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.1;
+  stroke-linecap:round;stroke-linejoin:round}
+.gal-dots{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.gal-dots button{width:9px;height:9px;padding:0;border-radius:50%;cursor:pointer;
+  border:1px solid var(--ink-faint);background:transparent;transition:.25s}
+.gal-dots button.on{background:var(--accent);border-color:var(--accent);transform:scale(1.25)}
+.gal-count{margin-top:14px;text-align:center;font-family:var(--cond);font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;font-size:.7rem;color:var(--ink-faint)}
+
 /* ---------- motion ---------- */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .reveal.in{opacity:1;transform:none}

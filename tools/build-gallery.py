@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
-"""Build the gallery manifest from whatever is sitting in assets/gallery/.
+"""Build the gallery manifests from whatever is sitting in assets/gallery/.
 
-Run by the deploy workflow on every push, so adding a photo or a video to the
-site is just dropping the file into that folder — no JSON to hand-edit and no
-code to touch.
+Files at the top level belong to the Rangers page. Each sub-folder is its own
+gallery for one of the other pages:
+
+    assets/gallery/              -> the Rangers home page
+    assets/gallery/new-mabu/     -> the FC New Mabu page
+    assets/gallery/gila/         -> the Gila page
+
+Run by the deploy workflow on every push, so adding a photo or a video to any
+page is just dropping the file into the right folder — no JSON to hand-edit and
+no code to touch.
 
 The caption comes from the filename: a leading date is stripped and dashes and
 underscores become spaces, so
@@ -68,36 +75,47 @@ def describe(stem):
     return text[0].upper() + text[1:], when
 
 
-def main():
+def collect(folder):
+    """Every image and video sitting directly in one folder, in name order."""
     items = []
-    if os.path.isdir(GALLERY):
-        for name in sorted(os.listdir(GALLERY)):
-            stem, ext = os.path.splitext(name)
-            ext = ext.lower()
-            if ext in IMAGE_EXT:
-                kind = "image"
-            elif ext in VIDEO_EXT:
-                kind = "video"
-            else:
-                continue                      # gallery.json, stray files, .gitkeep
-            caption, when = describe(stem)
-            items.append({
-                "src": "assets/gallery/" + name,
-                "type": kind,
-                "caption": caption,
-                "date": when,
-            })
+    if not os.path.isdir(folder):
+        return items
+    for name in sorted(os.listdir(folder)):
+        stem, ext = os.path.splitext(name)
+        ext = ext.lower()
+        if ext in IMAGE_EXT:
+            kind = "image"
+        elif ext in VIDEO_EXT:
+            kind = "video"
+        else:
+            continue                      # gallery.json, stray files, .gitkeep
+        caption, when = describe(stem)
+        rel = os.path.relpath(os.path.join(folder, name), ROOT).replace(os.sep, "/")
+        items.append({"src": rel, "type": kind, "caption": caption, "date": when})
+    return items
 
-    os.makedirs(GALLERY, exist_ok=True)
-    with open(MANIFEST, "w", encoding="utf-8") as f:
+
+def write(folder, items, label):
+    os.makedirs(folder, exist_ok=True)
+    with open(os.path.join(folder, "gallery.json"), "w", encoding="utf-8") as f:
         json.dump({"items": items}, f, indent=1, ensure_ascii=False)
         f.write("\n")
-
     photos = sum(1 for i in items if i["type"] == "image")
-    videos = len(items) - photos
-    print("gallery manifest: %d photo(s), %d video(s)" % (photos, videos))
+    print("%-10s %d photo(s), %d video(s)" % (label + ":", photos, len(items) - photos))
     for i in items:
-        print("  %-9s %s" % (i["type"], i["src"]))
+        print("   %-6s %s" % (i["type"], i["src"]))
+
+
+def main():
+    # top level belongs to the Rangers page
+    write(GALLERY, collect(GALLERY), "rangers")
+
+    # every sub-folder is a gallery for one of the other pages
+    if os.path.isdir(GALLERY):
+        for name in sorted(os.listdir(GALLERY)):
+            sub = os.path.join(GALLERY, name)
+            if os.path.isdir(sub):
+                write(sub, collect(sub), name)
 
 
 if __name__ == "__main__":

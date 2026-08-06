@@ -1087,7 +1087,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
 
 <!-- ============ GALLERY ============ -->
 <!-- Built from assets/gallery/. Hides itself when the folder is empty. -->
-<section class="gal-sec" id="gallery" hidden>
+<section class="gal-sec" id="gallery" hidden data-gallery data-manifest="assets/gallery/gallery.json">
   <div class="glow" aria-hidden="true"></div>
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
@@ -1246,6 +1246,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
 
 <!-- three.js r128, vendored (MIT — see vendor/three.LICENSE). Served from this
      origin so the hero never depends on a third-party CDN being reachable. -->
+<script src="assets/gallery.js"></script>
 <script src="vendor/three.min.js"></script>
 <script>
 (function(){
@@ -1567,126 +1568,6 @@ function sWhistle(){
   peep(t, 0.2);
   peep(t + 0.3, 0.32);
 }
-/* ==========================================================================
-   GALLERY
-   Reads assets/gallery/gallery.json, which the deploy workflow rebuilds from
-   whatever is in that folder. Adding a photo or a video to the site is just
-   dropping the file in — nothing here needs touching. Stays hidden while the
-   folder is empty.
-   ========================================================================== */
-(function(){
-  var sec = document.getElementById('gallery');
-  if(!sec || !window.fetch) return;
-  var stage = document.getElementById('galStage'),
-      dotsEl = document.getElementById('galDots'),
-      countEl = document.getElementById('galCount');
-  var items = [], slides = [], at = 0, timer = null, gen = 0, HOLD = 5000;
-
-  fetch('assets/gallery/gallery.json', {cache:'no-cache'})
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(data){
-      items = (data && data.items) || [];
-      if(!items.length) return;              /* nothing uploaded yet */
-      sec.hidden = false;
-      build();
-      show(0);
-    })['catch'](function(){ /* no manifest yet — leave the section hidden */ });
-
-  function build(){
-    items.forEach(function(item, i){
-      var slide = document.createElement('div');
-      slide.className = 'gal-item';
-      var media;
-      if(item.type === 'video'){
-        media = document.createElement('video');
-        media.src = item.src;
-        media.muted = true;                  /* muted, or phones refuse to play it */
-        media.playsInline = true;
-        media.setAttribute('playsinline', '');
-        media.preload = i === 0 ? 'metadata' : 'none';
-        /* A file the browser cannot decode fires "ended" straight away, which
-           would race the slideshow through everything. Only honour it from
-           the slide on screen, and only when something really played. */
-        media.addEventListener('ended', function(){
-          if(slides[at] !== slide) return;
-          if(!isFinite(media.duration) || media.duration <= 0){ queue(HOLD); return; }
-          next();
-        });
-        media.addEventListener('error', function(){ if(slides[at] === slide) queue(HOLD); });
-      }else{
-        media = document.createElement('img');
-        media.src = item.src;
-        media.loading = i === 0 ? 'eager' : 'lazy';
-        media.decoding = 'async';
-      }
-      media.alt = item.caption || 'Rangers Football Club';
-      slide.appendChild(media);
-
-      if(item.caption || item.date){
-        var cap = document.createElement('div');
-        cap.className = 'gal-cap';
-        if(item.caption){ var bEl = document.createElement('b'); bEl.textContent = item.caption; cap.appendChild(bEl); }
-        if(item.date){ var sEl = document.createElement('span'); sEl.textContent = item.date; cap.appendChild(sEl); }
-        slide.appendChild(cap);
-      }
-      stage.appendChild(slide);
-      slides.push(slide);
-
-      var dot = document.createElement('button');
-      dot.type = 'button';
-      dot.setAttribute('aria-label', 'Show item ' + (i + 1));
-      dot.addEventListener('click', function(){ show(i); });
-      dotsEl.appendChild(dot);
-    });
-
-    stage.querySelector('.gal-nav.prev').addEventListener('click', function(){ show(at - 1); });
-    stage.querySelector('.gal-nav.next').addEventListener('click', next);
-    /* leave the slideshow alone while someone is looking closely */
-    stage.addEventListener('pointerenter', stop);
-    stage.addEventListener('pointerleave', queue);
-    stage.addEventListener('focusin', stop);
-  }
-
-  function next(){ show(at + 1); }
-  function stop(){ clearTimeout(timer); }
-  function queue(ms){
-    stop();
-    if(reduced || items.length < 2) return;
-    /* a video normally advances when it ends; the long timer is a backstop so
-       one that stalls can't freeze the slideshow. A video the browser cannot
-       play falls back to the ordinary hold instead of stranding us for 20s. */
-    var mine = gen;
-    timer = setTimeout(function(){
-      /* clearTimeout cannot recall a callback that has already fired, so a tap
-         landing on the same tick as the timer would skip a slide. Ignore any
-         wake-up that belongs to a slide we have since moved off. */
-      if(mine === gen) next();
-    }, ms || (items[at].type === 'video' ? 20000 : HOLD));
-  }
-
-  function show(i){
-    if(!slides.length) return;
-    i = (i + slides.length) % slides.length;
-    slides.forEach(function(s, n){
-      s.classList.toggle('on', n === i);
-      var v = s.querySelector('video');
-      if(v && n !== i){ v.pause(); }
-      var d = dotsEl.children[n];
-      if(d) d.classList.toggle('on', n === i);
-    });
-    at = i;
-    gen++;
-    countEl.textContent = (i + 1) + ' / ' + slides.length;
-    var vid = slides[i].querySelector('video');
-    if(vid){
-      vid.currentTime = 0;
-      var pr = vid.play();
-      if(pr && pr['catch']) pr['catch'](function(){ queue(HOLD); });
-    }
-    queue();
-  }
-})();
-
 /* ==========================================================================
    BACKGROUND MUSIC
    Browsers refuse to start audio before the visitor has interacted with the
