@@ -201,14 +201,36 @@ p{max-width:64ch}
   transition:right .3s var(--ease)}
 .nav-links a:hover{opacity:1}
 .nav-links a:hover::after{right:0}
-.nav-call{margin-left:auto}
-@media(min-width:860px){.nav-links{display:flex}.nav-call{margin-left:0}}
+.nav-end{display:flex;align-items:center;gap:10px;margin-left:auto}
+@media(min-width:860px){.nav-links{display:flex}.nav-end{margin-left:0}}
+/* the sound switch costs width, so tighten the bar on small phones */
+@media(max-width:430px){
+  .nav-inner{padding:8px 14px;gap:9px}
+  .wordmark{font-size:1.16rem}
+  .wordmark small{letter-spacing:.26em}
+  .brand img{width:38px;height:38px}
+  .nav-end{gap:8px}
+  .nav-call{padding:.55em .9em;font-size:.72rem}
+}
+/* always-reachable sound switch — the hero's own toggle scrolls away */
+.nav-snd{flex:none;width:38px;height:38px;border-radius:50%;cursor:pointer;
+  border:1px solid rgba(156,203,232,.4);background:rgba(3,12,26,.5);color:var(--cream);
+  display:grid;place-items:center;transition:border-color .2s,color .2s,background .2s}
+.nav-snd:hover{border-color:var(--sky);background:rgba(27,120,180,.22)}
+.nav-snd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;
+  stroke-linecap:round;stroke-linejoin:round}
+.nav-snd .wave{opacity:1;transition:opacity .2s}
+.nav-snd .slash{opacity:0;transition:opacity .2s}
+.nav-snd.off{color:rgba(249,246,239,.5)}
+.nav-snd.off .wave{opacity:0}
+.nav-snd.off .slash{opacity:1}
 
 /* ==========================================================================
    4. BUTTONS
    ========================================================================== */
 .btn{display:inline-flex;align-items:center;gap:.55em;font-family:var(--cond);font-weight:600;
-  letter-spacing:.14em;text-transform:uppercase;font-size:.9rem;text-decoration:none;padding:.9em 1.6em;
+  letter-spacing:.14em;text-transform:uppercase;font-size:.9rem;text-decoration:none;
+  white-space:nowrap;padding:.9em 1.6em;
   border-radius:999px;cursor:pointer;border:2px solid transparent;position:relative;overflow:hidden;
   transition:transform .25s var(--ease),background .25s,color .25s,border-color .25s,box-shadow .25s}
 .btn span{position:relative;z-index:2}
@@ -620,9 +642,21 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
       <li><a href="#game">The Game</a></li>
       <li><a href="#visit">Visit Us</a></li>
     </ul>
-    <a class="btn btn-red btn-sm nav-call" href="tel:+639932910764" data-magnet><span>Call Us</span></a>
+    <div class="nav-end">
+      <button class="nav-snd" id="sndBtn2" type="button" aria-pressed="true" aria-label="Turn sound off">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 9.5h3.4L12 5.6v12.8L7.4 14.5H4z" />
+          <path class="wave" d="M15.6 9.2a4 4 0 0 1 0 5.6M18.2 6.6a7.6 7.6 0 0 1 0 10.8" />
+          <path class="slash" d="M16 9l5 6M21 9l-5 6" />
+        </svg>
+      </button>
+      <a class="btn btn-red btn-sm nav-call" href="tel:+639932910764" data-magnet><span>Call Us</span></a>
+    </div>
   </div>
 </nav>
+
+<!-- Club anthem. preload="none" so it only downloads once playback starts. -->
+<audio id="bgm" src="assets/music.mp3" loop preload="none"></audio>
 
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
@@ -1287,13 +1321,92 @@ function sWhistle(){
   peep(t, 0.2);
   peep(t + 0.3, 0.32);
 }
-sndBtn.addEventListener('click', function(){
-  muted = !muted;
+/* ==========================================================================
+   BACKGROUND MUSIC
+   Browsers refuse to start audio before the visitor has interacted with the
+   page, so the first play() attempt is expected to fail. When it does we arm
+   the next real gesture — a tap, click or key — and start on that instead.
+   ========================================================================== */
+var bgm = document.getElementById('bgm');
+var sndBtn2 = document.getElementById('sndBtn2');
+var MUSIC_VOL = 0.34, fadeRaf = null, fadeStop = null;
+
+/* a visitor who switched it off should stay switched off next visit */
+try{ if(localStorage.getItem('rfc_sound') === 'off') muted = true; }catch(e){}
+
+function paintSound(){
   sndBtn.textContent = muted ? 'Sound Off' : 'Sound On';
   sndBtn.setAttribute('aria-pressed', String(!muted));
-  if(!muted) ensureAudio();
+  sndBtn2.classList.toggle('off', muted);
+  sndBtn2.setAttribute('aria-pressed', String(!muted));
+  sndBtn2.setAttribute('aria-label', muted ? 'Turn sound on' : 'Turn sound off');
+}
+
+/* Driven off the clock rather than a fixed step per tick, so a throttled
+   frame rate stretches the ramp instead of stalling it part-way. The timeout
+   is a backstop: a stalled fade would leave the music playing inaudibly,
+   which is worse than no fade at all, so the volume lands on target either
+   way. */
+function fadeIn(){
+  cancelAnimationFrame(fadeRaf);
+  clearTimeout(fadeStop);
+  var from = bgm.volume;
+  if(from >= MUSIC_VOL - 0.001){ bgm.volume = MUSIC_VOL; return; }
+  var t0 = performance.now(), dur = 2000;
+  (function step(now){
+    /* a frame timestamp can predate t0, which would compute a negative
+       volume and throw out of the loop — clamp before assigning */
+    var k = Math.max(0, Math.min(1, (now - t0) / dur));
+    bgm.volume = from + (MUSIC_VOL - from) * k;
+    if(k < 1) fadeRaf = requestAnimationFrame(step);
+  })(t0);
+  fadeStop = setTimeout(function(){ bgm.volume = MUSIC_VOL; }, dur + 400);
+}
+function musicPlay(){
+  if(!bgm || muted) return;
+  var p = bgm.play();
+  /* only fade once playback is really running, so it never enters mid-level */
+  if(p && p.then) p.then(fadeIn)['catch'](armGesture);
+  else fadeIn();
+}
+
+var GESTURES = ['pointerdown', 'keydown', 'touchstart'];
+var armed = false;
+function armGesture(){
+  if(armed) return;
+  armed = true;
+  function go(){
+    GESTURES.forEach(function(e){ window.removeEventListener(e, go, true); });
+    armed = false;
+    musicPlay();
+  }
+  GESTURES.forEach(function(e){ window.addEventListener(e, go, {capture:true, passive:true}); });
+}
+
+function toggleSound(){
+  muted = !muted;
+  paintSound();
+  try{ localStorage.setItem('rfc_sound', muted ? 'off' : 'on'); }catch(e){}
+  if(muted){
+    if(bgm) bgm.pause();
+  }else{
+    ensureAudio();
+    musicPlay();
+  }
   if(AC && master) master.gain.setTargetAtTime(muted ? 0 : 1, AC.currentTime, 0.05);
+}
+sndBtn.addEventListener('click', toggleSound);
+sndBtn2.addEventListener('click', toggleSound);
+
+/* don't play to an empty room */
+document.addEventListener('visibilitychange', function(){
+  if(!bgm) return;
+  if(document.hidden) bgm.pause();
+  else if(!muted) musicPlay();
 });
+
+paintSound();
+if(bgm){ bgm.volume = 0; musicPlay(); }
 
 /* ==========================================================================
    HUD HELPERS
