@@ -63,12 +63,25 @@ FC New Mabu also plays the club's anthem, `assets/mabu-music.mp3`. It starts fro
 top of the track the moment the title sequence clears, and the sound switch in the bar
 governs both it and the scene.
 
-Browsers refuse to start audio until the visitor has touched the page, so a blocked
-attempt waits for the first tap, key press or press of the switch — and still starts at
-the top of the track when it fires. While it is waiting, **the switch reads off**, because
-a silent page must not claim its sound is on, and pressing it then asks for the sound
-rather than turning off the silence. Switching sound off is remembered across the whole
-site, so a visitor who muted the home page arrives here muted, with the switch showing it.
+**Autoplay, honestly.** No browser will start audible sound for a visitor who has not
+touched the page — Chrome, Safari and Firefox all enforce this, and muted audio is refused
+too. It cannot be coded around. What both pages do instead:
+
+- try to play the moment the title sequence clears, in case the browser already trusts
+  this site (Chrome starts allowing it once someone has played media here a few times);
+- if refused, keep trying quietly in the background and arm every interaction there is —
+  tap, click, key, wheel, the first touch of a scroll — so the sound comes in on whatever
+  the visitor does first, **starting at the top of the track**;
+- show a small *Tap anywhere for sound* pill while the browser is holding it back, so a
+  silent page is never just a silent page;
+- read the sound switch as **off** while it waits, because a silent page must not claim
+  its sound is on. Pressing it then asks for the sound rather than turning off the silence.
+
+Never unmute without a gesture: it is a policy violation, and the browser answers it by
+pausing the track — worse than the silence it was trying to fix.
+
+Switching sound off is remembered across the whole site, so a visitor who muted the home
+page arrives here muted, with the switch showing it.
 
 Both fall back the same way the home page does: no WebGL, no three.js, or
 `prefers-reduced-motion` and the hero is simply a still page that reads fine.

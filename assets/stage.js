@@ -47,7 +47,7 @@ var api = window.RFCStage = {
      when it finally does. A page that is silent must not claim to be on:
      the switch reads off while sound is pending, and pressing it asks for
      the sound rather than turning off the silence. */
-  pending: function(on){ pendingSound = !!on; paintSound(); }
+  pending: function(on){ pendingSound = !!on; paintSound(); paintCue(); }
 };
 
 /* ==========================================================================
@@ -173,6 +173,24 @@ function peep(t0, dur){
   o1.start(t0); o2.start(t0); o1.stop(t0 + dur); o2.stop(t0 + dur);
 }
 function sWhistle(){ if(!AC || muted) return; var t = AC.currentTime; peep(t, 0.18); peep(t + 0.28, 0.3); }
+
+var cueEl = null;
+function paintCue(){
+  /* only worth saying when the visitor wants sound and cannot have it yet */
+  var want = pendingSound && !muted;
+  if(want && !cueEl){
+    cueEl = document.createElement('div');
+    cueEl.className = 'snd-cue';
+    cueEl.setAttribute('role', 'status');
+    cueEl.textContent = 'Tap anywhere for sound';
+    document.body.appendChild(cueEl);
+    requestAnimationFrame(function(){ if(cueEl) cueEl.classList.add('show'); });
+  }else if(!want && cueEl){
+    var el = cueEl; cueEl = null;
+    el.classList.remove('show');
+    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 600);
+  }
+}
 
 function paintSound(){
   var silent = muted || pendingSound;
