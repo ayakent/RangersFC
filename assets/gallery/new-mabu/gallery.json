@@ -1,3 +1,58 @@
 {
- "items": []
+ "items": [
+  {
+   "src": "assets/gallery/new-mabu/FB_IMG_1785999141898.jpg",
+   "type": "image",
+   "caption": "",
+   "date": ""
+  },
+  {
+   "src": "assets/gallery/new-mabu/FB_IMG_1785999167152.jpg",
+   "type": "image",
+   "caption": "",
+   "date": ""
+  },
+  {
+   "src": "assets/gallery/new-mabu/FB_IMG_1785999184837.jpg",
+   "type": "image",
+   "caption": "",
+   "date": ""
+  },
+  {
+   "src": "assets/gallery/new-mabu/FB_IMG_1785999194899.jpg",
+   "type": "image",
+   "caption": "",
+   "date": ""
+  },
+  {
+   "src": "assets/gallery/new-mabu/FB_IMG_1785999225959.jpg",
+   "type": "image",
+   "caption": "",
+   "date": ""
+  },
+  {
+   "src": "assets/gallery/new-mabu/FB_IMG_1785999241002.jpg",
+   "type": "image",
+   "caption": "",
+   "date": ""
+  },
+  {
+   "src": "assets/gallery/new-mabu/FB_IMG_1785999254496.jpg",
+   "type": "image",
+   "caption": "",
+   "date": ""
+  },
+  {
+   "src": "assets/gallery/new-mabu/FB_IMG_1785999259760.jpg",
+   "type": "image",
+   "caption": "",
+   "date": ""
+  },
+  {
+   "src": "assets/gallery/new-mabu/FB_IMG_1785999274208.jpg",
+   "type": "image",
+   "caption": "",
+   "date": ""
+  }
+ ]
 }
