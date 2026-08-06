@@ -407,6 +407,29 @@ section{padding:96px 0;position:relative}
 /* direct child only — the counter inside <b> must keep the display size */
 .stat > span{font-family:var(--cond);font-weight:600;letter-spacing:.18em;text-transform:uppercase;
   font-size:.76rem;color:var(--ink-soft)}
+/* ---------- the founder ---------- */
+.founder-grid{display:grid;gap:34px;align-items:center}
+@media(min-width:900px){.founder-grid{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:56px}}
+.founder-shot{position:relative;border-radius:20px;overflow:hidden;border:2px solid rgba(156,203,232,.26);
+  background:var(--navy);box-shadow:0 30px 70px rgba(0,0,0,.55)}
+.founder-shot img{width:100%;height:auto;display:block}
+.founder-shot::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(5,26,49,0) 52%,rgba(5,26,49,.9) 100%)}
+.founder-plate{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:24px 22px 20px}
+.founder-plate b{display:block;font-family:var(--display);font-size:clamp(1.55rem,3.6vw,2.15rem);
+  letter-spacing:.03em;color:#fff;line-height:1}
+.founder-plate span{display:block;margin-top:7px;font-family:var(--cond);font-weight:600;
+  letter-spacing:.24em;text-transform:uppercase;font-size:.66rem;color:var(--orange-soft)}
+.founder-copy h3{font-family:var(--display);font-size:clamp(2.1rem,5.2vw,3.3rem);line-height:.98;
+  color:var(--cream);margin-bottom:20px}
+.founder-copy p{color:rgba(249,246,239,.82);max-width:58ch}
+.founder-copy p+p{margin-top:16px}
+.founder-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.founder-chips span{font-family:var(--cond);font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  font-size:.68rem;padding:.55em 1.1em;border-radius:999px;border:1px solid rgba(156,203,232,.3);
+  color:var(--sky-soft)}
+.founder-note{margin-top:26px;padding-top:22px;border-top:1px solid rgba(156,203,232,.18);
+  font-family:var(--cond);font-size:1.06rem;letter-spacing:.02em;color:var(--sky-soft)}
 .mv-grid{display:grid;gap:18px;margin-top:52px}
 @media(min-width:720px){.mv-grid{grid-template-columns:1fr 1fr}}
 .mv-card{border-radius:20px;padding:32px;background:var(--navy);color:var(--cream);position:relative;overflow:hidden}
@@ -886,12 +909,45 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   </div>
 </section>
 
+<!-- ============ THE FOUNDER ============ -->
+<section id="founder" style="background:var(--navy-ink)">
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>02</b> The Founder</div>
+      <h2 class="rt">The man who started it</h2>
+    </div>
+    <div class="founder-grid">
+      <figure class="founder-shot reveal" data-tilt>
+        <img src="assets/founder.webp" alt="Roberto P. Barrientos, founder of Rangers Football Club"
+             width="720" height="900" loading="lazy" />
+        <figcaption class="founder-plate">
+          <b>Roberto P. Barrientos</b>
+          <span>Founder &middot; 14 June 1996</span>
+        </figcaption>
+      </figure>
+      <div class="founder-copy reveal" data-d="1">
+        <h3>Every Rangers story begins with one decision</h3>
+        <p>On 14 June 1996, Roberto P. Barrientos decided that the children of Barangay Mabuhay should have somewhere to play. Rangers Football Club has existed ever since.</p>
+        <p>Thirty years of Saturdays come from that. Every session on the dusty field at Yam 1, every tournament the club has travelled to, every child who turned up in borrowed boots and found somewhere to belong &mdash; all of it traces back to one person deciding the thing was worth starting.</p>
+        <p>The club has grown since. Seven coaches now, sister teams in FC New Mabu and Gila, and children on the pitch who were not born when the first whistle went. What has not changed is the reason it was founded: every child deserves a chance.</p>
+        <div class="founder-chips">
+          <span>Founded 14 June 1996</span>
+          <span>Barangay Mabuhay</span>
+          <span>Thirty years on</span>
+        </div>
+        <p class="founder-note">With gratitude from every player, coach, parent and volunteer who has passed through this club.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ VALUES ============ -->
 <section class="on-dark-nvy" id="values">
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>02</b> What We Stand For</div>
+      <div class="slate reveal"><b>03</b> What We Stand For</div>
       <h2 class="rt">The Rangers way</h2>
     </div>
     <div class="values-grid">
@@ -936,7 +992,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>03</b> What We Do</div>
+      <div class="slate reveal"><b>04</b> What We Do</div>
       <h2 class="rt">Football first, character always</h2>
     </div>
     <div class="prog-grid">
@@ -982,7 +1038,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>04</b> The Gaffer's Room</div>
+      <div class="slate reveal"><b>05</b> The Gaffer's Room</div>
       <h2 class="rt">Meet the coaches</h2>
     </div>
     <div class="coach-grid">
@@ -1048,7 +1104,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>05</b> The Family</div>
+      <div class="slate reveal"><b>06</b> The Family</div>
       <h2 class="rt">One club became three</h2>
       <p class="reveal" data-d="1">Rangers has spent thirty years on one pitch. Reaching further meant building outward — two sister teams, and a shop that pays for the boots.</p>
     </div>
@@ -1092,7 +1148,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>06</b> From the Pitch</div>
+      <div class="slate reveal"><b>07</b> From the Pitch</div>
       <h2 class="rt">Training, tournaments, everything between</h2>
       <p class="gal-lede reveal" data-d="1">Photos and video from around the club, added as the season goes on.</p>
     </div>
@@ -1117,7 +1173,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>07</b> The Record</div>
+      <div class="slate reveal"><b>08</b> The Record</div>
     </div>
     <div class="album-grid">
       <div class="album-copy reveal">
@@ -1151,7 +1207,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>08</b> Extra Time</div>
+      <div class="slate reveal"><b>09</b> Extra Time</div>
     </div>
     <div class="game-grid">
       <a class="poster reveal" href="game/" aria-label="Play SKY: Soccer Quest">
@@ -1183,7 +1239,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>09</b> Visit Us</div>
+      <div class="slate reveal"><b>10</b> Visit Us</div>
       <h2 class="rt">Come watch a session</h2>
     </div>
     <div class="visit-grid">
@@ -1234,6 +1290,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
       <div><span>Coaches</span><b>Kurt · Kim · Ralph · Jabez · Steve · Ivan</b></div>
       <div><span>Supporting Cast</span><b>Parents &amp; Volunteers</b></div>
       <div><span>Home Pitch</span><b>Yam 1, Purok 27</b></div>
+      <div><span>Founder</span><b>Roberto P. Barrientos</b></div>
       <div><span>Founded</span><b>14 June 1996</b></div>
       <div><span>Motto</span><b>Play With Your Heart</b></div>
     </div>

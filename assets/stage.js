@@ -31,17 +31,28 @@ var hintEl = document.getElementById('hint');
 var popEl  = document.getElementById('pop');
 var aEl    = document.getElementById('statA');
 var bEl    = document.getElementById('statB');
-var sndBtn = document.getElementById('sndBtn');
+var sndBtn  = document.getElementById('sndBtn');
+var sndBtn2 = document.getElementById('sndBtn2');
+
+/* A small surface for the page to hook into: the title sequence finishing,
+   and the visitor turning sound on or off. FC New Mabu uses both to bring
+   its anthem in at the right moment and to stop it again. */
+var introSubs = [], soundSubs = [];
+var api = window.RFCStage = {
+  introDone: false,
+  muted: false,
+  onIntroEnd: function(fn){ if(api.introDone){ fn(); } else { introSubs.push(fn); } },
+  onSound: function(fn){ soundSubs.push(fn); }
+};
 
 /* ==========================================================================
    TITLE SEQUENCE
    ========================================================================== */
 var introEl = document.getElementById('intro');
-var introDone = false, onIntroEnd = [];
 
 function endIntro(fast){
-  if(introDone) return;
-  introDone = true;
+  if(api.introDone) return;
+  api.introDone = true;
   if(introEl){
     introEl.classList.add('out');
     setTimeout(function(){ introEl.classList.add('gone'); }, 1200);
@@ -49,7 +60,7 @@ function endIntro(fast){
   }
   document.body.classList.remove('locked');
   if(hero) hero.classList.add('live');
-  onIntroEnd.forEach(function(fn){ try{ fn(); }catch(e){} });
+  introSubs.forEach(function(fn){ try{ fn(); }catch(e){} });
 }
 
 (function(){
@@ -59,7 +70,7 @@ function endIntro(fast){
     if(introEl && introEl.parentNode) introEl.parentNode.removeChild(introEl);
     document.body.classList.remove('locked');
     if(hero) hero.classList.add('live');
-    introDone = true;
+    api.introDone = true;
     return;
   }
   try{ sessionStorage.setItem('rfc_intro_' + (mode || 'x'), '1'); }catch(e){}
@@ -68,7 +79,7 @@ function endIntro(fast){
   var skip = document.getElementById('skipIntro');
   if(skip) skip.addEventListener('click', function(){ endIntro(true); });
   window.addEventListener('keydown', function(e){
-    if(!introDone && (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ')) endIntro(true);
+    if(!api.introDone && (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ')) endIntro(true);
   });
   window.addEventListener('wheel', function(){ endIntro(true); }, {passive:true, once:true});
   window.addEventListener('touchstart', function(){ endIntro(true); }, {passive:true, once:true});
@@ -78,6 +89,10 @@ function endIntro(fast){
    SOUND — synthesised, and only after the visitor has touched something
    ========================================================================== */
 var AC = null, master = null, muted = false;
+
+/* a visitor who switched it off should stay switched off */
+try{ if(localStorage.getItem('rfc_sound') === 'off') muted = true; }catch(e){}
+api.muted = muted;
 
 function ensureAudio(){
   if(muted || AC) { if(AC && AC.state === 'suspended') AC.resume(); return; }
@@ -154,15 +169,29 @@ function peep(t0, dur){
 }
 function sWhistle(){ if(!AC || muted) return; var t = AC.currentTime; peep(t, 0.18); peep(t + 0.28, 0.3); }
 
-if(sndBtn){
-  sndBtn.addEventListener('click', function(){
-    muted = !muted;
+function paintSound(){
+  if(sndBtn){
     sndBtn.textContent = muted ? 'Sound Off' : 'Sound On';
     sndBtn.setAttribute('aria-pressed', String(!muted));
-    if(!muted) ensureAudio();
-    if(AC && master) master.gain.setTargetAtTime(muted ? 0 : 1, AC.currentTime, 0.05);
-  });
+  }
+  if(sndBtn2){
+    sndBtn2.classList.toggle('off', muted);
+    sndBtn2.setAttribute('aria-pressed', String(!muted));
+    sndBtn2.setAttribute('aria-label', muted ? 'Turn sound on' : 'Turn sound off');
+  }
 }
+function toggleSound(){
+  muted = !muted;
+  api.muted = muted;
+  paintSound();
+  try{ localStorage.setItem('rfc_sound', muted ? 'off' : 'on'); }catch(e){}
+  if(!muted) ensureAudio();
+  if(AC && master) master.gain.setTargetAtTime(muted ? 0 : 1, AC.currentTime, 0.05);
+  soundSubs.forEach(function(fn){ try{ fn(muted); }catch(e){} });
+}
+paintSound();
+if(sndBtn)  sndBtn.addEventListener('click', toggleSound);
+if(sndBtn2) sndBtn2.addEventListener('click', toggleSound);
 
 /* ---------- little UI helpers ---------- */
 var hintDefault = hintEl ? hintEl.textContent : '', hintTimer = null;
@@ -416,8 +445,7 @@ try{
   var home = {yaw:0, pitch:0.2, radius:12, from:{yaw:-0.7, pitch:0.03, radius:4.6}};
 
   function startCrane(){ if(!craning){ craning = true; craneT = 0; } }
-  onIntroEnd.push(startCrane);
-  if(introDone) startCrane();
+  api.onIntroEnd(startCrane);
 
   function easeIO(x){ return x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2; }
 
@@ -855,6 +883,9 @@ try{
   })();
 
 }catch(err){
+  /* the page still works without the scene — but say so, rather than failing
+     silently and leaving a broken stage to be found by eye */
+  if(window.console && console.error) console.error('stage:', err);
   if(hero) hero.classList.remove('has-stage');
 }
 }
