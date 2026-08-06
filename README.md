@@ -14,7 +14,7 @@ Barangay Mabuhay, General Santos City, founded 14 June 1996.
 | `index.html` | The club website. One self-contained page: markup, styles and scripts. |
 | `game/index.html` | *SKY: Soccer Quest*, the club's side-scrolling football game. |
 | `new-mabu/index.html` | FC New Mabu — sister team at New Mabuhay Elementary School. |
-| `gila/index.html` | Gila — the skills academy. Grind. Improve. Learn. Achieve. |
+| `gila/index.html` | Gila Academy — the skills academy. Grind. Improve. Learn. Achieve. |
 | `shop/index.html` | Club shop for all three teams. |
 | `assets/shop/shop.json` | The shop's stock. Edit this to change items, prices and sizes. |
 | `assets/team.css`, `assets/team.js` | Shared kit behind the three pages above. |
@@ -51,7 +51,7 @@ by `data-stage` on the hero's `#stage` element.
   covered walkway, mango trees, a low sun. Tap and another ball drops onto the
   court, bounces, rolls and knocks into the others. One tap, one more child
   reached — which is the whole point of the club. The counter keeps score.
-- **Gila** — a rebound wall under one floodlight at night, cones set out, dust in
+- **Gila Academy** — a rebound wall under one floodlight at night, cones set out, dust in
   the beam. Tap and the ball is struck at the board and comes back. Reps count up;
   let the ball come to rest and the chain breaks and you start again. That is the
   grind, made literal.
