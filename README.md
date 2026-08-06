@@ -21,9 +21,10 @@ Barangay Mabuhay, General Santos City, founded 14 June 1996.
 | `assets/stage.js` | The 3D hero stages and title sequences for the two sister-team pages. |
 | `assets/` | Club crest, favicon, the game still, the share card, the squad photo and the founder's portrait. |
 | `assets/gallery/` | Whatever you upload. Sub-folders feed the sister-team pages. |
-| `tools/build-gallery.py` | Turns those folders into gallery manifests at deploy time. |
+| `tools/build-gallery.py` | Turns those folders into gallery manifests. Run it after adding photos. |
 | `assets/gallery.js` | The slideshow, shared by every page that has one. |
 | `vendor/three.min.js` | three.js r128, used by the hero scene (MIT — see `vendor/three.LICENSE`). |
+| `.nojekyll` | Tells GitHub Pages to serve the files as they are, without running Jekyll. |
 
 ## The page
 
@@ -82,8 +83,8 @@ Nothing is charged on the site. Orders arrive as a text or email to a coach.
 
 ## Adding photos and videos
 
-Every page has its own folder. Drop files in the right one and that is the whole
-job — the site picks them up on the next deploy. Nothing here needs editing.
+Every page has its own folder. Drop files in the right one, then rebuild the
+manifests so the site knows about them (see **Publishing** — one command).
 
 | Put the file here | It appears on |
 | --- | --- |
@@ -98,9 +99,11 @@ From a phone or a laptop, without installing anything:
 2. **Add file → Upload files**, then drag the photos or clips in.
 3. **Commit changes.**
 
-A minute or so later they are live, played as a slideshow. Remove a file the same
-way and it disappears. A page whose folder is empty simply hides its gallery, so
-there is never a broken-looking empty section.
+Then run `python3 tools/build-gallery.py` and commit the `gallery.json` files it
+writes — or just tell me you have uploaded some and I will. A minute or so later
+they are live, played as a slideshow. Remove a file the same way and it disappears.
+A page whose folder is empty simply hides its gallery, so there is never a
+broken-looking empty section.
 
 **Shop photos work slightly differently.** Upload the picture to `assets/shop/`,
 then point an item at it in `assets/shop/shop.json`:
@@ -137,11 +140,25 @@ Opening `index.html` straight from the filesystem works too.
 
 ## Publishing
 
-Every push to `main` publishes the site, via `.github/workflows/pages.yml`. The site is
-plain static files, so there is nothing to build — the workflow uploads the repository
-root to GitHub Pages. It can also be run by hand from the **Actions** tab.
+The site publishes straight from the `main` branch: **Settings → Pages → Source →
+Deploy from a branch → `main` → `/ (root)`**. Push to `main` and it is live a minute
+later. There is nothing to build — it is plain static files, and `.nojekyll` in the root
+tells GitHub to serve them exactly as they are rather than running them through Jekyll.
 
 `index.html` is the home page and the game lives at `/game/`.
+
+**One thing to remember on this route:** the gallery manifests are not rebuilt for you.
+After adding or removing photos, run `python3 tools/build-gallery.py` and commit the
+`gallery.json` files it writes. (Under the Actions route below, that happened on every
+deploy.)
+
+`.github/workflows/pages.yml` is the other route — Pages' GitHub Actions publishing — and
+it still works, gallery manifests and all. It is set to manual dispatch only, because its
+`configure-pages` step would otherwise flip the Source back to GitHub Actions on the next
+push. It was taken off automatic on 6 August 2026, when GitHub's Pages publishing queue
+stalled for hours: five runs in a row uploaded the artifact in two seconds and then sat at
+`deployment_queued` until the action hit its ten-minute ceiling, which cannot be raised.
+To go back to it, run the workflow by hand **and** set the Source to GitHub Actions.
 
 The site answers on **rangersfc.net**. The `CNAME` file in the repository root holds that
 domain — it has to stay in place, because the deploy uploads the repository as an artifact

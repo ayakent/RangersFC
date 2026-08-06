@@ -1,11 +1,21 @@
 name: Deploy to GitHub Pages
 
 # The site is plain static files, so there is nothing to build — this just
-# publishes the repository root on every push to main.
+# publishes the repository root.
+#
+# NOT on push. GitHub's Pages publishing queue stalled for hours on 6 Aug
+# 2026 — five runs in a row uploaded the artifact in two seconds and then sat
+# at deployment_queued until deploy-pages hit its ten-minute ceiling — so the
+# site was moved to Pages' other publishing route: Settings → Pages → Source
+# → Deploy from a branch → main → / (root). That route does not involve this
+# workflow at all.
+#
+# It stays here, on manual dispatch only, for when the queue is healthy again
+# and it is worth switching back. Two reasons it must not run automatically:
+# configure-pages below would flip the Source back to GitHub Actions on the
+# next push, and a stalled deploy fails noisily for no reason.
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -34,11 +44,11 @@ jobs:
         run: python3 tools/build-gallery.py
 
       - name: Configure Pages
-        # enablement turns Pages on for the repository if it is still off,
-        # so no manual visit to Settings is needed.
+        # No enablement here: it would set the Source back to GitHub Actions,
+        # and while the site publishes from the main branch that is exactly
+        # what must not happen by accident. Running this workflow by hand is
+        # a deliberate switch back, so turn the Source over in Settings too.
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload the site
         uses: actions/upload-pages-artifact@v3
