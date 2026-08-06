@@ -81,6 +81,12 @@
   .ribbon-track span{font-family:var(--display);font-size:1.45rem;letter-spacing:.09em;padding:11px 0;white-space:nowrap}
   .ribbon-track span::after{content:"⚽";font-size:.9rem;margin:0 22px;vertical-align:middle}
   @keyframes rib{to{transform:translateX(-50%)}}
+  /* the two founders, with faces on */
+  .founder{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+  .founder img{width:78px;height:78px;flex:none;border-radius:50%;object-fit:cover;
+    object-position:center 14%;border:2px solid var(--line);transition:border-color .3s}
+  .founder h3{margin:0}
+  #founders .card:hover .founder img{border-color:var(--accent)}
   /* the motto is a long second title card — let it breathe on a phone */
   .seq-title span:nth-child(2) i{font-size:.26em;letter-spacing:.14em}
   @media(prefers-reduced-motion:reduce){
@@ -322,11 +328,17 @@
     </div>
     <div class="contact-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
       <div class="card reveal" data-tilt>
-        <h3>Coach Jabez</h3>
+        <div class="founder">
+          <img src="../assets/coaches/jabez.webp" alt="Coach Jabez" width="78" height="78" loading="lazy" />
+          <h3>Coach Jabez</h3>
+        </div>
         <p>Rangers FC coach and co-founder of FC New Mabu. He is the reason the club sits where it sits: he kept count of the children who drifted away, and worked out that almost all of them lived on the same side of the barangay.</p>
       </div>
       <div class="card reveal" data-d="1" data-tilt>
-        <h3>Coach Ralph</h3>
+        <div class="founder">
+          <img src="../assets/coaches/ralph.webp" alt="Coach Ralph" width="78" height="78" loading="lazy" />
+          <h3>Coach Ralph</h3>
+        </div>
         <p>Rangers FC coach, co-founder here, and founder of the Gila skills academy. Between the two clubs he covers both ends of the same idea — get children playing, then make them better.</p>
         <a class="big" href="tel:+639929747613" style="font-size:1.3rem">+63 992 974 7613</a>
       </div>
