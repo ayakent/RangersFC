@@ -136,7 +136,7 @@
   <button class="seq-skip" id="skipIntro" type="button">Skip intro</button>
 </div>
 
-<audio id="bgm" src="../assets/mabu-music.mp3" loop preload="none"></audio>
+<audio id="bgm" src="../assets/mabu-music.mp3" loop preload="auto" playsinline></audio>
 
 <div id="grain" aria-hidden="true"></div>
 <div id="vig" aria-hidden="true"></div>
@@ -468,15 +468,61 @@
 <script src="../vendor/three.min.js"></script>
 <script src="../assets/stage.js"></script>
 <script>
-  /* The club's anthem, in from the top of the track the moment the title
-     sequence clears. Browsers refuse to start audio before a gesture, so a
-     blocked attempt waits quietly for the first tap or key press instead of
-     failing. The sound switch in the bar governs it. */
+  /* The club's anthem, in from the top of the track.
+
+     Every browser refuses to start audible sound until the visitor has
+     touched the page. There is no way around that, but there is a way to be
+     ready: muted playback is always allowed, so when we are refused we start
+     the track muted and leave it running. Unmuting an element that is already
+     playing costs nothing, so the visitor's first touch — a tap, a key, the
+     start of a scroll — brings the sound in instantly, from the first note,
+     with no button to find.
+
+     The one rule that matters here: never unmute without a gesture. Doing so
+     is a policy violation and the browser answers it by pausing the track,
+     which is worse than the silence it was trying to fix. */
   (function(){
     var bgm = document.getElementById('bgm'), stage = window.RFCStage;
     if(!bgm || !stage) return;
-    var VOL = 0.3, started = false, armed = false;
-    var GESTURES = ['pointerdown', 'keydown', 'touchstart'];
+    var VOL = 0.3, started = false, armed = false, silentRoll = false;
+    /* a wide net on purpose: whichever the visitor does first, the sound is
+       already cued up behind it */
+    var GESTURES = ['pointerdown', 'pointerup', 'mousedown', 'click', 'keydown',
+                    'touchstart', 'touchend', 'touchmove', 'wheel', 'scroll'];
+
+    function hush(){ var p = bgm.play(); if(p && p['catch']) p['catch'](function(){}); }
+
+    /* out loud — only from a gesture, or from the sound switch */
+    function goAudible(){
+      if(stage.muted) return;
+      bgm.volume = VOL;
+      bgm.muted = false;
+      if(!started || silentRoll) bgm.currentTime = 0;
+      var p = bgm.play();
+      if(p && p.then){
+        p.then(function(){ started = true; silentRoll = false; stage.pending(false); })
+         ['catch'](rollSilently);
+      }else{
+        started = true; silentRoll = false; stage.pending(false);
+      }
+    }
+
+    /* refused: run it muted and wait to be let through */
+    function rollSilently(){
+      if(stage.muted) return;
+      bgm.muted = true;
+      silentRoll = true;
+      stage.pending(true);
+      if(bgm.paused) hush();
+      arm();
+    }
+
+    /* safe to call at any time — it will not disturb a roll already going */
+    function ensureRolling(){
+      if(stage.muted) return;
+      if(silentRoll){ if(bgm.paused) hush(); return; }
+      goAudible();
+    }
 
     function arm(){
       if(armed) return;
@@ -484,26 +530,21 @@
       function go(){
         GESTURES.forEach(function(e){ window.removeEventListener(e, go, true); });
         armed = false;
-        play();
+        goAudible();
       }
       GESTURES.forEach(function(e){ window.addEventListener(e, go, {capture:true, passive:true}); });
     }
-    function play(){
-      if(stage.muted) return;
-      bgm.volume = VOL;
-      if(!started) bgm.currentTime = 0;
-      var p = bgm.play();
-      if(p && p.then){
-        p.then(function(){ started = true; stage.pending(false); })
-         ['catch'](function(){ stage.pending(true); arm(); });
-      }else{
-        started = true;
-        stage.pending(false);
-      }
-    }
 
-    stage.onIntroEnd(play);
-    stage.onSound(function(muted){ if(muted){ bgm.pause(); } else { play(); } });
+    ensureRolling();                 /* start trying before the titles are over */
+    stage.onIntroEnd(ensureRolling);
+    stage.onSound(function(muted){
+      if(muted){ bgm.pause(); silentRoll = false; }
+      else { goAudible(); }
+    });
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden){ bgm.pause(); }
+      else if(!stage.muted){ if(silentRoll){ silentRoll = false; rollSilently(); } else ensureRolling(); }
+    });
   })();
 </script>
 <script>

@@ -233,6 +233,16 @@ p{max-width:64ch}
   stroke-linecap:round;stroke-linejoin:round}
 .nav-snd .wave{opacity:1;transition:opacity .2s}
 .nav-snd .slash{opacity:0;transition:opacity .2s}
+/* Browsers hold audio back until the page has been touched. When that
+   happens, say so quietly rather than sitting there silently. */
+.snd-cue{position:fixed;top:66px;right:14px;z-index:79;pointer-events:none;
+  font-family:var(--cond);font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  font-size:.62rem;color:#fff;background:var(--red);padding:.5em .9em;border-radius:999px;
+  box-shadow:0 10px 28px rgba(0,0,0,.5);opacity:0;transform:translateY(-6px);
+  transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.snd-cue.show{opacity:1;transform:none}
+@media(max-width:430px){.snd-cue{top:60px;right:10px;font-size:.58rem}}
+@media(prefers-reduced-motion:reduce){.snd-cue{transition:none}}
 .nav-snd.off{color:rgba(249,246,239,.5)}
 .nav-snd.off .wave{opacity:0}
 .nav-snd.off .slash{opacity:1}
@@ -801,7 +811,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
 </nav>
 
 <!-- Club anthem. preload="none" so it only downloads once playback starts. -->
-<audio id="bgm" src="assets/music.mp3" loop preload="none"></audio>
+<audio id="bgm" src="assets/music.mp3" loop preload="auto" playsinline></audio>
 
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
@@ -1638,30 +1648,88 @@ var MUSIC_VOL = 0.34, musicStarted = false;
 /* a visitor who switched it off should stay switched off next visit */
 try{ if(localStorage.getItem('rfc_sound') === 'off') muted = true; }catch(e){}
 
+var silentRoll = false;      /* running, but muted, waiting to be let through */
+
+var cueEl = null;
+function paintCue(){
+  /* only worth saying when the visitor wants sound and cannot have it yet */
+  var want = silentRoll && !muted;
+  if(want && !cueEl){
+    cueEl = document.createElement('div');
+    cueEl.className = 'snd-cue';
+    cueEl.setAttribute('role', 'status');
+    cueEl.textContent = 'Tap anywhere for sound';
+    document.body.appendChild(cueEl);
+    requestAnimationFrame(function(){ if(cueEl) cueEl.classList.add('show'); });
+  }else if(!want && cueEl){
+    var el = cueEl; cueEl = null;
+    el.classList.remove('show');
+    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 600);
+  }
+}
+
 function paintSound(){
-  sndBtn.textContent = muted ? 'Sound Off' : 'Sound On';
-  sndBtn.setAttribute('aria-pressed', String(!muted));
-  sndBtn2.classList.toggle('off', muted);
-  sndBtn2.setAttribute('aria-pressed', String(!muted));
-  sndBtn2.setAttribute('aria-label', muted ? 'Turn sound on' : 'Turn sound off');
+  var quiet = muted || silentRoll;
+  sndBtn.textContent = quiet ? 'Sound Off' : 'Sound On';
+  sndBtn.setAttribute('aria-pressed', String(!quiet));
+  sndBtn2.classList.toggle('off', quiet);
+  sndBtn2.setAttribute('aria-pressed', String(!quiet));
+  sndBtn2.setAttribute('aria-label', quiet ? 'Turn sound on' : 'Turn sound off');
+  paintCue();
 }
 
 /* No fade: the anthem comes in at full volume from its first note, and the
    very first play always starts at the top of the track rather than wherever
-   a blocked attempt left the playhead. */
+   a blocked attempt left the playhead.
+
+   Every browser refuses to start audible sound until the visitor has touched
+   the page. There is no way around that, but there is a way to be ready:
+   muted playback is always allowed, so when we are refused we start the track
+   muted and leave it running. Unmuting an element that is already playing
+   costs nothing, so the visitor's first touch — a tap, a key, the start of a
+   scroll — brings the sound in instantly, from the first note, with no button
+   to find.
+
+   The one rule that matters here: never unmute without a gesture. Doing so is
+   a policy violation and the browser answers it by pausing the track, which
+   is worse than the silence it was trying to fix. */
+function hush(){ var p = bgm.play(); if(p && p['catch']) p['catch'](function(){}); }
+
+/* out loud — only from a gesture, or from the sound switch */
 function musicPlay(){
   if(!bgm || muted) return;
   bgm.volume = MUSIC_VOL;
-  if(!musicStarted) bgm.currentTime = 0;
+  bgm.muted = false;
+  if(!musicStarted || silentRoll) bgm.currentTime = 0;
   var p = bgm.play();
   if(p && p.then){
-    p.then(function(){ musicStarted = true; })['catch'](armGesture);
+    p.then(function(){ musicStarted = true; silentRoll = false; paintSound(); })['catch'](rollSilently);
   }else{
-    musicStarted = true;
+    musicStarted = true; silentRoll = false; paintSound();
   }
 }
 
-var GESTURES = ['pointerdown', 'keydown', 'touchstart'];
+/* refused: run it muted and wait to be let through */
+function rollSilently(){
+  if(!bgm || muted) return;
+  bgm.muted = true;
+  silentRoll = true;
+  paintSound();
+  if(bgm.paused) hush();
+  armGesture();
+}
+
+/* safe to call at any time — it will not disturb a roll already going */
+function musicEnsure(){
+  if(!bgm || muted) return;
+  if(silentRoll){ if(bgm.paused) hush(); return; }
+  musicPlay();
+}
+
+/* A wide net on purpose: whichever of these the visitor does first, the
+   sound is already cued up behind it. */
+var GESTURES = ['pointerdown', 'pointerup', 'mousedown', 'click', 'keydown',
+                'touchstart', 'touchend', 'touchmove', 'wheel', 'scroll'];
 var armed = false;
 function armGesture(){
   if(armed) return;
@@ -1680,8 +1748,10 @@ function toggleSound(){
   try{ localStorage.setItem('rfc_sound', muted ? 'off' : 'on'); }catch(e){}
   if(muted){
     if(bgm) bgm.pause();
+    silentRoll = false;
   }else{
     ensureAudio();
+    if(bgm && silentRoll){ bgm.currentTime = 0; silentRoll = false; }
     musicPlay();
   }
   if(AC && master) master.gain.setTargetAtTime(muted ? 0 : 1, AC.currentTime, 0.05);
@@ -1693,7 +1763,7 @@ sndBtn2.addEventListener('click', toggleSound);
 document.addEventListener('visibilitychange', function(){
   if(!bgm) return;
   if(document.hidden) bgm.pause();
-  else if(!muted) musicPlay();
+  else if(!muted){ if(silentRoll){ silentRoll = false; rollSilently(); } else musicEnsure(); }
 });
 
 /* If the visitor starts the Spotify album, stand down — two pieces of music
@@ -1714,10 +1784,10 @@ if(spotify){
 /* The anthem belongs to the welcome, so try again the moment the title
    sequence lands — by then the visitor has usually tapped or hit skip,
    which is the gesture the browser was holding out for. */
-onIntroEnd.push(function(){ musicPlay(); });
+onIntroEnd.push(function(){ musicEnsure(); });
 
 paintSound();
-if(bgm){ bgm.volume = MUSIC_VOL; musicPlay(); }
+if(bgm){ bgm.volume = MUSIC_VOL; musicEnsure(); }
 
 /* ==========================================================================
    HUD HELPERS
