@@ -5,8 +5,7 @@ Barangay Mabuhay, General Santos City, founded 14 June 1996.
 
 **Play with your heart.**
 
-**Live:** [ayakent.github.io/RangersFC](https://ayakent.github.io/RangersFC/) ·
-the game at [/game/](https://ayakent.github.io/RangersFC/game/)
+**Live:** [rangersfc.net](https://rangersfc.net/) · the game at [rangersfc.net/game](https://rangersfc.net/game/)
 
 ## What's here
 
@@ -77,8 +76,11 @@ Every push to `main` publishes the site, via `.github/workflows/pages.yml`. The 
 plain static files, so there is nothing to build — the workflow uploads the repository
 root to GitHub Pages. It can also be run by hand from the **Actions** tab.
 
-`index.html` is the home page and the game lives at `/game/`. Because this is a project
-site, the URL follows the repository name: renaming the repository changes the address.
+`index.html` is the home page and the game lives at `/game/`.
+
+The site answers on **rangersfc.net**. The `CNAME` file in the repository root holds that
+domain — it has to stay in place, because the deploy uploads the repository as an artifact
+and GitHub reads the custom domain from it. Deleting the file drops the domain.
 
 ## Degrading gracefully
 
