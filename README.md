@@ -61,9 +61,14 @@ by `data-stage` on the hero's `#stage` element.
 
 FC New Mabu also plays the club's anthem, `assets/mabu-music.mp3`. It starts from the
 top of the track the moment the title sequence clears, and the sound switch in the bar
-governs both it and the scene. Browsers refuse to start audio before a gesture, so a
-blocked attempt waits quietly for the first tap rather than failing. Switching sound off
-is remembered across the whole site.
+governs both it and the scene.
+
+Browsers refuse to start audio until the visitor has touched the page, so a blocked
+attempt waits for the first tap, key press or press of the switch — and still starts at
+the top of the track when it fires. While it is waiting, **the switch reads off**, because
+a silent page must not claim its sound is on, and pressing it then asks for the sound
+rather than turning off the silence. Switching sound off is remembered across the whole
+site, so a visitor who muted the home page arrives here muted, with the switch showing it.
 
 Both fall back the same way the home page does: no WebGL, no three.js, or
 `prefers-reduced-motion` and the hero is simply a still page that reads fine.

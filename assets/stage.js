@@ -42,7 +42,12 @@ var api = window.RFCStage = {
   introDone: false,
   muted: false,
   onIntroEnd: function(fn){ if(api.introDone){ fn(); } else { introSubs.push(fn); } },
-  onSound: function(fn){ soundSubs.push(fn); }
+  onSound: function(fn){ soundSubs.push(fn); },
+  /* The page calls these when the browser refuses to start its audio and
+     when it finally does. A page that is silent must not claim to be on:
+     the switch reads off while sound is pending, and pressing it asks for
+     the sound rather than turning off the silence. */
+  pending: function(on){ pendingSound = !!on; paintSound(); }
 };
 
 /* ==========================================================================
@@ -88,7 +93,7 @@ function endIntro(fast){
 /* ==========================================================================
    SOUND — synthesised, and only after the visitor has touched something
    ========================================================================== */
-var AC = null, master = null, muted = false;
+var AC = null, master = null, muted = false, pendingSound = false;
 
 /* a visitor who switched it off should stay switched off */
 try{ if(localStorage.getItem('rfc_sound') === 'off') muted = true; }catch(e){}
@@ -170,19 +175,30 @@ function peep(t0, dur){
 function sWhistle(){ if(!AC || muted) return; var t = AC.currentTime; peep(t, 0.18); peep(t + 0.28, 0.3); }
 
 function paintSound(){
+  var silent = muted || pendingSound;
   if(sndBtn){
-    sndBtn.textContent = muted ? 'Sound Off' : 'Sound On';
-    sndBtn.setAttribute('aria-pressed', String(!muted));
+    sndBtn.textContent = silent ? 'Sound Off' : 'Sound On';
+    sndBtn.setAttribute('aria-pressed', String(!silent));
   }
   if(sndBtn2){
-    sndBtn2.classList.toggle('off', muted);
-    sndBtn2.setAttribute('aria-pressed', String(!muted));
-    sndBtn2.setAttribute('aria-label', muted ? 'Turn sound on' : 'Turn sound off');
+    sndBtn2.classList.toggle('off', silent);
+    sndBtn2.setAttribute('aria-pressed', String(!silent));
+    sndBtn2.setAttribute('aria-label', silent ? 'Turn sound on' : 'Turn sound off');
   }
 }
 function toggleSound(){
+  /* Sound is wanted but the browser has not allowed it yet. This press is
+     the permission it was waiting for, so ask again rather than toggling. */
+  if(pendingSound && !muted){
+    pendingSound = false;
+    paintSound();
+    ensureAudio();
+    soundSubs.forEach(function(fn){ try{ fn(false); }catch(e){} });
+    return;
+  }
   muted = !muted;
   api.muted = muted;
+  pendingSound = false;
   paintSound();
   try{ localStorage.setItem('rfc_sound', muted ? 'off' : 'on'); }catch(e){}
   if(!muted) ensureAudio();
