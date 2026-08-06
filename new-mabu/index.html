@@ -121,6 +121,8 @@
   <button class="seq-skip" id="skipIntro" type="button">Skip intro</button>
 </div>
 
+<audio id="bgm" src="../assets/mabu-music.mp3" loop preload="none"></audio>
+
 <div id="grain" aria-hidden="true"></div>
 <div id="vig" aria-hidden="true"></div>
 <div id="reel" aria-hidden="true"><i></i></div>
@@ -133,6 +135,13 @@
     </a>
     <div class="nav-end">
       <a class="nav-back" href="../">← Rangers FC</a>
+      <button class="nav-snd" id="sndBtn2" type="button" aria-pressed="true" aria-label="Turn sound off">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 9.5h3.4L12 5.6v12.8L7.4 14.5H4z" />
+          <path class="wave" d="M15.6 9.2a4 4 0 0 1 0 5.6M18.2 6.6a7.6 7.6 0 0 1 0 10.8" />
+          <path class="slash" d="M16 9l5 6M21 9l-5 6" />
+        </svg>
+      </button>
       <a class="btn btn-solid btn-sm" href="https://www.facebook.com/share/1Hj5tFeLkW/" target="_blank" rel="noopener" data-magnet><span>Follow</span></a>
     </div>
   </div>
@@ -434,6 +443,40 @@
 <script src="../assets/team.js"></script>
 <script src="../vendor/three.min.js"></script>
 <script src="../assets/stage.js"></script>
+<script>
+  /* The club's anthem, in from the top of the track the moment the title
+     sequence clears. Browsers refuse to start audio before a gesture, so a
+     blocked attempt waits quietly for the first tap or key press instead of
+     failing. The sound switch in the bar governs it. */
+  (function(){
+    var bgm = document.getElementById('bgm'), stage = window.RFCStage;
+    if(!bgm || !stage) return;
+    var VOL = 0.3, started = false, armed = false;
+    var GESTURES = ['pointerdown', 'keydown', 'touchstart'];
+
+    function arm(){
+      if(armed) return;
+      armed = true;
+      function go(){
+        GESTURES.forEach(function(e){ window.removeEventListener(e, go, true); });
+        armed = false;
+        play();
+      }
+      GESTURES.forEach(function(e){ window.addEventListener(e, go, {capture:true, passive:true}); });
+    }
+    function play(){
+      if(stage.muted) return;
+      bgm.volume = VOL;
+      if(!started) bgm.currentTime = 0;
+      var p = bgm.play();
+      if(p && p.then){ p.then(function(){ started = true; })['catch'](arm); }
+      else { started = true; }
+    }
+
+    stage.onIntroEnd(play);
+    stage.onSound(function(muted){ if(muted){ bgm.pause(); } else { play(); } });
+  })();
+</script>
 <script>
   /* the distance bars fill once the diagram is actually looked at */
   (function(){

@@ -19,7 +19,7 @@ Barangay Mabuhay, General Santos City, founded 14 June 1996.
 | `assets/shop/shop.json` | The shop's stock. Edit this to change items, prices and sizes. |
 | `assets/team.css`, `assets/team.js` | Shared kit behind the three pages above. |
 | `assets/stage.js` | The 3D hero stages and title sequences for the two sister-team pages. |
-| `assets/` | Club crest, favicon, the game still, the share card and the squad photo. |
+| `assets/` | Club crest, favicon, the game still, the share card, the squad photo and the founder's portrait. |
 | `assets/gallery/` | Whatever you upload. Sub-folders feed the sister-team pages. |
 | `tools/build-gallery.py` | Turns those folders into gallery manifests at deploy time. |
 | `assets/gallery.js` | The slideshow, shared by every page that has one. |
@@ -36,8 +36,10 @@ A single scroll, staged like a short film.
   football. The camera cranes in from ground level, then follows the pointer.
   Tap the pitch to juggle the ball; drag to look around. All sound is synthesised in the
   browser — nothing is downloaded — and it stays off until you interact.
-- **Chapters** — the club, its values, programmes, coaches, the game, and how to visit,
-  each announced with a chapter slate and revealed on scroll.
+- **Chapters** — the club, its founder, its values, programmes, coaches, the game, and how
+  to visit, each announced with a chapter slate and revealed on scroll.
+- **The Founder** — chapter 02 honours Roberto P. Barrientos, who started the club on
+  14 June 1996.
 - **Film layer** — grain, vignette, light leak and letterbox bars over the whole page.
 
 ## The sister-team pages
@@ -47,7 +49,7 @@ scene, not a picture — WebGL, lit properly, with physics you can knock about a
 sound synthesised in the browser. One engine, `assets/stage.js`, two scenes chosen
 by `data-stage` on the hero's `#stage` element.
 
-- **FC New Mabu** — the schoolyard court at golden hour: the school block with its
+- **FC New Mabu** — the schoolyard court at dusk in the club's pink: the school block with its
   covered walkway, mango trees, a low sun. Tap and another ball drops onto the
   court, bounces, rolls and knocks into the others. One tap, one more child
   reached — which is the whole point of the club. The counter keeps score.
@@ -56,9 +58,14 @@ by `data-stage` on the hero's `#stage` element.
   let the ball come to rest and the chain breaks and you start again. That is the
   grind, made literal.
 
+FC New Mabu also plays the club's anthem, `assets/mabu-music.mp3`. It starts from the
+top of the track the moment the title sequence clears, and the sound switch in the bar
+governs both it and the scene. Browsers refuse to start audio before a gesture, so a
+blocked attempt waits quietly for the first tap rather than failing. Switching sound off
+is remembered across the whole site.
+
 Both fall back the same way the home page does: no WebGL, no three.js, or
 `prefers-reduced-motion` and the hero is simply a still page that reads fine.
-Sound stays off until you press **Sound On**.
 
 ## Editing the shop
 

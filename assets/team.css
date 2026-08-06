@@ -63,6 +63,23 @@ p{max-width:64ch}
   font-size:.74rem;text-decoration:none;color:var(--ink-faint);white-space:nowrap;transition:color .2s}
 .nav-back:hover{color:var(--ink)}
 @media(max-width:520px){.nav-back{display:none}}
+/* the sound switch, kept in the bar so it is reachable the whole way down */
+.nav-snd{flex:none;width:38px;height:38px;border-radius:50%;cursor:pointer;
+  border:1px solid var(--line);background:rgba(0,0,0,.35);color:var(--ink);
+  display:grid;place-items:center;transition:border-color .2s,color .2s,background .2s}
+.nav-snd:hover{border-color:var(--accent)}
+.nav-snd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;
+  stroke-linecap:round;stroke-linejoin:round}
+.nav-snd .wave{opacity:1;transition:opacity .2s}
+.nav-snd .slash{opacity:0;transition:opacity .2s}
+.nav-snd.off{color:var(--ink-faint)}
+.nav-snd.off .wave{opacity:0}
+.nav-snd.off .slash{opacity:1}
+@media(max-width:520px){.nav-snd{width:34px;height:34px}.nav-snd svg{width:16px;height:16px}}
+/* with a sound switch in the bar too, the wordmark needs to give a little */
+@media(max-width:430px){.wordmark{font-size:1.06rem;white-space:nowrap}
+  .brand img{width:38px;height:38px}}
+@media(max-width:360px){.wordmark{font-size:.96rem}}
 
 /* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;gap:.55em;font-family:var(--cond);font-weight:600;
