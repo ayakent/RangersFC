@@ -30,6 +30,25 @@ DATE_RE = re.compile(r"^(\d{4})[-_](\d{2})[-_](\d{2})[-_ ]*")
 MONTHS = ("January", "February", "March", "April", "May", "June", "July",
           "August", "September", "October", "November", "December")
 
+# Whatever the phone or Facebook called the file. These carry no meaning, so
+# they are shown as no caption at all rather than as "FB IMG 1785985371206".
+DUMP_RE = re.compile(r"""^(
+    fb[ ]?img | img | image | photo | pic | vid | video | mov | pxl | dsc | dscn
+  | mvimg | screenshot | screen[ ]?shot | signal | whatsapp | received | inbound
+  | facebook | messenger | snapchat | viber | telegram | download | untitled
+)\b""", re.IGNORECASE | re.VERBOSE)
+
+
+def is_dump(text):
+    """True when the filename is a camera or app dump, not something written."""
+    if not text:
+        return True
+    if DUMP_RE.match(text):
+        return True
+    letters = sum(c.isalpha() for c in text)
+    digits = sum(c.isdigit() for c in text)
+    return letters == 0 or digits > letters * 2
+
 
 def describe(stem):
     """Turn a filename stem into a caption and, if present, a date."""
@@ -44,9 +63,9 @@ def describe(stem):
             when = ""
     text = re.sub(r"[-_]+", " ", stem).strip()
     text = re.sub(r"\s+", " ", text)
-    if text:
-        text = text[0].upper() + text[1:]
-    return text, when
+    if is_dump(text):
+        return "", when
+    return text[0].upper() + text[1:], when
 
 
 def main():

@@ -1462,7 +1462,7 @@ function sWhistle(){
   var stage = document.getElementById('galStage'),
       dotsEl = document.getElementById('galDots'),
       countEl = document.getElementById('galCount');
-  var items = [], slides = [], at = 0, timer = null, HOLD = 5000;
+  var items = [], slides = [], at = 0, timer = null, gen = 0, HOLD = 5000;
 
   fetch('assets/gallery/gallery.json', {cache:'no-cache'})
     .then(function(r){ return r.ok ? r.json() : null; })
@@ -1537,7 +1537,13 @@ function sWhistle(){
     /* a video normally advances when it ends; the long timer is a backstop so
        one that stalls can't freeze the slideshow. A video the browser cannot
        play falls back to the ordinary hold instead of stranding us for 20s. */
-    timer = setTimeout(next, ms || (items[at].type === 'video' ? 20000 : HOLD));
+    var mine = gen;
+    timer = setTimeout(function(){
+      /* clearTimeout cannot recall a callback that has already fired, so a tap
+         landing on the same tick as the timer would skip a slide. Ignore any
+         wake-up that belongs to a slide we have since moved off. */
+      if(mine === gen) next();
+    }, ms || (items[at].type === 'video' ? 20000 : HOLD));
   }
 
   function show(i){
@@ -1551,6 +1557,7 @@ function sWhistle(){
       if(d) d.classList.toggle('on', n === i);
     });
     at = i;
+    gen++;
     countEl.textContent = (i + 1) + ' / ' + slides.length;
     var vid = slides[i].querySelector('video');
     if(vid){
