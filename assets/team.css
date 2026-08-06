@@ -238,3 +238,96 @@ footer{border-top:1px solid var(--line);padding:56px 0 44px;background:var(--bg)
   #grain{display:none}
   .rulewrap i{transform:scaleX(1)}
 }
+
+/* ==========================================================================
+   WEBGL STAGE + TITLE SEQUENCE
+   The hero becomes a live 3D scene. Everything below sits over the canvas.
+   ========================================================================== */
+#stage{position:absolute;inset:0;z-index:0;touch-action:pan-y;cursor:pointer}
+#stage canvas{position:absolute;inset:0;display:block}
+/* the flat hero backdrop stays, but quietly — the scene is the backdrop now */
+.hero.has-stage .hero-bg{z-index:1;opacity:.4}
+/* the headline sits over the scene, but the scene still takes the taps —
+   only the things you can actually press catch the pointer */
+.hero.has-stage > .wrap{position:relative;z-index:2;pointer-events:none}
+.hero.has-stage h1,.hero.has-stage .eyebrow{text-shadow:0 2px 22px rgba(0,0,0,.72)}
+.hero.has-stage .hero-sub{text-shadow:0 1px 12px rgba(0,0,0,.8)}
+.hero.has-stage > .wrap a,
+.hero.has-stage > .wrap button{pointer-events:auto}
+.hero.has-stage .hero-crest{display:none}
+.stage-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to top,var(--bg) 2%,rgba(0,0,0,.55) 34%,rgba(0,0,0,0) 66%),
+             linear-gradient(to right,var(--bg) 0%,rgba(0,0,0,.35) 34%,rgba(0,0,0,0) 68%)}
+@media(max-width:820px){
+  /* a phone has no room to put the words beside the scene, so they go over it —
+     dark enough to read against, light enough that the scene still shows */
+  .stage-scrim{background:linear-gradient(to top,var(--bg) 2%,rgba(0,0,0,.7) 28%,
+    rgba(0,0,0,.52) 60%,rgba(0,0,0,.06) 88%)}
+  .hero.has-stage .hero-bg{opacity:.28}
+}
+/* live readout */
+.hud{position:absolute;top:84px;right:0;left:0;z-index:3;pointer-events:none}
+.hud .wrap{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.hud span,.hud button{font-family:var(--cond);font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  font-size:.68rem;background:rgba(0,0,0,.5);border:1px solid var(--line);padding:.45em .9em;
+  border-radius:999px;color:var(--ink-dim);backdrop-filter:blur(6px)}
+.hud b{color:var(--accent);font-size:1.02rem;margin-left:.4em;font-variant-numeric:tabular-nums}
+.hud button{pointer-events:auto;cursor:pointer;transition:border-color .2s,color .2s}
+.hud button:hover{border-color:var(--accent);color:var(--ink)}
+#hint{position:absolute;bottom:16px;left:0;right:0;z-index:3;text-align:center;font-family:var(--cond);
+  font-weight:600;letter-spacing:.24em;text-transform:uppercase;font-size:.64rem;
+  color:rgba(255,255,255,.62);pointer-events:none;text-shadow:0 1px 6px rgba(0,0,0,.9)}
+#pop{position:absolute;top:34%;left:0;right:0;z-index:3;text-align:center;font-family:var(--display);
+  font-size:clamp(2rem,7vw,4rem);color:var(--accent);opacity:0;transform:scale(.7);pointer-events:none;
+  text-shadow:0 4px 26px rgba(0,0,0,.8)}
+#pop.show{animation:pop 1.35s ease forwards}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}18%{opacity:1;transform:scale(1.08)}30%{transform:scale(1)}
+  75%{opacity:1}100%{opacity:0;transform:scale(1.05) translateY(-16px)}}
+
+/* ---------- title sequence ---------- */
+#intro{position:fixed;inset:0;z-index:120;background:var(--bg);display:grid;place-items:center;
+  overflow:hidden;transition:opacity .5s ease}
+#intro .shutter{position:absolute;left:0;right:0;height:50.5%;background:var(--bg);z-index:2;
+  transition:transform 1.15s var(--ease-io)}
+#intro .shutter.t{top:0}
+#intro .shutter.b{bottom:0}
+#intro.out .shutter.t{transform:translateY(-101%)}
+#intro.out .shutter.b{transform:translateY(101%)}
+#intro.out .seq,#intro.out .seq-skip{opacity:0;transition:opacity .35s ease}
+#intro.gone{opacity:0;pointer-events:none}
+.seq{position:relative;z-index:3;text-align:center;padding:24px}
+.seq-crest{width:min(28vw,124px);margin:0 auto 24px;position:relative;border-radius:50%;overflow:hidden;
+  opacity:0;transform:scale(.82);animation:crestIn 1.5s var(--ease) .25s forwards}
+.seq-crest img{width:100%}
+.seq-crest::after{content:"";position:absolute;inset:0;mix-blend-mode:screen;transform:translateX(-140%);
+  background:linear-gradient(115deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.45) 50%,rgba(255,255,255,0) 60%);
+  animation:sweep 1.4s ease 1.05s forwards}
+@keyframes crestIn{to{opacity:1;transform:scale(1)}}
+@keyframes sweep{to{transform:translateX(140%)}}
+.seq-pres{font-family:var(--cond);font-weight:500;letter-spacing:.4em;text-transform:uppercase;
+  font-size:.6rem;color:var(--accent);opacity:0;animation:fadeUp .9s var(--ease) .75s forwards}
+.seq-title{font-family:var(--display);font-size:clamp(2.2rem,8vw,4.8rem);line-height:.94;color:var(--ink);
+  margin:12px 0 8px;letter-spacing:.04em}
+.seq-title span{display:block;overflow:hidden}
+.seq-title span i{display:block;font-style:normal;transform:translateY(105%);
+  animation:riseIn 1s var(--ease) forwards}
+.seq-title span:nth-child(1) i{animation-delay:1.0s}
+.seq-title span:nth-child(2) i{font-size:.32em;letter-spacing:.26em;color:var(--ink-faint);animation-delay:1.18s}
+@keyframes riseIn{to{transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.seq-bar{width:min(230px,54vw);height:2px;background:var(--line);margin:28px auto 0;overflow:hidden}
+.seq-bar i{display:block;height:100%;width:0;background:var(--accent);
+  animation:load 3.2s var(--ease-io) .2s forwards}
+@keyframes load{to{width:100%}}
+.seq-skip{position:absolute;bottom:26px;right:26px;z-index:4;background:none;border:1px solid var(--line);
+  color:var(--ink-faint);font-family:var(--cond);font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  font-size:.66rem;padding:.6em 1.2em;border-radius:999px;cursor:pointer;transition:.2s;
+  opacity:0;animation:fadeUp .6s ease 1.2s forwards}
+.seq-skip:hover{border-color:var(--accent);color:var(--accent)}
+body.locked{overflow:hidden}
+
+@media(prefers-reduced-motion:reduce){
+  #intro{display:none}
+  .seq-crest,.seq-pres,.seq-title span i,.seq-bar i,.seq-skip{animation:none;opacity:1;transform:none}
+  #pop.show{animation:none}
+}

@@ -77,13 +77,39 @@
   .ribbon-track span{font-family:var(--display);font-size:1.45rem;letter-spacing:.09em;padding:11px 0;white-space:nowrap}
   .ribbon-track span::after{content:"⚽";font-size:.9rem;margin:0 22px;vertical-align:middle}
   @keyframes rib{to{transform:translateX(-50%)}}
+  /* the motto is a long second title card — let it breathe on a phone */
+  .seq-title span:nth-child(2) i{font-size:.26em;letter-spacing:.14em}
   @media(prefers-reduced-motion:reduce){
     .ribbon-track{animation:none}
     .walk .walk-bar i{width:var(--w);transition:none}
   }
 </style>
+<noscript><style>
+  /* nothing here needs JavaScript to be readable */
+  #intro{display:none}
+  body.locked{overflow:auto}
+  .hero h1 .ln i{transform:none}
+  .hero-sub,.hero-cta,.reveal{opacity:1;transform:none}
+  .walk .walk-bar i{width:var(--w)}
+</style></noscript>
 </head>
-<body>
+<body class="locked">
+
+<!-- ============ TITLE SEQUENCE ============ -->
+<div id="intro" role="presentation">
+  <div class="shutter t"></div>
+  <div class="shutter b"></div>
+  <div class="seq">
+    <div class="seq-crest"><img src="../assets/teams/new-mabu-mark.webp" alt="" width="124" height="124" /></div>
+    <div class="seq-pres">A Rangers FC Sister Team</div>
+    <div class="seq-title">
+      <span><i>FC NEW MABU</i></span>
+      <span><i>MINDSET · ATTITUDE · BELIEF · UNITY</i></span>
+    </div>
+    <div class="seq-bar"><i></i></div>
+  </div>
+  <button class="seq-skip" id="skipIntro" type="button">Skip intro</button>
+</div>
 
 <div id="grain" aria-hidden="true"></div>
 <div id="vig" aria-hidden="true"></div>
@@ -104,8 +130,20 @@
 
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
+  <div id="stage" data-stage="mabu" role="button" tabindex="0"
+       aria-label="Interactive schoolyard court. Tap, or press Enter, to send another ball onto the court. Drag to look around."></div>
+  <div class="stage-scrim" aria-hidden="true"></div>
   <div class="hero-bg" aria-hidden="true"></div>
   <img class="hero-crest" src="../assets/teams/new-mabu.webp" alt="" aria-hidden="true" />
+
+  <div class="hud">
+    <div class="wrap">
+      <span>On the court<b id="statA">0</b></span>
+      <span>Reached<b id="statB">0</b></span>
+      <button id="sndBtn" type="button" aria-pressed="true">Sound On</button>
+    </div>
+  </div>
+
   <div class="wrap">
     <span class="eyebrow">Rangers FC · Sister Team</span>
     <h1>
@@ -127,6 +165,9 @@
       <a class="btn btn-ghost" href="https://www.facebook.com/share/1Hj5tFeLkW/" target="_blank" rel="noopener"><span>On Facebook</span></a>
     </div>
   </div>
+
+  <div id="pop" aria-hidden="true"></div>
+  <div id="hint">Tap the court · one more every time</div>
 </header>
 
 <div class="ribbon" aria-hidden="true">
@@ -375,6 +416,8 @@
 
 <script src="../assets/gallery.js"></script>
 <script src="../assets/team.js"></script>
+<script src="../vendor/three.min.js"></script>
+<script src="../assets/stage.js"></script>
 <script>
   /* the distance bars fill once the diagram is actually looked at */
   (function(){

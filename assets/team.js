@@ -129,7 +129,11 @@ if(window.matchMedia('(hover: hover)').matches && !reduced){
   });
 }
 
-/* the hero animates in on load rather than on scroll — it is already in view */
+/* The hero animates in on load rather than on scroll — it is already in view.
+   Unless a title sequence is playing over it, in which case stage.js holds the
+   reveal back until the shutters open. */
 var hero = document.querySelector('.hero');
-if(hero) requestAnimationFrame(function(){ hero.classList.add('live'); });
+if(hero && !document.getElementById('intro')){
+  requestAnimationFrame(function(){ hero.classList.add('live'); });
+}
 })();

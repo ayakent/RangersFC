@@ -56,8 +56,31 @@
     right:14px;bottom:8px;font-family:var(--display);font-size:3.4rem;line-height:1;
     color:var(--ink);opacity:.06}
 </style>
+<noscript><style>
+  /* nothing here needs JavaScript to be readable */
+  #intro{display:none}
+  body.locked{overflow:auto}
+  .hero h1 .ln i{transform:none}
+  .hero-sub,.hero-cta,.reveal{opacity:1;transform:none}
+</style></noscript>
 </head>
-<body>
+<body class="locked">
+
+<!-- ============ TITLE SEQUENCE ============ -->
+<div id="intro" role="presentation">
+  <div class="shutter t"></div>
+  <div class="shutter b"></div>
+  <div class="seq">
+    <div class="seq-crest"><img src="../assets/teams/gila-mark.webp" alt="" width="124" height="124" /></div>
+    <div class="seq-pres">A Rangers FC Sister Team</div>
+    <div class="seq-title">
+      <span><i>GILA</i></span>
+      <span><i>THE ACADEMY</i></span>
+    </div>
+    <div class="seq-bar"><i></i></div>
+  </div>
+  <button class="seq-skip" id="skipIntro" type="button">Skip intro</button>
+</div>
 
 <div id="grain" aria-hidden="true"></div>
 <div id="vig" aria-hidden="true"></div>
@@ -78,8 +101,20 @@
 
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
+  <div id="stage" data-stage="gila" role="button" tabindex="0"
+       aria-label="Interactive training ground at night. Tap, or press Enter, to strike the ball at the rebound board. Drag to look around."></div>
+  <div class="stage-scrim" aria-hidden="true"></div>
   <div class="hero-bg" aria-hidden="true"></div>
   <img class="hero-crest" src="../assets/teams/gila.webp" alt="" aria-hidden="true" />
+
+  <div class="hud">
+    <div class="wrap">
+      <span>Reps<b id="statA">0</b></span>
+      <span>Best<b id="statB">0</b></span>
+      <button id="sndBtn" type="button" aria-pressed="true">Sound On</button>
+    </div>
+  </div>
+
   <div class="wrap">
     <span class="eyebrow">Rangers FC · Sister Team</span>
     <h1>
@@ -96,6 +131,9 @@
       <a class="btn btn-ghost" href="https://www.facebook.com/share/1EqG8JyniS/" target="_blank" rel="noopener"><span>Gila on Facebook</span></a>
     </div>
   </div>
+
+  <div id="pop" aria-hidden="true"></div>
+  <div id="hint">Tap to strike the board · drag to look</div>
 </header>
 
 <div class="rep" aria-hidden="true">
@@ -304,5 +342,7 @@
 
 <script src="../assets/gallery.js"></script>
 <script src="../assets/team.js"></script>
+<script src="../vendor/three.min.js"></script>
+<script src="../assets/stage.js"></script>
 </body>
 </html>

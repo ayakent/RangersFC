@@ -18,6 +18,7 @@ Barangay Mabuhay, General Santos City, founded 14 June 1996.
 | `shop/index.html` | Club shop for all three teams. |
 | `assets/shop/shop.json` | The shop's stock. Edit this to change items, prices and sizes. |
 | `assets/team.css`, `assets/team.js` | Shared kit behind the three pages above. |
+| `assets/stage.js` | The 3D hero stages and title sequences for the two sister-team pages. |
 | `assets/` | Club crest, favicon, the game still, the share card and the squad photo. |
 | `assets/gallery/` | Whatever you upload. Sub-folders feed the sister-team pages. |
 | `tools/build-gallery.py` | Turns those folders into gallery manifests at deploy time. |
@@ -38,6 +39,26 @@ A single scroll, staged like a short film.
 - **Chapters** — the club, its values, programmes, coaches, the game, and how to visit,
   each announced with a chapter slate and revealed on scroll.
 - **Film layer** — grain, vignette, light leak and letterbox bars over the whole page.
+
+## The sister-team pages
+
+FC New Mabu and Gila each open on a title sequence and then a hero that is a real
+scene, not a picture — WebGL, lit properly, with physics you can knock about and
+sound synthesised in the browser. One engine, `assets/stage.js`, two scenes chosen
+by `data-stage` on the hero's `#stage` element.
+
+- **FC New Mabu** — the schoolyard court at golden hour: the school block with its
+  covered walkway, mango trees, a low sun. Tap and another ball drops onto the
+  court, bounces, rolls and knocks into the others. One tap, one more child
+  reached — which is the whole point of the club. The counter keeps score.
+- **Gila** — a rebound wall under one floodlight at night, cones set out, dust in
+  the beam. Tap and the ball is struck at the board and comes back. Reps count up;
+  let the ball come to rest and the chain breaks and you start again. That is the
+  grind, made literal.
+
+Both fall back the same way the home page does: no WebGL, no three.js, or
+`prefers-reduced-motion` and the hero is simply a still page that reads fine.
+Sound stays off until you press **Sound On**.
 
 ## Editing the shop
 
