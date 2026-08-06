@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>FC New Mabu | Football &amp; Futsal at New Mabuhay Elementary · A Rangers FC sister team</title>
+<meta name="description" content="FC New Mabu brings football and futsal to New Mabuhay Elementary School, Barangay Mabuhay, General Santos City. Founded 2026 by Coach Jabez and Coach Ralph. A sister team of Rangers FC." />
+<meta name="theme-color" content="#0A0A0B" />
+<meta name="color-scheme" content="dark" />
+<link rel="canonical" href="https://rangersfc.net/new-mabu/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="FC New Mabu" />
+<meta property="og:url" content="https://rangersfc.net/new-mabu/" />
+<meta property="og:title" content="FC New Mabu — Football, walking distance" />
+<meta property="og:description" content="A football club built around New Mabuhay Elementary School, so the walk to training is short enough that nobody stops coming." />
+<meta property="og:image" content="https://rangersfc.net/assets/teams/new-mabu.webp" />
+<link rel="icon" type="image/png" href="../assets/crest-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/team.css" />
+<style>
+  /* New Mabu's palette: schoolyard ink and late-afternoon gold. */
+  :root{
+    --bg:#0A0A0B;
+    --bg-2:#131316;
+    --ink:#F5F2EB;
+    --ink-dim:rgba(245,242,235,.72);
+    --ink-faint:rgba(245,242,235,.44);
+    --accent:#F0B429;
+    --accent-2:#7FB3D5;
+    --line:rgba(245,242,235,.13);
+  }
+  .btn-solid{color:#0A0A0B}
+  /* chalk lines on a blackboard — the school, not the stadium */
+  .hero-bg{background:
+    radial-gradient(70% 55% at 78% 30%,rgba(240,180,41,.13),transparent 70%),
+    linear-gradient(180deg,rgba(10,10,11,0) 45%,rgba(10,10,11,.92) 100%)}
+  .hero h1{font-size:clamp(2.9rem,10.5vw,7.4rem);line-height:.88}
+  .hero h1 .gold{color:var(--accent)}
+  /* the distance strip */
+  .steps{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .step{font-family:var(--cond);font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    font-size:.68rem;padding:.5em 1em;border-radius:999px;border:1px solid var(--line);
+    background:rgba(19,19,22,.6);color:var(--ink-dim)}
+  .step.on{background:var(--accent);border-color:var(--accent);color:#0A0A0B;font-weight:700}
+  /* the walk — a small animated diagram of the point of the whole club */
+  .walk{border:1px solid var(--line);border-radius:20px;background:var(--bg-2);padding:30px 26px;
+    position:relative;overflow:hidden}
+  .walk h3{font-size:1.7rem;margin-bottom:18px}
+  .walk-row{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .walk-row:last-child{margin-bottom:0}
+  .walk-dot{width:12px;height:12px;border-radius:50%;flex:none;background:var(--accent-2)}
+  .walk-row.near .walk-dot{background:var(--accent)}
+  .walk-bar{flex:1;height:8px;border-radius:99px;background:rgba(245,242,235,.09);overflow:hidden}
+  .walk-bar i{display:block;height:100%;width:0;border-radius:99px;background:var(--accent-2);
+    transition:width 1.6s var(--ease-io)}
+  .walk-row.near .walk-bar i{background:var(--accent)}
+  .walk.in .walk-bar i{width:var(--w)}
+  .walk-lab{font-family:var(--cond);font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    font-size:.66rem;color:var(--ink-faint);width:104px;flex:none}
+  .walk-note{margin-top:20px;font-size:.93rem;color:var(--ink-dim)}
+  .ribbon{background:var(--accent);color:#0A0A0B;overflow:hidden}
+  .ribbon-track{display:flex;width:max-content;animation:rib 30s linear infinite}
+  .ribbon-track span{font-family:var(--display);font-size:1.45rem;letter-spacing:.09em;padding:11px 0;white-space:nowrap}
+  .ribbon-track span::after{content:"⚽";font-size:.9rem;margin:0 22px;vertical-align:middle}
+  @keyframes rib{to{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){
+    .ribbon-track{animation:none}
+    .walk .walk-bar i{width:var(--w);transition:none}
+  }
+</style>
+</head>
+<body>
+
+<div id="grain" aria-hidden="true"></div>
+<div id="vig" aria-hidden="true"></div>
+<div id="reel" aria-hidden="true"><i></i></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <img src="../assets/teams/new-mabu-mark.webp" alt="FC New Mabu crest" width="42" height="42" />
+      <span class="wordmark">FC NEW MABU<small>EST. 2026</small></span>
+    </a>
+    <div class="nav-end">
+      <a class="nav-back" href="../">← Rangers FC</a>
+      <a class="btn btn-solid btn-sm" href="https://www.facebook.com/share/1Hj5tFeLkW/" target="_blank" rel="noopener" data-magnet><span>Follow</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <img class="hero-crest" src="../assets/teams/new-mabu.webp" alt="" aria-hidden="true" />
+  <div class="wrap">
+    <span class="eyebrow">Rangers FC · Sister Team</span>
+    <h1>
+      <span class="ln"><i>FOOTBALL,</i></span>
+      <span class="ln"><i class="gold">WALKING</i></span>
+      <span class="ln"><i class="gold">DISTANCE.</i></span>
+    </h1>
+    <div class="steps">
+      <span class="step on">New Mabuhay Elementary School</span>
+      <span class="step">Barangay Mabuhay</span>
+      <span class="step">Est. 2026</span>
+    </div>
+    <p class="hero-sub lede">A club built around a school, so the walk to training is short enough that nobody has to stop coming.</p>
+    <div class="hero-cta">
+      <a class="btn btn-solid" href="#join" data-magnet><span>Bring Your Child</span></a>
+      <a class="btn btn-ghost" href="https://www.facebook.com/share/1Hj5tFeLkW/" target="_blank" rel="noopener"><span>On Facebook</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="ribbon" aria-hidden="true">
+  <div class="ribbon-track">
+    <span>Football</span><span>Futsal</span><span>Every child welcome</span><span>New Mabuhay Elementary</span><span>Est. 2026</span>
+    <span>Football</span><span>Futsal</span><span>Every child welcome</span><span>New Mabuhay Elementary</span><span>Est. 2026</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ============ THE STORY ============ -->
+<section id="story">
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>01</b> Why It Exists</div>
+      <h2 class="rt">The barrier was never interest</h2>
+    </div>
+    <div class="split">
+      <div class="prose reveal">
+        <p>Ask a coach why a child stopped coming to training and the answer is almost never that they lost interest. It is the fare. It is the distance. It is a parent who cannot make the trip twice a week, or an eight-year-old whose mother will not let them cross that far alone — and who is right not to.</p>
+        <p>Rangers has trained on the same ground in Barangay Mabuhay since 1996. For families a few streets the wrong way, that pitch may as well have been in another city. The club could see the children it was missing. They were not hard to find. They were just further away than a pair of small legs could reasonably go.</p>
+        <p>So in 2026 Coach Jabez and Coach Ralph did the obvious thing, which is usually the difficult thing. Instead of asking the neighbourhood to come to the football, they carried the football to the neighbourhood.</p>
+      </div>
+      <div class="walk reveal" data-d="1" id="walk">
+        <h3>The problem, drawn</h3>
+        <div class="walk-row">
+          <span class="walk-lab">Old ground</span>
+          <div class="walk-bar" style="--w:100%"><i></i></div>
+          <span class="walk-dot"></span>
+        </div>
+        <div class="walk-row near">
+          <span class="walk-lab">The school</span>
+          <div class="walk-bar" style="--w:22%"><i></i></div>
+          <span class="walk-dot"></span>
+        </div>
+        <p class="walk-note">Same child. Same willingness. The only thing that changed is how far they have to walk before they get to play — and that turns out to be the whole game.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE SCHOOL ============ -->
+<section id="school" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>02</b> Home Ground</div>
+      <h2 class="rt">A school is the one place every child already goes</h2>
+      <p class="reveal" data-d="1">FC New Mabu takes its name from New Mabuhay Elementary School — not as a sponsor, but as an address.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal" data-tilt>
+        <span>Familiar</span><b>NO NEW JOURNEY</b>
+        <p>Training happens where the school day already ends. No extra trip, no extra fare, no parent rearranging a working afternoon.</p>
+      </div>
+      <div class="pillar reveal" data-d="1" data-tilt>
+        <span>Trusted</span><b>PARENTS SAY YES</b>
+        <p>A grounds a family already knows is a grounds a family will let a child stay at. Permission is half the battle in grassroots football.</p>
+      </div>
+      <div class="pillar reveal" data-d="2" data-tilt>
+        <span>Open</span><b>EVERYONE SEES IT</b>
+        <p>Football played in a schoolyard recruits itself. Children who came to watch a friend end up in boots the following week.</p>
+      </div>
+      <div class="pillar reveal" data-d="3" data-tilt>
+        <span>Rooted</span><b>IT STAYS</b>
+        <p>Clubs tied to one coach leave when the coach does. A club tied to a school outlasts all of us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PULL QUOTE ============ -->
+<section style="padding:110px 0">
+  <div class="wrap">
+    <blockquote class="pull rt">You do not grow a club by finding more talent. <em>You grow it by removing the reasons children have to stay home.</em></blockquote>
+    <div class="slate reveal" data-d="2" style="margin-top:22px"><b>—</b> The idea behind FC New Mabu</div>
+  </div>
+</section>
+
+<!-- ============ WHAT WE DO ============ -->
+<section id="training">
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>03</b> Training</div>
+      <h2 class="rt">Football and futsal, from the first touch</h2>
+    </div>
+    <div class="split" style="align-items:start">
+      <ul class="drills reveal">
+        <li><div><b>Complete beginners</b><p>Most who arrive have never been coached. That is expected, and it is the point — nobody is behind here.</p></div></li>
+        <li><div><b>Football on grass</b><p>The full game: passing, movement, playing as a side rather than eleven children chasing one ball.</p></div></li>
+        <li><div><b>Futsal on hard court</b><p>Smaller pitch, more touches, faster decisions. It fits a schoolyard, and it builds close control quickly.</p></div></li>
+        <li><div><b>The Rangers way</b><p>Discipline, respect and turning up for each other are coached as deliberately as the passing — same as the parent club.</p></div></li>
+      </ul>
+      <div class="plate reveal" data-d="1">
+        <h3>Part of something bigger</h3>
+        <p>FC New Mabu is a sister team of Rangers Football Club, which has been developing players in Barangay Mabuhay since 1996. Players who want to push further can train at <a href="../gila/" style="color:var(--accent)">Gila</a>, the skills academy, or step up into Rangers itself.</p>
+        <p style="margin-top:14px">One community, three doors into the same game — and no child turned away for arriving at the wrong one.</p>
+        <a class="btn btn-ghost btn-sm" href="../" style="margin-top:18px"><span>About Rangers FC</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE FOUNDERS ============ -->
+<section id="founders" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>04</b> The Founders</div>
+      <h2 class="rt">Two coaches, one short walk</h2>
+    </div>
+    <div class="contact-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+      <div class="card reveal" data-tilt>
+        <h3>Coach Jabez</h3>
+        <p>Rangers FC coach and co-founder of FC New Mabu. He is the reason the club sits where it sits: he kept count of the children who drifted away, and worked out that almost all of them lived on the same side of the barangay.</p>
+      </div>
+      <div class="card reveal" data-d="1" data-tilt>
+        <h3>Coach Ralph</h3>
+        <p>Rangers FC coach, co-founder here, and founder of the Gila skills academy. Between the two clubs he covers both ends of the same idea — get children playing, then make them better.</p>
+        <a class="big" href="tel:+639929747613" style="font-size:1.3rem">+63 992 974 7613</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOIN ============ -->
+<section id="join">
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>05</b> Join In</div>
+      <h2 class="rt">Bring your child. That is the whole requirement.</h2>
+      <p class="reveal" data-d="1">No kit needed, no fee to try, no experience assumed.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="card reveal" data-tilt>
+        <h3>Message the club</h3>
+        <p>Training days and times are posted on the Facebook page. It is the fastest way to reach the coaches.</p>
+        <a class="btn btn-solid btn-sm" href="https://www.facebook.com/share/1Hj5tFeLkW/" target="_blank" rel="noopener" style="margin-top:14px" data-magnet><span>FC New Mabu on Facebook</span></a>
+      </div>
+      <div class="card reveal" data-d="1" data-tilt>
+        <h3>Phone</h3>
+        <p>A dedicated club number is being set up. In the meantime Coach Ralph can answer anything about joining.</p>
+        <a class="big" href="tel:+639929747613" style="font-size:1.3rem">+63 992 974 7613</a><br />
+        <span class="tba">Club number to follow</span>
+      </div>
+      <div class="card reveal" data-d="2" data-tilt>
+        <h3>Where</h3>
+        <p>New Mabuhay Elementary School, Barangay Mabuhay, General Santos City. Exact pitch and session times are being confirmed with the school.</p>
+        <span class="tba">Full details to follow</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="../assets/teams/new-mabu-mark.webp" alt="FC New Mabu crest" width="58" height="58" />
+        <div>
+          <div class="foot-motto">Football, walking distance.</div>
+          <div class="foot-meta">FC New Mabu · Est. 2026 · A sister team of Rangers Football Club</div>
+        </div>
+      </div>
+      <div class="foot-meta">
+        New Mabuhay Elementary School<br />
+        Barangay Mabuhay, General Santos City<br />
+        <a href="https://www.facebook.com/share/1Hj5tFeLkW/" target="_blank" rel="noopener">Facebook</a> ·
+        <a href="../">Rangers FC</a> · <a href="../gila/">Gila</a> · <a href="../shop/">Shop</a>
+      </div>
+    </div>
+    <div class="small">
+      <span>© 2026 FC New Mabu · General Santos City</span>
+      <span>Founded by Coach Jabez and Coach Ralph.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/team.js"></script>
+<script>
+  /* the distance bars fill once the diagram is actually looked at */
+  (function(){
+    var w = document.getElementById('walk');
+    if(!w) return;
+    if(!('IntersectionObserver' in window)){ w.classList.add('in'); return; }
+    new IntersectionObserver(function(en, obs){
+      if(en[0].isIntersecting){ w.classList.add('in'); obs.disconnect(); }
+    }, {threshold:.35}).observe(w);
+  })();
+</script>
+</body>
+</html>

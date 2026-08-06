@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Club Shop | Rangers FC · FC New Mabu · Gila</title>
+<meta name="description" content="Kit and merchandise for Rangers Football Club, FC New Mabu and Gila Team, General Santos City. Every order puts boots, balls and tournament fees on the pitch." />
+<meta name="theme-color" content="#07223F" />
+<meta name="color-scheme" content="dark" />
+<link rel="canonical" href="https://rangersfc.net/shop/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Rangers FC Club Shop" />
+<meta property="og:url" content="https://rangersfc.net/shop/" />
+<meta property="og:title" content="Club Shop — wear the badge" />
+<meta property="og:description" content="Kit for Rangers FC, FC New Mabu and Gila. Every order supports the children who play." />
+<meta property="og:image" content="https://rangersfc.net/assets/og.png" />
+<link rel="icon" type="image/png" href="../assets/crest-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/team.css" />
+<style>
+  /* The shop wears the parent club's colours. */
+  :root{
+    --bg:#05101F;
+    --bg-2:#0B2038;
+    --ink:#F9F6EF;
+    --ink-dim:rgba(249,246,239,.74);
+    --ink-faint:rgba(249,246,239,.46);
+    --accent:#E8712B;
+    --accent-2:#4CA5D8;
+    --line:rgba(156,203,232,.18);
+    --red:#C31E24;
+  }
+  .btn-solid{color:#05101F}
+  .hero{min-height:78svh}
+  .hero-bg{background:
+    radial-gradient(72% 60% at 76% 26%,rgba(232,113,43,.16),transparent 70%),
+    linear-gradient(180deg,rgba(5,16,31,0) 45%,rgba(5,16,31,.94) 100%)}
+  .hero h1{font-size:clamp(3rem,11vw,7.6rem)}
+  .hero h1 .warm{color:var(--accent)}
+
+  /* filters */
+  .filters{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:28px}
+  .filters button{font-family:var(--cond);font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    font-size:.72rem;padding:.6em 1.15em;border-radius:999px;cursor:pointer;color:var(--ink-dim);
+    border:1px solid var(--line);background:transparent;transition:.22s}
+  .filters button:hover{color:var(--ink);border-color:var(--ink-faint)}
+  .filters button.on{background:var(--accent);border-color:var(--accent);color:#05101F;font-weight:700}
+
+  /* product grid */
+  .goods{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+  .good{border:1px solid var(--line);border-radius:18px;background:var(--bg-2);overflow:hidden;
+    display:flex;flex-direction:column;transition:border-color .3s,transform .3s var(--ease),box-shadow .3s}
+  .good:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+  .good .shot{position:relative;aspect-ratio:4/3;background:
+    radial-gradient(60% 60% at 50% 40%,rgba(76,165,216,.16),transparent 70%),#081a2e;
+    display:grid;place-items:center;overflow:hidden}
+  .good .shot img{width:100%;height:100%;object-fit:cover}
+  .good .shot .crest{width:44%;max-width:130px;opacity:.5;object-fit:contain;height:auto}
+  .good .tag{position:absolute;top:10px;left:10px;font-family:var(--cond);font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;font-size:.6rem;padding:.35em .75em;border-radius:999px;
+    background:rgba(5,16,31,.8);border:1px solid var(--line);color:var(--ink-dim)}
+  .good .body{padding:16px 16px 18px;display:flex;flex-direction:column;flex:1}
+  .good h3{font-size:1.3rem;line-height:1.05;margin-bottom:6px}
+  .good .note{font-size:.88rem;color:var(--ink-dim);max-width:none}
+  .good .sizes{display:flex;flex-wrap:wrap;gap:5px;margin-top:11px}
+  .good .sizes span{font-family:var(--cond);font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+    font-size:.58rem;padding:.3em .6em;border-radius:6px;border:1px solid var(--line);color:var(--ink-faint)}
+  .good .foot{margin-top:auto;padding-top:14px;display:flex;align-items:center;gap:10px;justify-content:space-between}
+  .good .price{font-family:var(--display);font-size:1.5rem;letter-spacing:.03em;color:var(--accent);line-height:1}
+  .good .price.ask{font-size:.82rem;font-family:var(--cond);font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-faint)}
+  .add{font-family:var(--cond);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;
+    padding:.6em 1.1em;border-radius:999px;cursor:pointer;border:1px solid var(--accent);
+    background:transparent;color:var(--accent);transition:.2s;white-space:nowrap}
+  .add:hover{background:var(--accent);color:#05101F}
+  .add.in{background:var(--accent);color:#05101F}
+  .good.out{opacity:.5}
+  .good.out .add{pointer-events:none;border-color:var(--line);color:var(--ink-faint)}
+
+  /* order tray */
+  .tray{position:fixed;left:0;right:0;bottom:0;z-index:85;transform:translateY(110%);
+    transition:transform .45s var(--ease);background:rgba(5,16,31,.97);border-top:1px solid var(--line);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+  .tray.up{transform:none}
+  .tray-inner{max-width:1140px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;
+    gap:14px;flex-wrap:wrap}
+  .tray-count{font-family:var(--cond);font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    font-size:.74rem;color:var(--ink-dim)}
+  .tray-count b{font-family:var(--display);font-size:1.5rem;color:var(--accent);margin-right:.35em}
+  .tray .btn{padding:.7em 1.3em}
+  .tray-clear{background:none;border:none;color:var(--ink-faint);cursor:pointer;font-family:var(--cond);
+    font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:.7rem}
+  .tray-clear:hover{color:var(--ink)}
+
+  /* order sheet */
+  .sheet{position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:20px;
+    background:rgba(3,8,15,.82);backdrop-filter:blur(6px)}
+  .sheet.open{display:grid}
+  .sheet-box{width:min(560px,100%);max-height:86svh;overflow:auto;background:var(--bg-2);
+    border:1px solid var(--line);border-radius:20px;padding:28px}
+  .sheet-box h3{font-size:1.9rem;margin-bottom:6px}
+  .sheet-box .lede{font-size:.95rem;margin-bottom:18px}
+  .sheet-list{list-style:none;margin:0 0 18px}
+  .sheet-list li{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .sheet-list .nm{flex:1;font-size:.95rem}
+  .sheet-list .qty{display:flex;align-items:center;gap:8px}
+  .sheet-list .qty button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);
+    background:transparent;color:var(--ink);cursor:pointer;font-size:1rem;line-height:1}
+  .sheet-list .qty button:hover{border-color:var(--accent);color:var(--accent)}
+  .sheet-list .qty b{min-width:22px;text-align:center;font-family:var(--display);font-size:1.2rem}
+  .sheet-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .sheet-note{margin-top:16px;font-size:.85rem;color:var(--ink-faint)}
+  .sheet-close{background:none;border:none;color:var(--ink-faint);cursor:pointer;font-size:1.6rem;
+    line-height:1;float:right;margin:-6px -6px 0 0}
+  .copied{font-family:var(--cond);font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    font-size:.7rem;color:var(--accent);margin-left:8px}
+  .empty{padding:40px 0;color:var(--ink-faint);text-align:center;font-family:var(--cond);
+    letter-spacing:.16em;text-transform:uppercase;font-size:.78rem}
+</style>
+</head>
+<body>
+
+<div id="grain" aria-hidden="true"></div>
+<div id="vig" aria-hidden="true"></div>
+<div id="reel" aria-hidden="true"><i></i></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../">
+      <img src="../assets/crest.webp" alt="Rangers Football Club crest" width="42" height="42" />
+      <span class="wordmark">CLUB SHOP<small>RANGERS · NEW MABU · GILA</small></span>
+    </a>
+    <div class="nav-end">
+      <a class="nav-back" href="../">← Rangers FC</a>
+      <a class="btn btn-solid btn-sm" href="#goods" data-magnet><span>Browse</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <img class="hero-crest" src="../assets/crest.webp" alt="" aria-hidden="true" />
+  <div class="wrap">
+    <span class="eyebrow">Rangers FC · FC New Mabu · Gila</span>
+    <h1>
+      <span class="ln"><i>WEAR</i></span>
+      <span class="ln"><i class="warm">THE BADGE.</i></span>
+    </h1>
+    <p class="hero-sub lede">Kit and merchandise for all three clubs. Every order buys boots for a child who has none, balls that survive a season, and the entry fee for the next tournament.</p>
+    <div class="hero-cta">
+      <a class="btn btn-solid" href="#goods" data-magnet><span>See the Kit</span></a>
+      <a class="btn btn-ghost" href="#how"><span>How Ordering Works</span></a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ GOODS ============ -->
+<section id="goods">
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>01</b> The Kit</div>
+      <h2 class="rt">Three badges, one club shop</h2>
+      <p class="reveal" data-d="1">Pick what you want, then send the order straight to the coaches. Nothing is charged here.</p>
+    </div>
+    <div class="filters reveal" id="filters" role="group" aria-label="Filter by team"></div>
+    <div class="goods" id="goodsGrid"></div>
+    <p class="empty" id="empty" hidden>Nothing here yet — check back shortly.</p>
+  </div>
+</section>
+
+<!-- ============ HOW ============ -->
+<section id="how" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>02</b> Ordering</div>
+      <h2 class="rt">How this works</h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal" data-tilt>
+        <span>Step one</span><b>PICK</b>
+        <p>Add what you want to your order. It is kept on this page only — nothing is sent anywhere yet.</p>
+      </div>
+      <div class="pillar reveal" data-d="1" data-tilt>
+        <span>Step two</span><b>SEND</b>
+        <p>Your list becomes a ready-written message. Send it by text, email, or copy it into Messenger.</p>
+      </div>
+      <div class="pillar reveal" data-d="2" data-tilt>
+        <span>Step three</span><b>CONFIRM</b>
+        <p>A coach replies with sizes, the total and where to collect. Payment is arranged directly with them.</p>
+      </div>
+      <div class="pillar reveal" data-d="3" data-tilt>
+        <span>Step four</span><b>WEAR IT</b>
+        <p>Collect at training. Every peso stays with the clubs — there is no middleman taking a cut.</p>
+      </div>
+    </div>
+    <div class="split" style="margin-top:44px">
+      <div class="prose reveal">
+        <h3 style="font-family:var(--display);font-size:1.9rem;margin-bottom:12px">Why there is no card checkout</h3>
+        <p>This shop takes orders; it does not take payments. That is deliberate for now — a card gateway costs money every month and needs a registered business behind it, which is a lot of overhead for a grassroots club selling shirts to its own families.</p>
+        <p>So orders come straight to a coach, and payment is settled the way it already is at training. If the volume ever justifies proper online payment, it can be added without rebuilding any of this.</p>
+      </div>
+      <div class="plate reveal" data-d="1">
+        <h3>Every order does something</h3>
+        <p>Most Rangers players come from families who cannot spend on football. Shirts sold to those who can are what put boots on the ones who cannot.</p>
+        <p style="margin-top:14px">Buying a cap is not charity and it is not nothing. It is a pair of boots, eventually.</p>
+        <a class="btn btn-solid btn-sm" href="tel:+639932910764" style="margin-top:18px" data-magnet><span>Call Coach James</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>03</b> Reach Us</div>
+      <h2 class="rt">Who to ask</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="card reveal" data-tilt>
+        <h3>Rangers FC</h3>
+        <p>Coach James, head coach and club contact.</p>
+        <a class="big" href="tel:+639932910764">+63 993 291 0764</a><br />
+        <a class="btn btn-ghost btn-sm" href="https://www.facebook.com/share/1F7K8LTuHT/" target="_blank" rel="noopener" style="margin-top:12px"><span>Facebook</span></a>
+      </div>
+      <div class="card reveal" data-d="1" data-tilt>
+        <h3>Gila &amp; FC New Mabu</h3>
+        <p>Coach Ralph, founder of Gila and co-founder of FC New Mabu.</p>
+        <a class="big" href="tel:+639929747613">+63 992 974 7613</a><br />
+        <a class="big" href="mailto:rcgqwerty16@gmail.com" style="font-size:1rem">rcgqwerty16@gmail.com</a>
+      </div>
+      <div class="card reveal" data-d="2" data-tilt>
+        <h3>Collection</h3>
+        <p>Orders are handed over at training on the home pitch in Yam 1, Purok 27, Barangay Mabuhay.</p>
+        <a class="btn btn-ghost btn-sm" href="https://share.google/nRfj0M8NLTZqJQiBK" target="_blank" rel="noopener" style="margin-top:12px"><span>Open in Maps</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="../assets/crest.webp" alt="Rangers Football Club crest" width="58" height="58" />
+        <div>
+          <div class="foot-motto">Play with your heart.</div>
+          <div class="foot-meta">Club shop · Rangers FC, FC New Mabu &amp; Gila</div>
+        </div>
+      </div>
+      <div class="foot-meta">
+        Yam 1, Purok 27, Barangay Mabuhay<br />
+        General Santos City, Philippines<br />
+        <a href="../">Rangers FC</a> · <a href="../new-mabu/">FC New Mabu</a> · <a href="../gila/">Gila</a>
+      </div>
+    </div>
+    <div class="small">
+      <span>© 2026 Rangers Football Club, Barangay Mabuhay, General Santos City</span>
+      <span>Every shirt sold is a pair of boots for someone who has none.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- order tray -->
+<div class="tray" id="tray" aria-live="polite">
+  <div class="tray-inner">
+    <span class="tray-count"><b id="trayN">0</b> item(s) in your order</span>
+    <button class="tray-clear" id="trayClear" type="button">Clear</button>
+    <a class="btn btn-solid" id="trayReview" href="#" style="margin-left:auto"><span>Review Order</span></a>
+  </div>
+</div>
+
+<!-- order sheet -->
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Your order">
+  <div class="sheet-box">
+    <button class="sheet-close" id="sheetClose" type="button" aria-label="Close">×</button>
+    <h3>Your order</h3>
+    <p class="lede">Send this to a coach and they will confirm sizes, the total and collection.</p>
+    <ul class="sheet-list" id="sheetList"></ul>
+    <div class="sheet-actions">
+      <a class="btn btn-solid" id="sendSms"><span>Send by Text</span></a>
+      <a class="btn btn-ghost" id="sendMail"><span>Send by Email</span></a>
+      <button class="btn btn-ghost" id="copyBtn" type="button"><span>Copy List</span><span class="copied" id="copied" hidden>Copied</span></button>
+    </div>
+    <p class="sheet-note">Nothing is charged on this website. A coach replies to agree sizes and payment.</p>
+  </div>
+</div>
+
+<script src="../assets/team.js"></script>
+<script>
+(function(){
+"use strict";
+var TEAMS = {rangers:'Rangers FC', newmabu:'FC New Mabu', gila:'Gila', all:'All clubs'};
+var CRESTS = {rangers:'../assets/crest.webp', newmabu:'../assets/teams/new-mabu-mark.webp',
+              gila:'../assets/teams/gila-mark.webp', all:'../assets/crest.webp'};
+var ORDER_TO = '+639932910764';
+var goodsEl = document.getElementById('goodsGrid'),
+    filtersEl = document.getElementById('filters'),
+    emptyEl = document.getElementById('empty'),
+    tray = document.getElementById('tray'), trayN = document.getElementById('trayN'),
+    sheet = document.getElementById('sheet'), sheetList = document.getElementById('sheetList');
+var items = [], cur = 'all', order = {}, currency = '₱';
+
+fetch('../assets/shop/shop.json', {cache:'no-cache'})
+  .then(function(r){ return r.ok ? r.json() : null; })
+  .then(function(d){
+    if(!d || !d.items || !d.items.length){ emptyEl.hidden = false; return; }
+    currency = d.currency || '₱';
+    items = d.items;
+    buildFilters();
+    render();
+  })['catch'](function(){ emptyEl.hidden = false; });
+
+function buildFilters(){
+  var present = ['all'].concat(Object.keys(TEAMS).filter(function(k){
+    return k !== 'all' && items.some(function(i){ return i.team === k; });
+  }));
+  present.forEach(function(k){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = k === 'all' ? 'Everything' : TEAMS[k];
+    b.className = k === cur ? 'on' : '';
+    b.addEventListener('click', function(){
+      cur = k;
+      [].slice.call(filtersEl.children).forEach(function(c){ c.classList.toggle('on', c === b); });
+      render();
+    });
+    filtersEl.appendChild(b);
+  });
+}
+
+function key(i){ return i.name; }
+
+function render(){
+  goodsEl.textContent = '';
+  var list = items.filter(function(i){ return cur === 'all' || i.team === cur || i.team === 'all'; });
+  list.forEach(function(i){
+    var card = document.createElement('article');
+    card.className = 'good' + (i.sold_out ? ' out' : '');
+
+    var shot = document.createElement('div');
+    shot.className = 'shot';
+    var img = document.createElement('img');
+    if(i.image){ img.src = '../' + i.image.replace(/^\.?\//, ''); img.alt = i.name; }
+    else { img.src = CRESTS[i.team] || CRESTS.all; img.alt = ''; img.className = 'crest'; }
+    img.loading = 'lazy';
+    shot.appendChild(img);
+    var tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.textContent = i.sold_out ? 'Sold out' : (TEAMS[i.team] || '');
+    shot.appendChild(tag);
+    card.appendChild(shot);
+
+    var body = document.createElement('div');
+    body.className = 'body';
+    var h = document.createElement('h3'); h.textContent = i.name; body.appendChild(h);
+    if(i.note){ var n = document.createElement('p'); n.className = 'note'; n.textContent = i.note; body.appendChild(n); }
+    if(i.sizes && i.sizes.length){
+      var sz = document.createElement('div'); sz.className = 'sizes';
+      i.sizes.forEach(function(s){ var e = document.createElement('span'); e.textContent = s; sz.appendChild(e); });
+      body.appendChild(sz);
+    }
+    var foot = document.createElement('div'); foot.className = 'foot';
+    var pr = document.createElement('span');
+    if(typeof i.price === 'number'){ pr.className = 'price'; pr.textContent = currency + i.price.toLocaleString(); }
+    else { pr.className = 'price ask'; pr.textContent = 'Ask for price'; }
+    foot.appendChild(pr);
+    var add = document.createElement('button');
+    add.type = 'button'; add.className = 'add';
+    add.textContent = order[key(i)] ? 'Added ×' + order[key(i)].n : 'Add';
+    if(order[key(i)]) add.classList.add('in');
+    add.addEventListener('click', function(){
+      var k = key(i);
+      order[k] = order[k] || {item:i, n:0};
+      order[k].n++;
+      add.textContent = 'Added ×' + order[k].n;
+      add.classList.add('in');
+      syncTray();
+    });
+    foot.appendChild(add);
+    body.appendChild(foot);
+    card.appendChild(body);
+    goodsEl.appendChild(card);
+  });
+  emptyEl.hidden = list.length > 0;
+}
+
+function count(){
+  return Object.keys(order).reduce(function(a, k){ return a + order[k].n; }, 0);
+}
+function syncTray(){
+  var c = count();
+  trayN.textContent = c;
+  tray.classList.toggle('up', c > 0);
+}
+function orderText(){
+  var lines = ['Hi! I would like to order from the club shop:', ''];
+  Object.keys(order).forEach(function(k){
+    lines.push('• ' + order[k].item.name + ' ×' + order[k].n +
+               (order[k].item.team && TEAMS[order[k].item.team] ? ' (' + TEAMS[order[k].item.team] + ')' : ''));
+  });
+  lines.push('', 'Please let me know sizes, the total and where to collect. Thank you!');
+  return lines.join('\n');
+}
+function fillSheet(){
+  sheetList.textContent = '';
+  Object.keys(order).forEach(function(k){
+    var row = document.createElement('li');
+    var nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = order[k].item.name;
+    var qty = document.createElement('span'); qty.className = 'qty';
+    var minus = document.createElement('button'); minus.type = 'button'; minus.textContent = '−';
+    minus.setAttribute('aria-label', 'One fewer ' + order[k].item.name);
+    var n = document.createElement('b'); n.textContent = order[k].n;
+    var plus = document.createElement('button'); plus.type = 'button'; plus.textContent = '+';
+    plus.setAttribute('aria-label', 'One more ' + order[k].item.name);
+    minus.addEventListener('click', function(){
+      order[k].n--;
+      if(order[k].n <= 0) delete order[k];
+      syncTray(); render(); fillSheet();
+      if(!count()) closeSheet();
+    });
+    plus.addEventListener('click', function(){ order[k].n++; syncTray(); render(); fillSheet(); });
+    qty.appendChild(minus); qty.appendChild(n); qty.appendChild(plus);
+    row.appendChild(nm); row.appendChild(qty);
+    sheetList.appendChild(row);
+  });
+  var txt = orderText();
+  document.getElementById('sendSms').href = 'sms:' + ORDER_TO + '?&body=' + encodeURIComponent(txt);
+  document.getElementById('sendMail').href = 'mailto:rcgqwerty16@gmail.com?subject=' +
+    encodeURIComponent('Club shop order') + '&body=' + encodeURIComponent(txt);
+}
+function openSheet(){ fillSheet(); sheet.classList.add('open'); }
+function closeSheet(){ sheet.classList.remove('open'); }
+
+document.getElementById('trayReview').addEventListener('click', function(e){ e.preventDefault(); openSheet(); });
+document.getElementById('sheetClose').addEventListener('click', closeSheet);
+sheet.addEventListener('click', function(e){ if(e.target === sheet) closeSheet(); });
+window.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeSheet(); });
+document.getElementById('trayClear').addEventListener('click', function(){
+  order = {}; syncTray(); render(); closeSheet();
+});
+document.getElementById('copyBtn').addEventListener('click', function(){
+  var done = document.getElementById('copied');
+  function flash(){ done.hidden = false; setTimeout(function(){ done.hidden = true; }, 1800); }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(orderText()).then(flash, flash);
+  }else{
+    var ta = document.createElement('textarea');
+    ta.value = orderText(); document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(err){}
+    document.body.removeChild(ta); flash();
+  }
+});
+})();
+</script>
+</body>
+</html>
