@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Gila Team | Football &amp; Futsal Academy · A Rangers FC sister team</title>
-<meta name="description" content="Gila is the skills academy of Rangers Football Club in General Santos City. Football and futsal training built on four words: grind, improve, learn, achieve." />
+<meta name="description" content="GILA — Grind. Improve. Learn. Achieve. The skills academy of Rangers Football Club in General Santos City. Football and futsal training built on the four words the name spells." />
 <meta name="theme-color" content="#0B0B0C" />
 <meta name="color-scheme" content="dark" />
 <link rel="canonical" href="https://rangersfc.net/gila/" />
@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="Gila Team" />
 <meta property="og:url" content="https://rangersfc.net/gila/" />
 <meta property="og:title" content="Gila Team — Grind. Improve. Learn. Achieve." />
-<meta property="og:description" content="The skills academy of Rangers FC. Football and futsal training in General Santos City." />
+<meta property="og:description" content="GILA — Grind. Improve. Learn. Achieve. The skills academy of Rangers FC. Football and futsal training in General Santos City." />
 <meta property="og:image" content="https://rangersfc.net/assets/teams/gila.webp" />
 <link rel="icon" type="image/png" href="../assets/crest-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,8 +37,15 @@
     linear-gradient(180deg,rgba(12,13,15,0) 40%,rgba(12,13,15,.9) 100%),
     repeating-linear-gradient(90deg,rgba(237,237,234,.045) 0 1px,transparent 1px 78px),
     repeating-linear-gradient(0deg,rgba(237,237,234,.045) 0 1px,transparent 1px 78px)}
-  .hero h1{letter-spacing:-.01em}
+  /* four words, four lines — the name spelt out down the page */
+  .hero h1{font-size:clamp(2.7rem,9.4vw,6.6rem);letter-spacing:-.01em}
   .hero h1 .dim{color:var(--accent-2)}
+  .hero h1 .hit{color:var(--accent)}
+  .hero h1 .ln:nth-child(4) i{transition-delay:.3s}
+  /* the acronym, spelt small */
+  .initials{display:flex;gap:.5em;align-items:center;font-family:var(--display);font-size:1.5rem;
+    line-height:1;letter-spacing:.28em;color:var(--accent)}
+  .initials i{font-style:normal}
   /* the four words, marching */
   .creed{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:6px;font-family:var(--cond);
     font-weight:700;letter-spacing:.3em;text-transform:uppercase;font-size:.8rem;color:var(--ink-faint)}
@@ -51,10 +58,15 @@
   .rep-track span::after{content:"·";margin:0 22px}
   @keyframes rep{to{transform:translateX(-50%)}}
   @media(prefers-reduced-motion:reduce){.rep-track{animation:none}}
-  .numbered{counter-reset:step}
-  .numbered .pillar::after{counter-increment:step;content:"0" counter(step);position:absolute;
-    right:14px;bottom:8px;font-family:var(--display);font-size:3.4rem;line-height:1;
-    color:var(--ink);opacity:.06}
+  /* G, I, L, A — one to a card */
+  .letters .pillar{padding-top:22px}
+  .letters .letter{font-family:var(--display);font-size:4.6rem;line-height:.8;color:var(--accent);
+    display:block;margin-bottom:6px;opacity:.9;letter-spacing:0}
+  .letters .pillar b{font-size:1.35rem;letter-spacing:.14em}
+  .letters .pillar::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;
+    border-radius:50%;border:1px solid var(--line)}
+  /* the title card's second line is the whole tagline */
+  .seq-title span:nth-child(2) i{font-size:.28em;letter-spacing:.18em}
 </style>
 <noscript><style>
   /* nothing here needs JavaScript to be readable */
@@ -75,7 +87,7 @@
     <div class="seq-pres">A Rangers FC Sister Team</div>
     <div class="seq-title">
       <span><i>GILA</i></span>
-      <span><i>THE ACADEMY</i></span>
+      <span><i>GRIND · IMPROVE · LEARN · ACHIEVE</i></span>
     </div>
     <div class="seq-bar"><i></i></div>
   </div>
@@ -90,7 +102,7 @@
   <div class="nav-inner">
     <a class="brand" href="#top">
       <img src="../assets/teams/gila-mark.webp" alt="Gila Team badge" width="42" height="42" />
-      <span class="wordmark">GILA<small>ACADEMY</small></span>
+      <span class="wordmark">GILA<small>G·I·L·A</small></span>
     </a>
     <div class="nav-end">
       <a class="nav-back" href="../">← Rangers FC</a>
@@ -121,9 +133,11 @@
       <span class="ln"><i>GRIND.</i></span>
       <span class="ln"><i class="dim">IMPROVE.</i></span>
       <span class="ln"><i>LEARN.</i></span>
+      <span class="ln"><i class="hit">ACHIEVE.</i></span>
     </h1>
     <div class="creed">
-      <span>Four words</span><b>One standard</b><span>No shortcuts</span>
+      <span class="initials" aria-hidden="true"><i>G</i><i>I</i><i>L</i><i>A</i></span>
+      <span>The name is the method</span>
     </div>
     <p class="hero-sub lede">Gila is where you go to fix the thing you are worst at. Football and futsal, drilled until the weak foot stops being the weak one.</p>
     <div class="hero-cta">
@@ -158,6 +172,7 @@
         <p>Coach Ralph could have called it anything. He put his own family name on it instead — Gila — and that was the whole point. If his name is on the badge, the standard is his to answer for. There is nowhere to hide behind a nickname.</p>
         <p>He had watched it happen for years at Rangers. A boy loses a match on Saturday, and everyone talks about Saturday. But the game was not lost on Saturday. It was lost months earlier, in the touches nobody practised, in the weak foot that got avoided, in the one-against-one he lost every single week and never once worked on.</p>
         <p>Talent turns up on its own. Everything else has to be built, badly and repeatedly, until it holds.</p>
+        <p>The name turned out to be the plan as well. Grind, Improve, Learn, Achieve — four words that happen to spell the one already on the badge, in the exact order they have to be done.</p>
         <p>So Gila is not really a team. It is a workshop with a badge on the door.</p>
       </div>
       <div class="plate reveal" data-d="1" data-tilt>
@@ -175,24 +190,24 @@
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
       <div class="slate reveal"><b>02</b> The Method</div>
-      <h2 class="rt">Four words, in order</h2>
-      <p class="reveal" data-d="1">They are on the badge because they are the sequence. Skip one and the rest stop working.</p>
+      <h2 class="rt">GILA spells the method</h2>
+      <p class="reveal" data-d="1">Four words, in order, and the badge is the first letter of each. They are a sequence, not a list — skip one and the rest stop working.</p>
     </div>
-    <div class="pillars numbered">
+    <div class="pillars letters">
       <div class="pillar reveal" data-tilt>
-        <span>First</span><b>GRIND</b>
+        <span class="letter">G</span><b>GRIND</b>
         <p>Turn up when it is boring. When it is hot, when the ball is worn, when nobody is watching. That is not the price of getting good — it <em>is</em> getting good.</p>
       </div>
       <div class="pillar reveal" data-d="1" data-tilt>
-        <span>Second</span><b>IMPROVE</b>
+        <span class="letter">I</span><b>IMPROVE</b>
         <p>One thing at a time, and measured. Not "get better at football" — fifty left-foot touches before the ball drops, and then fifty-one.</p>
       </div>
       <div class="pillar reveal" data-d="2" data-tilt>
-        <span>Third</span><b>LEARN</b>
+        <span class="letter">L</span><b>LEARN</b>
         <p>Understand why the drill exists, not just how to survive it. A player who knows the reason can coach themselves for the rest of their life.</p>
       </div>
       <div class="pillar reveal" data-d="3" data-tilt>
-        <span>Fourth</span><b>ACHIEVE</b>
+        <span class="letter">A</span><b>ACHIEVE</b>
         <p>Then, and only then, the match. Saturday stops being a test of nerve and becomes a report on the work already done.</p>
       </div>
     </div>
@@ -322,7 +337,7 @@
       <div class="foot-brand">
         <img src="../assets/teams/gila-mark.webp" alt="Gila Team badge" width="58" height="58" />
         <div>
-          <div class="foot-motto">Grind · Improve · Learn · Achieve</div>
+          <div class="foot-motto">GILA · Grind · Improve · Learn · Achieve</div>
           <div class="foot-meta">Gila Team · A sister team of Rangers Football Club</div>
         </div>
       </div>

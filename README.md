@@ -14,7 +14,7 @@ Barangay Mabuhay, General Santos City, founded 14 June 1996.
 | `index.html` | The club website. One self-contained page: markup, styles and scripts. |
 | `game/index.html` | *SKY: Soccer Quest*, the club's side-scrolling football game. |
 | `new-mabu/index.html` | FC New Mabu — sister team at New Mabuhay Elementary School. |
-| `gila/index.html` | Gila — the skills academy. |
+| `gila/index.html` | Gila — the skills academy. Grind. Improve. Learn. Achieve. |
 | `shop/index.html` | Club shop for all three teams. |
 | `assets/shop/shop.json` | The shop's stock. Edit this to change items, prices and sizes. |
 | `assets/team.css`, `assets/team.js` | Shared kit behind the three pages above. |
