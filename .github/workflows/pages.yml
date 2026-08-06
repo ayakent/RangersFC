@@ -47,9 +47,10 @@ jobs:
 
       - name: Deploy
         id: deployment
+        # Ten minutes is the ceiling, not a default: deploy-pages clamps any
+        # larger timeout back down and says so in the log. So when GitHub's
+        # publishing queue holds a deployment at deployment_queued for longer
+        # than that, the deploy fails and the only remedy is a fresh run —
+        # re-running the job uploads a second github-pages artifact, which
+        # deploy-pages then refuses to choose between.
         uses: actions/deploy-pages@v4
-        with:
-          # GitHub's publishing queue has been slow enough to blow through the
-          # action's ten-minute default and fail a deploy that was fine. Wait
-          # twenty before calling it.
-          timeout: 1200000
