@@ -3,7 +3,7 @@
 
    One engine, two scenes, chosen by data-stage on #stage:
 
-     data-stage="mabu"  a schoolyard futsal court at golden hour. Every tap
+     data-stage="mabu"  a schoolyard futsal court at dusk. Every tap
                         drops another ball onto the court; they bounce, roll
                         and knock into each other. One tap, one more child.
 
@@ -454,20 +454,20 @@ try{
   }
 
   /* ======================================================================
-     SCENE — schoolyard court at golden hour
+     SCENE — schoolyard court at dusk, in the club's pink
      ====================================================================== */
   var balls = [], bounds = null, tick = function(){}, onTap = function(){};
 
   if(mode === 'mabu'){
-    scene.fog = new THREE.Fog(0x21160f, 26, 96);
-    skyDome([[0,'#132033'],[.34,'#3d3a4a'],[.5,'#8a5a3c'],[.6,'#e08b3c'],[.68,'#f6bb5c'],
-             [.78,'#5a4530'],[1,'#1a1209']], 100);
+    scene.fog = new THREE.Fog(0x1b1218, 26, 96);
+    skyDome([[0,'#120e16'],[.34,'#2c2534'],[.5,'#653450'],[.6,'#bd4569'],[.68,'#f2789f'],
+             [.78,'#402b36'],[1,'#100a0e']], 100);
 
     /* the court: painted lines on hard standing */
     var cc = document.createElement('canvas'); cc.width = cc.height = 1024;
     var cx = cc.getContext('2d');
-    cx.fillStyle = '#2c5f7a'; cx.fillRect(0, 0, 1024, 1024);
-    cx.fillStyle = '#2a5570'; cx.fillRect(0, 0, 1024, 512);
+    cx.fillStyle = '#3b3e44'; cx.fillRect(0, 0, 1024, 1024);
+    cx.fillStyle = '#35383e'; cx.fillRect(0, 0, 1024, 512);
     for(var s = 0; s < 5200; s++){
       cx.fillStyle = ['#27566f','#316a86','#2b6079'][(Math.random()*3)|0];
       cx.globalAlpha = .3;
@@ -489,13 +489,13 @@ try{
     scene.add(court);
 
     var apron = new THREE.Mesh(new THREE.CircleGeometry(80, 36),
-      new THREE.MeshStandardMaterial({color:0x1d1a12, roughness:1}));
+      new THREE.MeshStandardMaterial({color:0x17161a, roughness:1}));
     apron.rotation.x = -Math.PI / 2; apron.position.y = -0.03;
     scene.add(apron);
 
     /* the school: a long low block with lit windows, and a covered walkway */
-    var wall = new THREE.MeshStandardMaterial({color:0x6d6455, roughness:.92});
-    var roof = new THREE.MeshStandardMaterial({color:0x3a2f26, roughness:.85});
+    var wall = new THREE.MeshStandardMaterial({color:0x62626a, roughness:.92});
+    var roof = new THREE.MeshStandardMaterial({color:0x2e2e35, roughness:.85});
     var blockG = new THREE.Group();
     var body = new THREE.Mesh(new THREE.BoxGeometry(30, 4.6, 7), wall);
     body.position.set(0, 2.3, -18); body.castShadow = body.receiveShadow = true;
@@ -503,7 +503,7 @@ try{
     var top = new THREE.Mesh(new THREE.BoxGeometry(31.5, .5, 8.4), roof);
     top.position.set(0, 4.8, -18); top.castShadow = true;
     blockG.add(top);
-    var win = new THREE.MeshBasicMaterial({color:0xffd9a0, fog:false});
+    var win = new THREE.MeshBasicMaterial({color:0xffd0bc, fog:false});
     for(var w = -6; w <= 6; w++){
       var pane = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.5), win);
       pane.position.set(w * 2.2, 2.5, -14.45);
@@ -523,10 +523,10 @@ try{
     function tree(x, z, sc){
       var g = new THREE.Group();
       var tr = new THREE.Mesh(new THREE.CylinderGeometry(.22 * sc, .34 * sc, 3.4 * sc, 7),
-        new THREE.MeshStandardMaterial({color:0x2b2119, roughness:1}));
+        new THREE.MeshStandardMaterial({color:0x2a242a, roughness:1}));
       tr.position.y = 1.7 * sc;
       g.add(tr);
-      var leaf = new THREE.MeshStandardMaterial({color:0x1d3320, roughness:1});
+      var leaf = new THREE.MeshStandardMaterial({color:0x24352c, roughness:1});
       for(var i = 0; i < 4; i++){
         var b = new THREE.Mesh(new THREE.SphereGeometry(1.5 * sc, 9, 7), leaf);
         b.position.set((Math.random()-.5)*1.7*sc, (3.3 + Math.random()*1.2) * sc, (Math.random()-.5)*1.7*sc);
@@ -538,12 +538,12 @@ try{
     }
     tree(-16, -9, 1.25); tree(15, -11, 1.05); tree(20, 2, 1.35); tree(-21, 3, 1.15);
 
-    /* the low sun doing all the work */
-    var sun = glowSprite(26, 0xffc46b, .9);
+    /* the low sun doing all the work — the club's pink, straight from the sky */
+    var sun = glowSprite(26, 0xff7fae, .9);
     sun.position.set(-26, 5.5, -46);
     scene.add(sun);
-    scene.add(new THREE.HemisphereLight(0xffc98a, 0x2a1f14, .75));
-    var key = new THREE.DirectionalLight(0xffb066, 2.1);
+    scene.add(new THREE.HemisphereLight(0xffa9ca, 0x201a20, .58));
+    var key = new THREE.DirectionalLight(0xff87ae, 1.7);
     key.position.set(-24, 11, -30);
     key.castShadow = true;
     key.shadow.mapSize.set(isSmall ? 1024 : 2048, isSmall ? 1024 : 2048);
@@ -552,7 +552,7 @@ try{
     key.shadow.camera.top = 22; key.shadow.camera.bottom = -22;
     key.shadow.bias = -0.0006;
     scene.add(key);
-    var fill = new THREE.DirectionalLight(0x86a8d6, .5);
+    var fill = new THREE.DirectionalLight(0x9aa2ad, .68);
     fill.position.set(14, 9, 16);
     scene.add(fill);
 
@@ -563,7 +563,7 @@ try{
     }
     var dg = new THREE.BufferGeometry();
     dg.setAttribute('position', new THREE.BufferAttribute(da, 3));
-    scene.add(new THREE.Points(dg, new THREE.PointsMaterial({color:0xffd7a0, size:.055,
+    scene.add(new THREE.Points(dg, new THREE.PointsMaterial({color:0xffc2d8, size:.055,
       transparent:true, opacity:.6, blending:THREE.AdditiveBlending, depthWrite:false})));
 
     bounds = {x:9.2, z1:-9.2, z2:9.2};

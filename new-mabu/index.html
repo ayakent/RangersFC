@@ -20,24 +20,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../assets/team.css" />
 <style>
-  /* New Mabu's palette: schoolyard ink and late-afternoon gold. */
+  /* The club's colours: pink, grey and black. Black holds the page, grey
+     does the quiet work, and the pink is spent only where it counts. */
   :root{
     --bg:#0A0A0B;
-    --bg-2:#131316;
-    --ink:#F5F2EB;
-    --ink-dim:rgba(245,242,235,.72);
-    --ink-faint:rgba(245,242,235,.44);
-    --accent:#F0B429;
-    --accent-2:#7FB3D5;
-    --line:rgba(245,242,235,.13);
+    --bg-2:#141416;
+    --ink:#F2F2F3;
+    --ink-dim:rgba(242,242,243,.72);
+    --ink-faint:rgba(242,242,243,.44);
+    --accent:#FF4E9B;
+    --accent-2:#9BA1A8;
+    --line:rgba(242,242,243,.14);
   }
   .btn-solid{color:#0A0A0B}
   /* chalk lines on a blackboard — the school, not the stadium */
   .hero-bg{background:
-    radial-gradient(70% 55% at 78% 30%,rgba(240,180,41,.13),transparent 70%),
+    radial-gradient(70% 55% at 78% 30%,rgba(255,78,155,.10),transparent 70%),
     linear-gradient(180deg,rgba(10,10,11,0) 45%,rgba(10,10,11,.92) 100%)}
   .hero h1{font-size:clamp(3.4rem,15vw,9.4rem);line-height:.84}
-  .hero h1 .gold{color:var(--accent)}
+  .hero h1 .pink{color:var(--accent)}
   /* what the club is, in four words, under the name */
   .tag{font-family:var(--cond);font-weight:600;letter-spacing:.2em;text-transform:uppercase;
     font-size:.86rem;color:var(--ink-dim);margin-top:14px}
@@ -55,7 +56,7 @@
   .walk-row:last-child{margin-bottom:0}
   .walk-dot{width:12px;height:12px;border-radius:50%;flex:none;background:var(--accent-2)}
   .walk-row.near .walk-dot{background:var(--accent)}
-  .walk-bar{flex:1;height:8px;border-radius:99px;background:rgba(245,242,235,.09);overflow:hidden}
+  .walk-bar{flex:1;height:8px;border-radius:99px;background:rgba(242,242,243,.09);overflow:hidden}
   .walk-bar i{display:block;height:100%;width:0;border-radius:99px;background:var(--accent-2);
     transition:width 1.6s var(--ease-io)}
   .walk-row.near .walk-bar i{background:var(--accent)}
@@ -151,7 +152,7 @@
     <span class="eyebrow">Rangers FC · Sister Team</span>
     <h1>
       <span class="ln"><i>FC NEW</i></span>
-      <span class="ln"><i class="gold">MABU</i></span>
+      <span class="ln"><i class="pink">MABU</i></span>
     </h1>
     <p class="tag">Football, walking distance.</p>
     <div class="creed">
