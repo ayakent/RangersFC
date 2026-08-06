@@ -202,6 +202,7 @@ p{max-width:64ch}
 .nav-links a:hover{opacity:1}
 .nav-links a:hover::after{right:0}
 .nav-end{display:flex;align-items:center;gap:10px;margin-left:auto}
+.nav-call{white-space:nowrap}
 @media(min-width:860px){.nav-links{display:flex}.nav-end{margin-left:0}}
 /* the sound switch costs width, so tighten the bar on small phones */
 @media(max-width:430px){
@@ -211,6 +212,17 @@ p{max-width:64ch}
   .brand img{width:38px;height:38px}
   .nav-end{gap:8px}
   .nav-call{padding:.55em .9em;font-size:.72rem}
+}
+@media(max-width:360px){
+  .nav-inner{padding:8px 10px;gap:7px}
+  .brand{gap:8px}
+  .brand img{width:34px;height:34px}
+  .wordmark{font-size:1rem}
+  .wordmark small{font-size:.52rem;letter-spacing:.2em}
+  .nav-snd{width:32px;height:32px}
+  .nav-snd svg{width:16px;height:16px}
+  .nav-end{gap:6px}
+  .nav-call{padding:.5em .72em;font-size:.66rem;letter-spacing:.08em}
 }
 /* always-reachable sound switch — the hero's own toggle scrolls away */
 .nav-snd{flex:none;width:38px;height:38px;border-radius:50%;cursor:pointer;
@@ -229,8 +241,7 @@ p{max-width:64ch}
    4. BUTTONS
    ========================================================================== */
 .btn{display:inline-flex;align-items:center;gap:.55em;font-family:var(--cond);font-weight:600;
-  letter-spacing:.14em;text-transform:uppercase;font-size:.9rem;text-decoration:none;
-  white-space:nowrap;padding:.9em 1.6em;
+  letter-spacing:.14em;text-transform:uppercase;font-size:.9rem;text-decoration:none;padding:.9em 1.6em;
   border-radius:999px;cursor:pointer;border:2px solid transparent;position:relative;overflow:hidden;
   transition:transform .25s var(--ease),background .25s,color .25s,border-color .25s,box-shadow .25s}
 .btn span{position:relative;z-index:2}
@@ -514,8 +525,30 @@ section{padding:96px 0;position:relative}
 .game-copy p{color:rgba(249,246,239,.82)}
 .game-list{list-style:none;margin:20px 0 26px;display:grid;gap:9px}
 .game-list li{font-family:var(--cond);font-weight:500;letter-spacing:.12em;text-transform:uppercase;
-  font-size:.8rem;color:var(--sky-soft);display:flex;gap:10px;align-items:center}
-.game-list li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange);flex:none}
+  font-size:.8rem;color:var(--sky-soft);display:flex;gap:10px;align-items:flex-start}
+.game-list li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange);
+  flex:none;margin-top:.45em}
+
+/* Album */
+.album-sec{background:var(--navy-ink);position:relative;overflow:hidden}
+.album-sec .glow{position:absolute;left:50%;top:0;width:min(140vw,1100px);height:520px;
+  transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(circle at 50% 0,rgba(30,215,96,.13),transparent 68%)}
+.album-grid{display:grid;gap:34px;align-items:center}
+@media(min-width:900px){.album-grid{grid-template-columns:1.05fr .95fr}}
+.album-copy h2{margin-bottom:14px}
+.album-copy p{color:rgba(249,246,239,.84)}
+.album-copy p+p{margin-top:14px}
+.album-list{list-style:none;margin:22px 0 26px;display:grid;gap:9px}
+.album-list li{font-family:var(--cond);font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  font-size:.8rem;color:var(--sky-soft);display:flex;gap:10px;align-items:flex-start}
+.album-list li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange);
+  flex:none;margin-top:.45em}
+.album-player{border-radius:16px;overflow:hidden;box-shadow:0 22px 52px rgba(0,0,0,.55);
+  background:#121212;min-height:352px}
+.album-player iframe{display:block;width:100%;height:clamp(352px,58vh,520px);border:0}
+.album-note{margin-top:13px;font-family:var(--cond);font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.7rem;color:rgba(249,246,239,.5)}
 
 /* Visit */
 .visit-grid{display:grid;gap:16px}
@@ -623,6 +656,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
     <li data-for="values"><span>Values</span></li>
     <li data-for="programs"><span>Programmes</span></li>
     <li data-for="coaches"><span>Coaches</span></li>
+    <li data-for="album"><span>The Album</span></li>
     <li data-for="game"><span>The Game</span></li>
     <li data-for="visit"><span>Visit</span></li>
   </ol>
@@ -899,13 +933,47 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   </div>
 </section>
 
+<!-- ============ ALBUM ============ -->
+<section class="album-sec" id="album">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>05</b> The Record</div>
+    </div>
+    <div class="album-grid">
+      <div class="album-copy reveal">
+        <h2 class="rt">The album: Play With Your Heart</h2>
+        <p>Three words the coaches have been shouting across this pitch since 1996. Now they have a soundtrack.</p>
+        <p><em>Play With Your Heart</em> is Rangers Football Club's own album. Press play and let it run while you read, or take the whole thing with you to training.</p>
+        <ul class="album-list">
+          <li>Free to stream on Spotify</li>
+          <li>Play it here or add it to your own playlist</li>
+          <li>Every listen carries the club a little further</li>
+        </ul>
+        <a class="btn btn-red" href="https://open.spotify.com/album/6qK04S9Tn1TtIlHN0f5Xh5"
+           target="_blank" rel="noopener" data-magnet><span>Open in Spotify</span></a>
+      </div>
+      <div class="reveal" data-d="1">
+        <div class="album-player">
+          <iframe src="https://open.spotify.com/embed/album/6qK04S9Tn1TtIlHN0f5Xh5?utm_source=generator&amp;theme=0"
+                  title="Play With Your Heart by Rangers Football Club, on Spotify"
+                  loading="lazy" allowfullscreen
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+        </div>
+        <p class="album-note">Scroll the player for the full track list · starting the album pauses the music on this page</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ THE GAME ============ -->
 <section class="reel-sec" id="game">
   <div class="glow" aria-hidden="true"></div>
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>05</b> Extra Time</div>
+      <div class="slate reveal"><b>06</b> Extra Time</div>
     </div>
     <div class="game-grid">
       <a class="poster reveal" href="game/" aria-label="Play SKY: Soccer Quest">
@@ -937,7 +1005,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>06</b> Visit Us</div>
+      <div class="slate reveal"><b>07</b> Visit Us</div>
       <h2 class="rt">Come watch a session</h2>
     </div>
     <div class="visit-grid">
@@ -1404,6 +1472,21 @@ document.addEventListener('visibilitychange', function(){
   if(document.hidden) bgm.pause();
   else if(!muted) musicPlay();
 });
+
+/* If the visitor starts the Spotify album, stand down — two pieces of music
+   at once helps nobody. A cross-origin iframe gives us no events, but taking
+   keyboard focus is a reliable tell that they clicked inside the player.
+   This is a courtesy for the visit only, so it isn't written to storage. */
+var spotify = document.querySelector('.album-player iframe');
+if(spotify){
+  window.addEventListener('blur', function(){
+    if(document.activeElement !== spotify || muted) return;
+    muted = true;
+    paintSound();
+    if(bgm) bgm.pause();
+    if(AC && master) master.gain.setTargetAtTime(0, AC.currentTime, 0.05);
+  });
+}
 
 paintSound();
 if(bgm){ bgm.volume = 0; musicPlay(); }
