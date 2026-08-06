@@ -345,7 +345,7 @@ p{max-width:64ch}
   border:1px solid rgba(156,203,232,.22);border-radius:999px;background:rgba(14,62,107,.22);
   transition:border-color .3s,background .3s,transform .25s var(--ease)}
 .sis:hover{border-color:var(--orange);background:rgba(232,113,43,.12);transform:translateY(-3px)}
-.sis img{width:38px;height:38px;object-fit:contain;flex:none}
+.sis img{width:46px;height:46px;object-fit:contain;flex:none}
 .sis b{display:block;font-family:var(--display);font-size:1.15rem;letter-spacing:.05em;
   line-height:1;color:#fff}
 .sis span{display:block;font-family:var(--cond);font-weight:600;letter-spacing:.16em;
@@ -551,6 +551,36 @@ section{padding:96px 0;position:relative}
 .game-list li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange);
   flex:none;margin-top:.45em}
 
+/* The family — the two sister teams and the shop, introduced properly */
+.fam-sec{background:var(--navy-ink);position:relative;overflow:hidden}
+.fam-sec .glow{position:absolute;left:50%;top:0;width:min(140vw,1100px);height:460px;
+  transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(circle at 50% 0,rgba(76,165,216,.16),transparent 68%)}
+.fam-grid{display:grid;gap:18px}
+@media(min-width:820px){.fam-grid{grid-template-columns:repeat(3,1fr)}}
+.fam{display:flex;flex-direction:column;text-decoration:none;border-radius:20px;overflow:hidden;
+  border:1px solid rgba(156,203,232,.24);background:rgba(14,62,107,.22);
+  transition:border-color .3s,transform .3s var(--ease),box-shadow .3s,background .3s}
+.fam:hover{border-color:var(--orange);transform:translateY(-6px);background:rgba(232,113,43,.1);
+  box-shadow:0 22px 50px rgba(0,0,0,.45)}
+/* the logo itself is the button */
+.fam-badge{aspect-ratio:16/10;display:grid;place-items:center;padding:26px;position:relative;
+  background:radial-gradient(70% 70% at 50% 40%,rgba(156,203,232,.14),transparent 72%)}
+.fam-badge img{max-height:100%;max-width:74%;width:auto;object-fit:contain;
+  transition:transform .5s var(--ease)}
+.fam:hover .fam-badge img{transform:scale(1.07)}
+.fam-body{padding:0 24px 26px;display:flex;flex-direction:column;flex:1}
+.fam-role{font-family:var(--cond);font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  font-size:.64rem;color:var(--orange);margin-bottom:7px}
+.fam h3{font-size:1.75rem;color:#fff;margin-bottom:9px}
+.fam p{font-size:.95rem;color:rgba(249,246,239,.82);max-width:none}
+.fam-go{margin-top:auto;padding-top:18px;font-family:var(--cond);font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;font-size:.74rem;color:var(--sky);display:flex;align-items:center;gap:.5em}
+.fam-go::after{content:"→";transition:transform .3s var(--ease)}
+.fam:hover .fam-go{color:var(--orange)}
+.fam:hover .fam-go::after{transform:translateX(5px)}
+.fam-note{margin-top:30px;font-size:.97rem;color:rgba(249,246,239,.72)}
+
 /* Gallery — a slideshow of whatever is in assets/gallery/ */
 .gal-sec{background:var(--black);position:relative;overflow:hidden}
 .gal-sec .glow{position:absolute;left:50%;top:0;width:min(140vw,1100px);height:480px;
@@ -711,6 +741,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
     <li data-for="values"><span>Values</span></li>
     <li data-for="programs"><span>Programmes</span></li>
     <li data-for="coaches"><span>Coaches</span></li>
+    <li data-for="family"><span>The Family</span></li>
     <li data-for="gallery"><span>Gallery</span></li>
     <li data-for="album"><span>The Album</span></li>
     <li data-for="game"><span>The Game</span></li>
@@ -729,7 +760,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
       <li><a href="#about">The Club</a></li>
       <li><a href="#values">Values</a></li>
       <li><a href="#coaches">Coaches</a></li>
-      <li><a href="#game">The Game</a></li>
+      <li><a href="#family">Teams</a></li>
       <li><a href="shop/">Shop</a></li>
       <li><a href="#visit">Visit Us</a></li>
     </ul>
@@ -797,15 +828,15 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
     <span class="sisters-lab">Sister teams</span>
     <div class="sisters-links">
       <a class="sis" href="new-mabu/">
-        <img src="assets/teams/new-mabu-mark.webp" alt="" width="38" height="38" />
+        <img src="assets/teams/new-mabu-mark.webp" alt="" width="46" height="46" />
         <span style="margin:0"><b>FC New Mabu</b><span>New Mabuhay Elementary</span></span>
       </a>
       <a class="sis" href="gila/">
-        <img src="assets/teams/gila-mark.webp" alt="" width="38" height="38" />
+        <img src="assets/teams/gila-mark.webp" alt="" width="46" height="46" />
         <span style="margin:0"><b>Gila</b><span>Skills academy</span></span>
       </a>
       <a class="sis" href="shop/">
-        <img src="assets/crest.webp" alt="" width="38" height="38" />
+        <img src="assets/crest.webp" alt="" width="46" height="46" />
         <span style="margin:0"><b>Club Shop</b><span>Kit &amp; merchandise</span></span>
       </a>
     </div>
@@ -1011,6 +1042,49 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   </div>
 </section>
 
+<!-- ============ THE FAMILY ============ -->
+<section class="fam-sec" id="family">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>05</b> The Family</div>
+      <h2 class="rt">One club became three</h2>
+      <p class="reveal" data-d="1">Rangers has spent thirty years on one pitch. Reaching further meant building outward — two sister teams, and a shop that pays for the boots.</p>
+    </div>
+    <div class="fam-grid">
+      <a class="fam reveal" href="new-mabu/">
+        <span class="fam-badge"><img src="assets/teams/new-mabu-mark.webp" alt="FC New Mabu crest" width="200" height="200" loading="lazy" /></span>
+        <span class="fam-body">
+          <span class="fam-role">Sister team · Est. 2026</span>
+          <h3>FC New Mabu</h3>
+          <p>Founded by Coach Jabez and Coach Ralph, and built around New Mabuhay Elementary School so the walk to training is short enough that nobody stops coming. Football and futsal, from a first touch.</p>
+          <span class="fam-go">Visit FC New Mabu</span>
+        </span>
+      </a>
+      <a class="fam reveal" data-d="1" href="gila/">
+        <span class="fam-badge"><img src="assets/teams/gila-mark.webp" alt="Gila Team badge" width="200" height="200" loading="lazy" /></span>
+        <span class="fam-body">
+          <span class="fam-role">Skills academy</span>
+          <h3>Gila</h3>
+          <p>Coach Ralph's academy, carrying his own surname because the standard is his to answer for. Grind, improve, learn, achieve — the unglamorous hours that decide what happens on Saturday.</p>
+          <span class="fam-go">Visit Gila</span>
+        </span>
+      </a>
+      <a class="fam reveal" data-d="2" href="shop/">
+        <span class="fam-badge"><img src="assets/crest.webp" alt="Rangers Football Club crest" width="200" height="200" loading="lazy" /></span>
+        <span class="fam-body">
+          <span class="fam-role">Club shop</span>
+          <h3>Wear the Badge</h3>
+          <p>Kit and merchandise for all three clubs. Most Rangers families cannot spend on football — shirts sold to those who can are what put boots on those who cannot.</p>
+          <span class="fam-go">Open the shop</span>
+        </span>
+      </a>
+    </div>
+    <p class="fam-note reveal" data-d="2">Three doors into the same game, and no child turned away for arriving at the wrong one.</p>
+  </div>
+</section>
+
 <!-- ============ GALLERY ============ -->
 <!-- Built from assets/gallery/. Hides itself when the folder is empty. -->
 <section class="gal-sec" id="gallery" hidden>
@@ -1018,7 +1092,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>05</b> From the Pitch</div>
+      <div class="slate reveal"><b>06</b> From the Pitch</div>
       <h2 class="rt">Training, tournaments, everything between</h2>
       <p class="gal-lede reveal" data-d="1">Photos and video from around the club, added as the season goes on.</p>
     </div>
@@ -1043,7 +1117,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>06</b> The Record</div>
+      <div class="slate reveal"><b>07</b> The Record</div>
     </div>
     <div class="album-grid">
       <div class="album-copy reveal">
@@ -1077,7 +1151,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>07</b> Extra Time</div>
+      <div class="slate reveal"><b>08</b> Extra Time</div>
     </div>
     <div class="game-grid">
       <a class="poster reveal" href="game/" aria-label="Play SKY: Soccer Quest">
@@ -1109,7 +1183,7 @@ footer{background:var(--black);border-top:1px solid rgba(156,203,232,.12);paddin
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>08</b> Visit Us</div>
+      <div class="slate reveal"><b>09</b> Visit Us</div>
       <h2 class="rt">Come watch a session</h2>
     </div>
     <div class="visit-grid">
