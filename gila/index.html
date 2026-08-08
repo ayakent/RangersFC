@@ -67,6 +67,33 @@
     border-radius:50%;border:1px solid var(--line)}
   /* the title card's second line is the whole tagline */
   .seq-title span:nth-child(2) i{font-size:.28em;letter-spacing:.18em}
+  /* ---------- the squads ---------- */
+  .squads{display:grid;gap:34px}
+  @media(min-width:920px){.squads{grid-template-columns:.94fr 1.06fr;align-items:start}}
+  .squad-shot{position:relative;margin:0;border-radius:20px;overflow:hidden;border:1px solid var(--line);
+    background:var(--bg-2);box-shadow:0 26px 60px rgba(0,0,0,.45)}
+  .squad-shot img{display:block;width:100%;height:auto}
+  .squad-shot figcaption{position:absolute;left:0;right:0;bottom:0;padding:56px 20px 16px;pointer-events:none;
+    background:linear-gradient(180deg,rgba(12,13,15,0),rgba(12,13,15,.9))}
+  .squad-shot figcaption b{display:block;font-family:var(--display);font-size:1.35rem;letter-spacing:.05em;
+    color:#fff;font-weight:400}
+  .squad-shot figcaption span{font-family:var(--cond);font-weight:600;letter-spacing:.18em;
+    text-transform:uppercase;font-size:.68rem;color:rgba(255,255,255,.62)}
+  /* one block per age group, tagged in the artwork's own pink-to-amber */
+  .age{border:1px solid var(--line);border-radius:16px;background:var(--bg-2);padding:24px;
+    transition:border-color .3s,transform .3s var(--ease)}
+  .age:hover{border-color:var(--accent);transform:translateY(-3px)}
+  .age+.age{margin-top:14px}
+  .age-tag{display:block;font-family:var(--display);font-size:2.7rem;line-height:.86;letter-spacing:.01em;
+    background:linear-gradient(135deg,#FF3D9A,#FFC46B);-webkit-background-clip:text;background-clip:text;
+    color:transparent;margin-bottom:8px}
+  .age h3{font-size:1.3rem;color:var(--ink);margin-bottom:8px}
+  .age p{color:var(--ink-dim);font-size:.97rem;max-width:none}
+  /* the line written across the sky in the photograph */
+  .sky{margin-top:26px;padding-left:20px;border-left:2px solid var(--accent)}
+  .sky b{display:block;font-family:var(--display);font-size:1.7rem;letter-spacing:.08em;color:var(--ink);
+    font-weight:400;margin-bottom:8px}
+  .sky p{color:var(--ink-dim);font-size:.97rem;max-width:none}
 </style>
 <noscript><style>
   /* nothing here needs JavaScript to be readable */
@@ -271,6 +298,45 @@
   </div>
 </section>
 
+<!-- ============ THE SQUADS ============ -->
+<section id="squads">
+  <div class="wrap">
+    <div class="rulewrap"><i></i></div>
+    <div class="section-head">
+      <div class="slate reveal"><b>05</b> The Squads</div>
+      <h2 class="rt">Two squads, one badge</h2>
+      <p class="reveal" data-d="1">The age groups already wearing it. Photographed at the end of the day on the same patch of ground they train on, which is exactly where a team photograph belongs.</p>
+    </div>
+    <div class="squads">
+      <figure class="squad-shot reveal">
+        <img src="../assets/teams/gila-squads.webp"
+             alt="The Gila Academy U10 and U8 squads in maroon and white, gathered together on the training ground at dusk."
+             width="1080" height="1350" loading="lazy" decoding="async" />
+        <figcaption>
+          <b>U10 &amp; U8</b>
+          <span>Gila Academy · General Santos City</span>
+        </figcaption>
+      </figure>
+      <div class="squad-notes">
+        <div class="age reveal" data-d="1" data-tilt>
+          <span class="age-tag" aria-hidden="true">U10</span>
+          <h3>Old enough to be told the truth</h3>
+          <p>Ten is the age at which a player can be told that their weak foot is the problem and treat it as a job rather than an insult. So this is where the counting starts — touches, repetitions, the number that has to be beaten next week. Most of them will look back on this as the year they first got better at something on purpose.</p>
+        </div>
+        <div class="age reveal" data-d="2" data-tilt>
+          <span class="age-tag" aria-hidden="true">U8</span>
+          <h3>Too young to know it's hard</h3>
+          <p>Nobody in this group has been informed that football is difficult, and there is no hurry to tell them. The grind can wait a few years. For now the work is simpler, and matters more than any drill: touch the ball an enormous number of times, and love it enough to come back on Saturday.</p>
+        </div>
+        <div class="sky reveal" data-d="3">
+          <b>Sky is the limit</b>
+          <p>It is written across the sky above them in the club's own hand. On most posters that line is decoration. Here it is simply accurate — almost nothing has happened to these players yet. Everything they will ever be good at is still in front of them, and all of it begins on this dirt, on an ordinary evening, with nobody watching.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ GALLERY ============ -->
 <!-- Fed by assets/gallery/gila/. Hides itself while that folder is empty. -->
 <section class="gal-sec" id="gallery" hidden data-gallery
@@ -280,7 +346,7 @@
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>05</b> The Album</div>
+      <div class="slate reveal"><b>06</b> The Album</div>
       <h2 class="rt">The work, photographed</h2>
       <p class="reveal" data-d="1">Sessions, drills and the occasional match. Added as they happen.</p>
     </div>
@@ -304,7 +370,7 @@
   <div class="wrap">
     <div class="rulewrap"><i></i></div>
     <div class="section-head">
-      <div class="slate reveal"><b>06</b> Start</div>
+      <div class="slate reveal"><b>07</b> Start</div>
       <h2 class="rt">Bring boots. Bring patience.</h2>
     </div>
     <div class="contact-grid">
