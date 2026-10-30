@@ -23,6 +23,7 @@ Barangay Mabuhay, General Santos City, founded 14 June 1996.
 | `assets/gallery/` | Whatever you upload. Sub-folders feed the sister-team pages. |
 | `tools/build-gallery.py` | Turns those folders into gallery manifests. Run it after adding photos. |
 | `assets/gallery.js` | The slideshow, shared by every page that has one. |
+| `assets/clarity.js` | Microsoft Clarity (heatmaps and recordings) for the public pages. Off until a project ID is set inside. The app does not load it. |
 | `vendor/three.min.js` | three.js r128, used by the hero scene (MIT — see `vendor/three.LICENSE`). |
 | `.nojekyll` | Tells GitHub Pages to serve the files as they are, without running Jekyll. |
 
